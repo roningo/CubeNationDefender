@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6038c793e49035c44831a3ed55547b36, type: 3}
+  m_Name: TowerDatabase
+  m_EditorClassIdentifier: 
+  objectDatas:
+  - <Name>k__BackingField: Turret
+    <ID>k__BackingField: 0
+    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: 1f7e02c7b0917b146a640655fc131dc2, type: 3}
+  - <Name>k__BackingField: ClaymorePinsboard
+    <ID>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 2488538722235215733, guid: b5cb4b91f2ce42c4683b1a18e75ba8e9, type: 3}
+  - <Name>k__BackingField: CrayonMissle
+    <ID>k__BackingField: 2
+    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: 8449c7a62e96f204680e642c4cd40d27, type: 3}
+  - <Name>k__BackingField: FlashbangLamp
+    <ID>k__BackingField: 3
+    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: 56790a723be830d46902308589f910a3, type: 3}
+  - <Name>k__BackingField: GatlingMailbox
+    <ID>k__BackingField: 4
+    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: bdfa9ce78a5020e45a4f95fcc8c68ac6, type: 3}
+  - <Name>k__BackingField: SmokeKettle
+    <ID>k__BackingField: 5
+    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: a365ab0a313da6b4ea4ac0cdf9c11762, type: 3}
+  - <Name>k__BackingField: SoundwaveSpeaker
+    <ID>k__BackingField: 6
+    <Prefab>k__BackingField: {fileID: 5665646599631833181, guid: ede67505182fabb49a03f2382b086df4, type: 3}
