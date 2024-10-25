@@ -750,7 +750,7 @@ MonoBehaviour:
   mouseIndicator: {fileID: 0}
   _aimColliderLayerMask:
     serializedVersion: 2
-    m_Bits: 16385
+    m_Bits: 147457
   OnShoot:
     m_PersistentCalls:
       m_Calls: []

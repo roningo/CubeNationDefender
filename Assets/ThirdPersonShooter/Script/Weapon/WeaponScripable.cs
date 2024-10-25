@@ -1,10 +1,18 @@
 using UnityEngine;
+using UnityEngine.InputSystem.Composites;
+using UnityEngine.Jobs;
 
 [CreateAssetMenu]
 public class WeaponScripable : ScriptableObject
 {
-    //bullet
-    public GameObject bullet;
+    //setup position
+    public Vector3 spawnPoint;
+    public Vector3 spawnRotation;
+    public Vector3 spawnScale;
+
+    //model
+    public GameObject weaponPf;
+    public GameObject bulletPf;
 
     //bullet force
     public float fireForce, upwardForce;
@@ -24,5 +32,17 @@ public class WeaponScripable : ScriptableObject
 
     //ref
     public Transform firePoint;
+
+    private MonoBehaviour _activeMonoBehaviour;
+    private GameObject _model;
+
+    // public void Spawn(Transform parent, MonoBehaviour activeMonoBehaviour) {
+    //     this._activeMonoBehaviour = activeMonoBehaviour;
+
+    //     _model = Instantiate(weaponPf);
+    //     _model.transform.SetParent(parent, false);
+    //     _model.transform.SetLocalPositionAndRotation(spawnPoint, Quaternion.Euler(spawnRotation));
+    //     _model.transform.localScale = spawnScale;
+    // }
 }
 

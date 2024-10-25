@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class ProjectileWeapon : MonoBehaviour
 {
-    [SerializeField] InputManager _inputManager;
+    public InputManager inputManager;
 
     //bullet
-    [SerializeField] GameObject _bullet;
+    [SerializeField] private GameObject _bullet;
 
     //bullet force
     [SerializeField] float _fireForce, _upwardForce;
@@ -50,14 +50,14 @@ public class ProjectileWeapon : MonoBehaviour
     //on changing weapon, disable old and enable new, OnEnable will run for re-initialization purposes 
     void OnEnable()
     {
-        if (_inputManager)
-            _inputManager.OnShoot.AddListener(ListenShoot);
+        if (inputManager)
+            inputManager.OnShoot.AddListener(ListenShoot);
     }
 
     void OnDisable()
     {
-        if (_inputManager)
-            _inputManager.OnShoot.RemoveListener(ListenShoot);
+        if (inputManager)
+            inputManager.OnShoot.RemoveListener(ListenShoot);
     }
 
     //cant RemoveListener(() => DetectShoot()) correctly, below solve the case
@@ -65,7 +65,7 @@ public class ProjectileWeapon : MonoBehaviour
 
     public void DetectShoot(Vector3 targetPosition = new(), Action fireAnimate = null)
     {
-        if (!_allowHold) _inputManager.starterAssetsInputs.shoot = false;
+        if (!_allowHold) inputManager.starterAssetsInputs.shoot = false;
 
         //shooting
         if (_readyToShoot && !_reloading && _bulletsLeft > 0)
@@ -88,8 +88,8 @@ public class ProjectileWeapon : MonoBehaviour
         //check ray hit something
         Vector3 targetPoint;
 
-        if (_inputManager)
-            targetPoint = _inputManager.GetMouseWorldPosition();
+        if (inputManager)
+            targetPoint = inputManager.GetMouseWorldPosition();
         else
             targetPoint = targetPosition;
 
