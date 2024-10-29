@@ -39,8 +39,17 @@ public class InputManager : MonoBehaviour
 
     public Vector3 GetMouseWorldPosition()
     {
+        FindMouseWord();
+        return mouseIndicator.transform.position;
+    }
 
-        Vector3 mouseWorldPosition = Vector3.zero;
+    public GameObject GetMouseWorldGameObject()
+    {
+        FindMouseWord();
+        return mouseIndicator;
+    }
+
+    private void FindMouseWord() {
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
         Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
 
@@ -52,8 +61,6 @@ public class InputManager : MonoBehaviour
 
         if (mouseIndicator != null)
             mouseIndicator.transform.position = targetPoint;
-        mouseWorldPosition = targetPoint;
-        return mouseWorldPosition;
     }
 
     // public Vector3 GetGunPointPosition()

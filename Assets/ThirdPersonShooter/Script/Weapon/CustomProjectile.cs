@@ -39,6 +39,7 @@ public class CustomProjectile : MonoBehaviour
 
     void Update()
     {
+        transform.forward = rb.velocity; 
         //collisions up to explode
         if (maxCollisions != 0 && collisions >= maxCollisions) DamageDeal();
 

@@ -16,7 +16,7 @@ public class TowerShooterController : MonoBehaviour
     private PlayerInput _playerInputs;
 
     private GatlingAuto _towerShoot;
-    private Vector3 _mouseWorldPosition;
+    private GameObject _mouseWorldGameObject;
 
     private void Awake()
     {
@@ -28,14 +28,14 @@ public class TowerShooterController : MonoBehaviour
 
     void Start()
     {
-        _inputManager.OnShoot.AddListener(() => _towerShoot.Shoot(_mouseWorldPosition));
+        _inputManager.OnShoot.AddListener(() => _towerShoot.TriggerShoot(_mouseWorldGameObject));
         _inputManager.OnInteract.AddListener(ExitTurret);
     }
 
     private void Update()
     {
-        _mouseWorldPosition = _inputManager.GetMouseWorldPosition();
-        _towerShoot.LookAtTarget(_mouseWorldPosition);
+        _mouseWorldGameObject = _inputManager.GetMouseWorldGameObject();
+        _towerShoot.LookAtTarget(_mouseWorldGameObject.transform.position);
     }
 
     private void ExitTurret()

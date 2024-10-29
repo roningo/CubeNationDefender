@@ -48,8 +48,9 @@ public class InteractSystem : MonoBehaviour
                     _placementSystem.GetComponent<PlacementSystem>().StopPlacement();
 
                     //camera toggle
-                    _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = collapseObject.gameObject.transform.GetChild(0).transform;
-                    _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = collapseObject.gameObject.transform.GetChild(0).transform;
+                    Transform towerRoot = collapseObject.transform.Find("TowerCameraRoot");
+                    _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
+                    _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
                     _towerVirtualCamera.gameObject.SetActive(true);
                     // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
 
@@ -59,12 +60,9 @@ public class InteractSystem : MonoBehaviour
 
                     //Hit object toggle
                     collapseObject.GetComponent<GatlingAuto>().autoMode = false;
-
                     collapseObject.GetComponent<TowerController>().enabled = true;
                     collapseObject.GetComponent<PlayerInput>().enabled = true;
                     collapseObject.GetComponent<TowerShooterController>().enabled = true;
-
-                    // _towerVirtualCamera.transform.forward = _playerRoot.transform.forward;
 
                     this.gameObject.transform.parent.gameObject.SetActive(false); //hide self
 

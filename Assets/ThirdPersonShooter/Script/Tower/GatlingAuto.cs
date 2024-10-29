@@ -20,7 +20,7 @@ public class GatlingAuto : ProjectileWeapon
 
     public bool autoMode = true;
 
-    private bool _isReloading = false;
+    // private bool _isReloading = false;
     public bool canFire = true;
 
     private bool _hasAnimator;
@@ -53,7 +53,7 @@ public class GatlingAuto : ProjectileWeapon
             if (currentTarget != null)
             {
                 LookAtTarget(currentTarget.transform.position);
-                Shoot(currentTarget.transform.position);
+                TriggerShoot(currentTarget);
             }
         }
     }
@@ -102,8 +102,8 @@ public class GatlingAuto : ProjectileWeapon
         _core.transform.rotation = Quaternion.Slerp(_core.transform.rotation, Quaternion.LookRotation(aimAt - _core.transform.position), turningSpeed);
     }
 
-    public void Shoot(Vector3 targetPosition)
-        => DetectShoot(targetPosition, FireAnimate);
+    public void TriggerShoot(GameObject targetObject)
+        => DetectShoot(targetObject, FireAnimate);
 
     private void FireAnimate()
     {
