@@ -115,7 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1814cca8dc86d2e47ad15aed3d3e94f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputManager: {fileID: 0}
+  inputManager: {fileID: 0}
   _bullet: {fileID: 2143931553402575989, guid: 8b5b27db22096f8498b04a9ea559c1b4, type: 3}
   _fireForce: 50
   _upwardForce: 0
@@ -126,11 +126,17 @@ MonoBehaviour:
   _magazineSize: 5
   _bulletPerTap: 1
   _allowHold: 1
-  _allowGuideProjectile: 1
+  _allowGuideBullet: 0
   _playerRb: {fileID: 0}
   _recoilForce: 0
   _fireEffect: {fileID: 0}
-  _firePoint: {fileID: 4990068288514560210}
+  firePoint: {fileID: 4990068288514560210}
+  _throwMode: 0
+  _forceRatio: 0
+  isMovementPrediction: 0
+  OnLook:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &5856135267285978816 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -2577548232221058511, guid: 05f00abc4b5eb1f4ab6c124d46a46bd7, type: 3}

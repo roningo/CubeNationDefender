@@ -35,7 +35,7 @@ public class TowerShooterController : MonoBehaviour
     private void Update()
     {
         _mouseWorldGameObject = _inputManager.GetMouseWorldGameObject();
-        _towerShoot.LookAtTarget(_mouseWorldGameObject.transform.position);
+        _towerShoot.AimDirection(_mouseWorldGameObject);
     }
 
     private void ExitTurret()

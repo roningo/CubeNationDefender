@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public class ProjectileWeapon : MonoBehaviour
 {
@@ -31,18 +32,19 @@ public class ProjectileWeapon : MonoBehaviour
     [SerializeField] private GameObject _fireEffect;
 
     //ref
-    [SerializeField] private Transform _firePoint;
+    public Transform firePoint;
 
-    [SerializeField] private bool _throwMode = false;
+    public bool throwMode = false;
     [Range(0, 1)]
     [Tooltip("Using a values closer to 0 will make the agent throw with the lower force"
         + "down to the least possible force (highest angle) to reach the target.\n"
         + "Using a value of 1 the agent will always throw with the MaxThrowForce below.")]
     [SerializeField] private float _forceRatio = 0;
-    [SerializeField] private bool _useMovementPrediction;
+    public bool isMovementPrediction;
 
     //
     private bool _allowInvoke = true;
+    public UnityEvent<Vector3,Vector3> OnLook;
 
     void Start()
     {
@@ -96,22 +98,16 @@ public class ProjectileWeapon : MonoBehaviour
         _readyToShoot = false;
 
         //spawn bullet
-        GameObject currentBullet = Instantiate(_bullet, _firePoint.position, Quaternion.identity);
+        GameObject currentBullet = Instantiate(_bullet, firePoint.position, Quaternion.identity);
 
-        if (_throwMode)
-        {
+        if (throwMode)
             ThrowShoot(currentBullet, targetObject);
-        }
         else
-        {
-            StraightShoot(currentBullet, targetObject);
-        }
+            DirectShoot(currentBullet, targetObject);
 
         //effect
         if (_fireEffect != null)
-        {
-            Instantiate(_fireEffect, _firePoint.position, Quaternion.identity);
-        }
+            Instantiate(_fireEffect, firePoint.position, Quaternion.identity);
 
         //invoke reset
         if (_allowInvoke)
@@ -172,16 +168,14 @@ public class ProjectileWeapon : MonoBehaviour
 
 
 
-    public void StraightShoot(GameObject currentBullet, GameObject targetObject)
+    public void DirectShoot(GameObject currentBullet, GameObject targetObject)
     {
         Vector3 targetPosition = targetObject.transform.position;
         //caculate direction
-        Vector3 directionWithoutSpread = targetPosition - _firePoint.position;
+        Vector3 directionWithoutSpread = targetPosition - firePoint.position;
 
-        if (_useMovementPrediction)
-        {
-            directionWithoutSpread = GetPredictedPositionShootData(directionWithoutSpread, targetObject);
-        }
+        if (isMovementPrediction)
+            directionWithoutSpread = PredictedShootData(directionWithoutSpread, targetObject);
 
         //caculate spread
         float x = UnityEngine.Random.Range(-_spread, _spread);
@@ -191,16 +185,16 @@ public class ProjectileWeapon : MonoBehaviour
         //caculate direction
         Vector3 directionWithSpread = directionWithoutSpread.normalized + new Vector3(x, y, z);
 
-        Vector3 bulletVelocity = directionWithSpread.normalized * _fireForce + _firePoint.up * _upwardForce;
+        Vector3 bulletVelocity = directionWithSpread.normalized * _fireForce + firePoint.up * _upwardForce;
         Shoot(bulletVelocity, currentBullet);
     }
 
-    private Vector3 GetPredictedPositionShootData(Vector3 directShootData, GameObject targetObject)
+    private Vector3 PredictedShootData(Vector3 directShootData, GameObject targetObject)
     {
         Vector3 shootVelocity = directShootData * _fireForce;
         shootVelocity.y = 0;
         Vector3 targetPosition = targetObject.transform.position;
-        Vector3 displacement = targetPosition - _firePoint.position;
+        Vector3 displacement = targetPosition - firePoint.position;
         float time = displacement.magnitude / shootVelocity.magnitude;
         Vector3 targetMovement = new();
 
@@ -213,7 +207,7 @@ public class ProjectileWeapon : MonoBehaviour
             targetPosition.z + targetMovement.z
         );
 
-        return newTargetPosition - _firePoint.position;
+        return newTargetPosition - firePoint.position;
     }
 
     private void Shoot(Vector3 bulletVelocity, GameObject currentBullet)
@@ -229,21 +223,27 @@ public class ProjectileWeapon : MonoBehaviour
 
     public void ThrowShoot(GameObject currentBullet, GameObject targetObject)
     {
-        ThrowData throwData = CalculateThrowData(
-            targetObject.transform.position,
-            currentBullet.transform.position
-        );
-
-        if (_useMovementPrediction)
-        {
-            throwData = GetPredictedPositionThrowData(throwData, targetObject);
-        }
-
+        ThrowData throwData = GetThrowData(firePoint.position, targetObject);
         Vector3 bulletVelocity = throwData.ThrowVelocity;
+
+        OnLook?.Invoke(throwData.TargetPosition, bulletVelocity);
         Throw(bulletVelocity, currentBullet);
     }
 
-    private ThrowData GetPredictedPositionThrowData(ThrowData directThrowData, GameObject targetObject)
+    public ThrowData GetThrowData(Vector3 firePoint, GameObject targetObject)
+    {
+        ThrowData throwData = CalculateThrowData(
+            targetObject.transform.position,
+            firePoint
+        );
+
+        if (isMovementPrediction)
+            throwData = PredictedThrowData(throwData, targetObject);
+
+        return throwData;
+    }
+
+    private ThrowData PredictedThrowData(ThrowData directThrowData, GameObject targetObject)
     {
         Vector3 throwVelocity = directThrowData.ThrowVelocity;
         throwVelocity.y = 0;
@@ -263,7 +263,7 @@ public class ProjectileWeapon : MonoBehaviour
         // Option Calculate again the trajectory based on target position
         ThrowData predictiveThrowData = CalculateThrowData(
             newTargetPosition,
-            _firePoint.position
+            firePoint.position
         );
 
         predictiveThrowData.ThrowVelocity = Vector3.ClampMagnitude(
@@ -283,9 +283,7 @@ public class ProjectileWeapon : MonoBehaviour
             rb.AddForce(bulletVelocity, ForceMode.Impulse);
         }
         else
-        {
             Debug.LogError("Projectile Rigidbody not found");
-        }
     }
 
     private ThrowData CalculateThrowData(Vector3 targetPosition, Vector3 startPosition)
@@ -338,11 +336,9 @@ public class ProjectileWeapon : MonoBehaviour
         }
 
         if (float.IsNaN(angle))
-        {
             // you will need to handle this case when there
             // is no feasible angle to throw the object and reach the target.
             return new ThrowData();
-        }
 
         Vector3 initialVelocity =
             Mathf.Cos(angle) * throwStrength * displacement.normalized
@@ -351,15 +347,17 @@ public class ProjectileWeapon : MonoBehaviour
         return new ThrowData
         {
             ThrowVelocity = initialVelocity,
+            TargetPosition = targetPosition,
             Angle = angle,
             DeltaXZ = deltaXZ,
             DeltaY = deltaY
         };
     }
 
-    private struct ThrowData
+    public struct ThrowData
     {
         public Vector3 ThrowVelocity;
+        public Vector3 TargetPosition;
         public float Angle;
         public float DeltaXZ;
         public float DeltaY;

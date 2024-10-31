@@ -120,7 +120,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1814cca8dc86d2e47ad15aed3d3e94f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _inputManager: {fileID: 0}
+  inputManager: {fileID: 0}
   _bullet: {fileID: 1954257580130986123, guid: 9c211666fcfc0544a955b20bb3edeff0, type: 3}
   _fireForce: 30
   _upwardForce: 0
@@ -131,8 +131,14 @@ MonoBehaviour:
   _magazineSize: 5
   _bulletPerTap: 1
   _allowHold: 0
-  _allowGuideProjectile: 0
+  _allowGuideBullet: 0
   _playerRb: {fileID: 0}
   _recoilForce: 0
   _fireEffect: {fileID: 0}
-  _firePoint: {fileID: 7937516879261090207}
+  firePoint: {fileID: 7937516879261090207}
+  _throwMode: 0
+  _forceRatio: 0
+  isMovementPrediction: 0
+  OnLook:
+    m_PersistentCalls:
+      m_Calls: []

@@ -139,8 +139,14 @@ MonoBehaviour:
   _magazineSize: 5
   _bulletPerTap: 1
   _allowHold: 1
-  _allowGuideProjectile: 0
+  _allowGuideBullet: 0
   _playerRb: {fileID: 0}
   _recoilForce: 0
   _fireEffect: {fileID: 0}
-  _firePoint: {fileID: 6169198556063961449}
+  firePoint: {fileID: 6169198556063961449}
+  throwMode: 1
+  _forceRatio: 0
+  isMovementPrediction: 1
+  OnLook:
+    m_PersistentCalls:
+      m_Calls: []

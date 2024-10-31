@@ -32,9 +32,7 @@ public class GatlingAuto : ProjectileWeapon
 
         Transform rangeFind = this.gameObject.transform.Find("Range");
         if (rangeFind && rangeFind.TryGetComponent<SphereCollider>(out SphereCollider sphereResult))
-        {
             sphereResult.radius = _fireRange;
-        }
         _fireAnimate = GetComponent<Animator>();
         _hasAnimator = TryGetComponent(out _fireAnimate);
     }
@@ -52,7 +50,7 @@ public class GatlingAuto : ProjectileWeapon
 
             if (currentTarget != null)
             {
-                LookAtTarget(currentTarget.transform.position);
+                AimDirection(currentTarget);
                 TriggerShoot(currentTarget);
             }
         }
@@ -81,26 +79,53 @@ public class GatlingAuto : ProjectileWeapon
 
         if (currentTarget != null && enemiesInRange.Contains(currentTarget)) return;
         if (enemiesInRange.Count > 0)
-        {
             currentTarget = enemiesInRange.First();
-        }
         else
-        {
             currentTarget = null;
-        }
     }
 
-    public void LookAtTarget(Vector3 targetPosition)
+    public void AimDirection(GameObject currentTarget)
     {
-        Vector3 aimAt = new Vector3(targetPosition.x, _core.transform.position.y, targetPosition.z);
+        ThrowData throwData = GetThrowData(firePoint.position, currentTarget);
+        Vector3 currentTargetPosition = currentTarget.transform.position;
+        Vector3 lookDirection = Vector3.zero;
+        if (throwMode)
+        {
+            currentTargetPosition = throwData.TargetPosition;
+            lookDirection = throwData.ThrowVelocity;
+        }
+
+        Vector3 aimAt = new Vector3(currentTargetPosition.x, _core.transform.position.y, currentTargetPosition.z);
         float distToTarget = Vector3.Distance(aimAt, _barrel.transform.position);
         Vector3 relativeTargetPosition = _barrel.transform.position + (_barrel.transform.forward * distToTarget);
-        relativeTargetPosition = new Vector3(relativeTargetPosition.x, targetPosition.y, relativeTargetPosition.z);
+        relativeTargetPosition = new Vector3(relativeTargetPosition.x, currentTargetPosition.y, relativeTargetPosition.z);
 
         float turningSpeed = autoMode ? Time.deltaTime * _turningSpeed : float.MaxValue;
-        _barrel.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, Quaternion.LookRotation(relativeTargetPosition - _barrel.transform.position), turningSpeed);
+
+        _barrel.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, Quaternion.LookRotation(throwMode ? lookDirection : relativeTargetPosition - _barrel.transform.position), turningSpeed);
         _core.transform.rotation = Quaternion.Slerp(_core.transform.rotation, Quaternion.LookRotation(aimAt - _core.transform.position), turningSpeed);
     }
+
+    // public void Aim(Vector3 targetPosition)
+    // {
+    //     //left right
+    //     float targetPlaneAngle = Vector3AngleFloor(targetPosition, _core.transform.position, -_core.transform.up, _core.transform.forward);
+    //     Vector3 newRotation = new Vector3(0, targetPlaneAngle, 0);
+    //     _core.transform.Rotate(newRotation, Space.Self);
+
+    //     //up down
+    //     float upAngle = Vector3.Angle(targetPosition, _barrel.transform.up);
+    //     Vector3 upRotation = new Vector3(-upAngle + 90, 0, 0);
+    //     _barrel.transform.Rotate(upRotation, Space.Self);
+    // }
+
+    // float Vector3AngleFloor(Vector3 from, Vector3 to, Vector3 planeNormal, Vector3 zeroAngle)
+    // {
+    //     Vector3 projectedVector = Vector3.ProjectOnPlane(from - to, planeNormal);
+    //     float projectedVectorAngle = Vector3.SignedAngle(projectedVector, zeroAngle, planeNormal);
+
+    //     return projectedVectorAngle;
+    // }
 
     public void TriggerShoot(GameObject targetObject)
         => DetectShoot(targetObject, FireAnimate);
@@ -108,8 +133,6 @@ public class GatlingAuto : ProjectileWeapon
     private void FireAnimate()
     {
         if (_hasAnimator)
-        {
             _fireAnimate.Play("Shoot", -1, 0f);
-        }
     }
 }

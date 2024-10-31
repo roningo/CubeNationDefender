@@ -13,24 +13,12 @@ MonoBehaviour:
   m_Name: TowerDatabase
   m_EditorClassIdentifier: 
   objectDatas:
-  - <Name>k__BackingField: Turret
+  - <Name>k__BackingField: Gatling
     <ID>k__BackingField: 0
-    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: 1f7e02c7b0917b146a640655fc131dc2, type: 3}
-  - <Name>k__BackingField: ClaymorePinsboard
+    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: dafe0a70d13bdfc4f9b7d401d762fa61, type: 3}
+  - <Name>k__BackingField: FlameThrower
     <ID>k__BackingField: 1
-    <Prefab>k__BackingField: {fileID: 2488538722235215733, guid: b5cb4b91f2ce42c4683b1a18e75ba8e9, type: 3}
-  - <Name>k__BackingField: CrayonMissle
+    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: 62c54da4f49ac674d8bcdc9cead6f1f6, type: 3}
+  - <Name>k__BackingField: Mortar
     <ID>k__BackingField: 2
-    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: 8449c7a62e96f204680e642c4cd40d27, type: 3}
-  - <Name>k__BackingField: FlashbangLamp
-    <ID>k__BackingField: 3
-    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: 56790a723be830d46902308589f910a3, type: 3}
-  - <Name>k__BackingField: GatlingMailbox
-    <ID>k__BackingField: 4
-    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: bdfa9ce78a5020e45a4f95fcc8c68ac6, type: 3}
-  - <Name>k__BackingField: SmokeKettle
-    <ID>k__BackingField: 5
-    <Prefab>k__BackingField: {fileID: 6564840380589674096, guid: a365ab0a313da6b4ea4ac0cdf9c11762, type: 3}
-  - <Name>k__BackingField: SoundwaveSpeaker
-    <ID>k__BackingField: 6
-    <Prefab>k__BackingField: {fileID: 5665646599631833181, guid: ede67505182fabb49a03f2382b086df4, type: 3}
+    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: a425b02931a3a5f4c99102bb898c758d, type: 3}
