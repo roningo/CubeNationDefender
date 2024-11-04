@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GatlingAuto : ProjectileWeapon
+public class TurretAuto : ProjectileWeapon
 {
     [Header("Turret stats")]
 
@@ -112,10 +112,8 @@ public class GatlingAuto : ProjectileWeapon
         Vector3 targetDirection = currentTarget.transform.position - _core.transform.position;
         ThrowData throwData = GetThrowData(firePoint.position, currentTarget);
         if (throwMode)
-        {
             targetDirection = throwData.ThrowVelocity;
-        }
-        
+
         //turn
         Vector3 projectedToCore = Vector3.ProjectOnPlane(targetDirection, _core.transform.up);
         _core.transform.rotation = Quaternion.Slerp(_core.transform.rotation, Quaternion.LookRotation(projectedToCore), turningSpeed);
@@ -124,14 +122,6 @@ public class GatlingAuto : ProjectileWeapon
         Vector3 projectedToBarrel = Vector3.ProjectOnPlane(targetDirection, -_barrel.transform.right);
         _barrel.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, Quaternion.LookRotation(projectedToBarrel), turningSpeed);
 
-    }
-
-    float Vector3AngleFloor(Vector3 from, Vector3 to, Vector3 planeNormal, Vector3 zeroAngle)
-    {
-        Vector3 projectedVector = Vector3.ProjectOnPlane(from - to, planeNormal);
-        float projectedVectorAngle = Vector3.SignedAngle(projectedVector, zeroAngle, planeNormal);
-
-        return projectedVectorAngle;
     }
 
     public void TriggerShoot(GameObject targetObject)

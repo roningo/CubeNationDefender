@@ -24,21 +24,27 @@ public class Health : MonoBehaviour
 
     public void ReceivedDamage(float damage)
     {
-        _currentHealth -= damage;
-        ChangeHealthBar($"-{damage.ToString()}");
+        if (damage > 0)
+        {
+            _currentHealth -= damage;
+            ChangeHealthBar($"-{damage.ToString()}");
 
-        if (_currentHealth <= 0)
-            OnDeath();
+            if (_currentHealth <= 0)
+                OnDeath();
+        }
     }
 
     public void ReceivedHealing(float heal)
     {
-        _maxHealth += heal;
-        ChangeHealthBar($"+{heal.ToString()}");
-
-        if (_currentHealth >= _maxHealth)
+        if (heal > 0)
         {
-            _currentHealth = _maxHealth;
+            _maxHealth += heal;
+            ChangeHealthBar($"+{heal.ToString()}");
+
+            if (_currentHealth >= _maxHealth)
+            {
+                _currentHealth = _maxHealth;
+            }
         }
     }
 

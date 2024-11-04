@@ -259,8 +259,9 @@ MonoBehaviour:
   bounciness: 0
   useGravity: 0
   damage: 3
-  explosionRange: 1
+  explosionRange: 0
   explosionForce: 0
   maxCollisions: 0
   maxLifetime: 1
   explodeOnImpact: 1
+  effectScripable: {fileID: 11400000, guid: cfa7f37681175cd4fbc27b9f666ed45d, type: 2}

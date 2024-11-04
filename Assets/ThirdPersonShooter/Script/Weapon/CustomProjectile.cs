@@ -26,6 +26,8 @@ public class CustomProjectile : MonoBehaviour
     private int collisions;
     private bool _triggered = false;
 
+    public EffectScripable effectScripable;
+
     void Start()
     {
         if (TryGetComponent<TrailRenderer>(out TrailRenderer trailRenderer))
@@ -39,7 +41,7 @@ public class CustomProjectile : MonoBehaviour
 
     void Update()
     {
-        transform.forward = rb.velocity; 
+        transform.forward = rb.velocity;
         //collisions up to explode
         if (maxCollisions != 0 && collisions >= maxCollisions) DamageDeal();
 
@@ -61,6 +63,8 @@ public class CustomProjectile : MonoBehaviour
             {
                 if (other.gameObject.TryGetComponent<Health>(out Health health))
                     health.ReceivedDamage(damage);
+
+                ProjectileEffect(other.collider);
             }
             else //explode-type projectile
             {
@@ -73,12 +77,23 @@ public class CustomProjectile : MonoBehaviour
                     if (e.TryGetComponent<Health>(out Health health))
                         health.ReceivedDamage(damage);
 
+                    ProjectileEffect(e);
+
                     if (e.TryGetComponent<Rigidbody>(out Rigidbody erb))
                         erb.AddExplosionForce(explosionForce, transform.position, explosionRange);
                 }
             }
 
             Invoke(nameof(DelayDestroy), float.MinValue);
+        }
+    }
+
+    private void ProjectileEffect(Collider other)
+    {
+        if (other.gameObject.TryGetComponent<EffectSystem>(out EffectSystem effectSystem) && effectScripable)
+        {
+            EffectScripable currentEffect = effectScripable;
+            effectSystem.AddEffect(currentEffect);
         }
     }
 

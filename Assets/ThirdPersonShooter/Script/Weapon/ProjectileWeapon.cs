@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Events;
 
 public class ProjectileWeapon : MonoBehaviour
 {
@@ -44,7 +43,6 @@ public class ProjectileWeapon : MonoBehaviour
 
     //
     private bool _allowInvoke = true;
-    public UnityEvent<Vector3,Vector3> OnLook;
 
     void Start()
     {
@@ -226,7 +224,6 @@ public class ProjectileWeapon : MonoBehaviour
         ThrowData throwData = GetThrowData(firePoint.position, targetObject);
         Vector3 bulletVelocity = throwData.ThrowVelocity;
 
-        OnLook?.Invoke(throwData.TargetPosition, bulletVelocity);
         Throw(bulletVelocity, currentBullet);
     }
 
@@ -347,7 +344,6 @@ public class ProjectileWeapon : MonoBehaviour
         return new ThrowData
         {
             ThrowVelocity = initialVelocity,
-            TargetPosition = targetPosition,
             Angle = angle,
             DeltaXZ = deltaXZ,
             DeltaY = deltaY
@@ -357,7 +353,6 @@ public class ProjectileWeapon : MonoBehaviour
     public struct ThrowData
     {
         public Vector3 ThrowVelocity;
-        public Vector3 TargetPosition;
         public float Angle;
         public float DeltaXZ;
         public float DeltaY;

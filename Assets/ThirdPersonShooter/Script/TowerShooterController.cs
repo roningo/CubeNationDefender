@@ -15,7 +15,7 @@ public class TowerShooterController : MonoBehaviour
     private TowerController _towerController;
     private PlayerInput _playerInputs;
 
-    private GatlingAuto _towerShoot;
+    private TurretAuto _towerShoot;
     private GameObject _mouseWorldGameObject;
 
     private void Awake()
@@ -23,7 +23,7 @@ public class TowerShooterController : MonoBehaviour
         _towerController = GetComponent<TowerController>();
         _playerInputs = GetComponent<PlayerInput>();
 
-        _towerShoot = GetComponent<GatlingAuto>();
+        _towerShoot = GetComponent<TurretAuto>();
     }
 
     void Start()

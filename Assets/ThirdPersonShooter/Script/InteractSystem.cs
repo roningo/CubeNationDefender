@@ -59,7 +59,7 @@ public class InteractSystem : MonoBehaviour
                     GetComponentInParent<ThirdPersonShooterController>().enabled = false;
 
                     //Hit object toggle
-                    collapseObject.GetComponent<GatlingAuto>().autoMode = false;
+                    collapseObject.GetComponent<TurretAuto>().autoMode = false;
                     collapseObject.GetComponent<TowerController>().enabled = true;
                     collapseObject.GetComponent<PlayerInput>().enabled = true;
                     collapseObject.GetComponent<TowerShooterController>().enabled = true;
