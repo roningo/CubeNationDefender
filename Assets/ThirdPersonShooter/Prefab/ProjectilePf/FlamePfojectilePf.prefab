@@ -264,4 +264,4 @@ MonoBehaviour:
   maxCollisions: 0
   maxLifetime: 1
   explodeOnImpact: 1
-  effectScripable: {fileID: 11400000, guid: cfa7f37681175cd4fbc27b9f666ed45d, type: 2}
+  effectScripable: {fileID: 11400000, guid: 38a1d05042aa3c442871f3ef16f81b9e, type: 2}

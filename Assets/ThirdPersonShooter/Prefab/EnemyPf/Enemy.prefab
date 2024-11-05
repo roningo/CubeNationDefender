@@ -137,7 +137,7 @@ PrefabInstance:
       addedObject: {fileID: 8341262898033707364}
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 72353cec7bee10346bbd4e0d4a36887f, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -7616156769457549489}
+      addedObject: {fileID: -7196758800937792293}
   m_SourcePrefab: {fileID: 100100000, guid: 72353cec7bee10346bbd4e0d4a36887f, type: 3}
 --- !u!4 &1453651162123831849 stripped
 Transform:
@@ -253,7 +253,7 @@ MonoBehaviour:
   _floatingText: {fileID: 4008326704361802276, guid: ff5e7971018532846ba1a53bc926a733, type: 3}
   _healthBarCanvas: {fileID: 0}
   _faceCamera: {fileID: 0}
---- !u!114 &-7616156769457549489
+--- !u!114 &-7196758800937792293
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -262,7 +262,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2262980382943727763}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a9634d8d9ea76f4da7ab6bfab1a65a1, type: 3}
+  m_Script: {fileID: 11500000, guid: 2484307bb2af5e24a8143bbd693ed683, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   effectList: []

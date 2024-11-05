@@ -9,11 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dabb5c9b1489a5d4e8413415180f535e, type: 3}
-  m_Name: BurnEffect
+  m_Script: {fileID: 11500000, guid: 7bacd17d9af94394089958aff268dff0, type: 3}
+  m_Name: BurnDot
   m_EditorClassIdentifier: 
-  effectName: Burn
-  damage: 5
-  tickRate: 2
-  maxLifeTime: 5
+  effectName: 
+  tickRate: 0
+  maxLifeTime: 0
   lifeTimeLeft: 0
+  activeMonoBehaviour: {fileID: 0}
+  damage: 0

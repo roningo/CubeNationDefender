@@ -1,10 +1,10 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Effect/Damage Over Time Effect")]
-public class DamageOverTimeEffect : EffectScripable
+[CreateAssetMenu(menuName = "Effect/Heal Over Time Effect")]
+public class HealOverTimeEffect : EffectScripable
 {
     [Header("Effect stats")]
-    public float damage;
+    public float heal;
 
     private Health _health;
 
@@ -13,7 +13,7 @@ public class DamageOverTimeEffect : EffectScripable
     }
 
     public override void OverrideEffect() {
-        _health.ReceivedDamage(damage);
+        _health.ReceivedHealing(heal);
     }
 }
 

@@ -3,58 +3,81 @@ using System.Collections;
 using System.Diagnostics;
 using UnityEngine;
 
-[CreateAssetMenu]
 public class EffectScripable : ScriptableObject
 {
     public String effectName;
-    public float damage;
     public float tickRate;
     public float maxLifeTime;
 
-    public float lifeTimeLeft;
+    [HideInInspector] public float lifeTimeLeft;
 
-    private Stopwatch _durationTimer = new();
-    private IEnumerator _effectCoroutine;
-    private MonoBehaviour _activeMonoBehaviour;
+    [HideInInspector] public Stopwatch durationTimer = new();
+    [HideInInspector] public MonoBehaviour activeMonoBehaviour;
 
     private bool _coroutineRunning = false;
 
-    public void StartEffect(MonoBehaviour mono, Health health)
+    public void StartEffect(MonoBehaviour mono)
     {
-        _effectCoroutine = Effect(health);
-        _activeMonoBehaviour = mono;
+        activeMonoBehaviour = mono;
         lifeTimeLeft = maxLifeTime;
-        _durationTimer.Reset();
-        mono.StartCoroutine(_effectCoroutine);
+        durationTimer.Reset();
+        OverrideSetup();
+        if (tickRate != 0)
+            //if tick timing effect like damage overtime or heal over time 
+            mono.StartCoroutine(TickingEffect());
+        else
+            //if life time value effect
+            mono.StartCoroutine(LifeTimeEffect());
     }
 
     public void ResetEffect()
     {
         lifeTimeLeft = maxLifeTime;
-        _durationTimer.Reset();
-        _durationTimer.Start();
+        durationTimer.Reset();
+        durationTimer.Start();
     }
 
-    public IEnumerator Effect(Health health)
+    public IEnumerator TickingEffect()
     {
         _coroutineRunning = true;
         float timePerTick = 1 / tickRate;
 
-        _durationTimer.Start();
-        while (_durationTimer.IsRunning && _durationTimer.Elapsed.Seconds < maxLifeTime)
+        durationTimer.Start();
+        while (durationTimer.IsRunning && durationTimer.Elapsed.Seconds < maxLifeTime)
         {
             lifeTimeLeft -= timePerTick;
-            health.ReceivedDamage(damage);
+            OverrideEffect();
             yield return new WaitForSeconds(timePerTick);
         }
-        _durationTimer.Reset();
+        durationTimer.Reset();
         _coroutineRunning = false;
         yield break;
     }
 
+    public IEnumerator LifeTimeEffect()
+    {
+        _coroutineRunning = true;
+
+        durationTimer.Start();
+        // while (durationTimer.IsRunning && durationTimer.Elapsed.Seconds < maxLifeTime)
+        // {
+        //     OverrideEffect();
+        //     yield return new WaitForSeconds(timePerTick);
+        // }
+        durationTimer.Reset();
+        _coroutineRunning = false;
+        yield break;
+    }
+
+    // override this for setup effect
+    public virtual void OverrideSetup() { }
+
+    // override this for effect action
+    public virtual void OverrideEffect() { }
+
     private void OnDestroy()
     {
-        if (this && _coroutineRunning) _activeMonoBehaviour.StopCoroutine(_effectCoroutine);
+        if (this && _coroutineRunning) activeMonoBehaviour.StopCoroutine(TickingEffect());
     }
 }
 

@@ -6,13 +6,6 @@ public class EffectSystem : MonoBehaviour
 {
     public List<EffectScripable> effectList;
 
-    private Health _health;
-
-    private void Start()
-    {
-        _health = this.GetComponent<Health>();
-    }
-
     private void Update()
     {
         //remove outdate effect
@@ -37,7 +30,7 @@ public class EffectSystem : MonoBehaviour
         if (id < 0)
         {
             // add new effect
-            newEffect.StartEffect(this, _health);
+            newEffect.StartEffect(this);
             effectList.Add(newEffect);
         }
         else

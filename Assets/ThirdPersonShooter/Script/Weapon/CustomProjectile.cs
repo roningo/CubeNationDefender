@@ -63,7 +63,6 @@ public class CustomProjectile : MonoBehaviour
             {
                 if (other.gameObject.TryGetComponent<Health>(out Health health))
                     health.ReceivedDamage(damage);
-
                 ProjectileEffect(other.collider);
             }
             else //explode-type projectile
@@ -76,7 +75,6 @@ public class CustomProjectile : MonoBehaviour
                     //get emnemies component to call damage
                     if (e.TryGetComponent<Health>(out Health health))
                         health.ReceivedDamage(damage);
-
                     ProjectileEffect(e);
 
                     if (e.TryGetComponent<Rigidbody>(out Rigidbody erb))
