@@ -14,8 +14,6 @@ public class EffectScripable : ScriptableObject
     [HideInInspector] public Stopwatch durationTimer = new();
     [HideInInspector] public MonoBehaviour activeMonoBehaviour;
 
-    private bool _coroutineRunning = false;
-
     public void StartEffect(MonoBehaviour mono)
     {
         activeMonoBehaviour = mono;
@@ -39,7 +37,6 @@ public class EffectScripable : ScriptableObject
 
     public IEnumerator TickingEffect()
     {
-        _coroutineRunning = true;
         float timePerTick = 1 / tickRate;
 
         durationTimer.Start();
@@ -50,14 +47,11 @@ public class EffectScripable : ScriptableObject
             yield return new WaitForSeconds(timePerTick);
         }
         durationTimer.Reset();
-        _coroutineRunning = false;
         yield break;
     }
 
     public IEnumerator LifeTimeEffect()
     {
-        _coroutineRunning = true;
-
         durationTimer.Start();
         // while (durationTimer.IsRunning && durationTimer.Elapsed.Seconds < maxLifeTime)
         // {
@@ -65,7 +59,6 @@ public class EffectScripable : ScriptableObject
         //     yield return new WaitForSeconds(timePerTick);
         // }
         durationTimer.Reset();
-        _coroutineRunning = false;
         yield break;
     }
 
