@@ -74,11 +74,6 @@ public class EffectScripable : ScriptableObject
 
     // override this for effect action
     public virtual void OverrideEffect() { }
-
-    private void OnDestroy()
-    {
-        if (this && _coroutineRunning) activeMonoBehaviour.StopCoroutine(TickingEffect());
-    }
 }
 
 
