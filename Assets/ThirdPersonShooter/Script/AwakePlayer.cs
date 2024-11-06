@@ -6,13 +6,13 @@ public class AwakePlayer : MonoBehaviour
     private ThirdPersonShooterController _thirdPersonShooterController;
 
     // Start is called before the first frame update
-    void Awake()
+    private void Awake()
     {
         _thirdPersonShooterController = GetComponentInParent<ThirdPersonShooterController>();
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!_thirdPersonShooterController.enabled)
             _thirdPersonShooterController.enabled = true;

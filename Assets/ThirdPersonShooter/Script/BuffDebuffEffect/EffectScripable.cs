@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class EffectScripable : ScriptableObject
 {
-    public String effectName;
+    public string effectName;
 
     [Tooltip("Set Tick Rate 0 for fix value effect")]
     public float tickRate;
@@ -14,14 +14,14 @@ public class EffectScripable : ScriptableObject
 
     [HideInInspector] public float lifeTimeLeft;
 
-    [HideInInspector] public Stopwatch durationTimer = new();
+    private readonly Stopwatch _durationTimer = new();
     [HideInInspector] public MonoBehaviour activeMonoBehaviour;
 
     public void StartEffect(MonoBehaviour mono)
     {
         activeMonoBehaviour = mono;
         lifeTimeLeft = maxLifeTime;
-        durationTimer.Reset();
+        _durationTimer.Reset();
         OverrideSetup();
         mono.StartCoroutine(tickRate != 0 ? TickingEffect() : LifeTimeEffect());
     }
@@ -29,48 +29,48 @@ public class EffectScripable : ScriptableObject
     public void ResetEffect()
     {
         lifeTimeLeft = maxLifeTime;
-        durationTimer.Reset();
-        durationTimer.Start();
+        _durationTimer.Reset();
+        _durationTimer.Start();
     }
 
     //if tick timing effect like damage overtime or heal over time 
-    public IEnumerator TickingEffect()
+    private IEnumerator TickingEffect()
     {
         float timePerTick = 1 / tickRate;
 
-        durationTimer.Start();
-        while (durationTimer.IsRunning && durationTimer.Elapsed.Seconds < maxLifeTime)
+        _durationTimer.Start();
+        while (_durationTimer.IsRunning && _durationTimer.Elapsed.TotalSeconds < maxLifeTime)
         {
             lifeTimeLeft -= timePerTick;
             OverrideEffect();
             yield return new WaitForSeconds(timePerTick);
         }
 
-        durationTimer.Reset();
+        _durationTimer.Reset();
         yield break;
     }
 
     //if life time value effect
-    public IEnumerator LifeTimeEffect()
+    private IEnumerator LifeTimeEffect()
     {
-        durationTimer.Start();
+        _durationTimer.Start();
         //not yet 
         // while (durationTimer.IsRunning && durationTimer.Elapsed.Seconds < maxLifeTime)
         // {
         //     OverrideEffect();
         //     yield return new WaitForSeconds(timePerTick);
         // }
-        durationTimer.Reset();
+        _durationTimer.Reset();
         yield break;
     }
 
     // override this for setup effect
-    public virtual void OverrideSetup()
+    protected virtual void OverrideSetup()
     {
     }
 
     // override this for effect action
-    public virtual void OverrideEffect()
+    protected virtual void OverrideEffect()
     {
     }
 }

@@ -21,7 +21,7 @@ public class ThirdPersonShooterController : MonoBehaviour
         _playerInputs = GetComponent<PlayerInput>();
     }
 
-    void Start()
+    private void Start()
     {
         _thirdPersonController.SetRotateOnMove(false);
         _playerInputs.enabled = false; //restart playerInput

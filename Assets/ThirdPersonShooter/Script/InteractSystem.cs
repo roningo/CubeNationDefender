@@ -25,12 +25,12 @@ public class InteractSystem : MonoBehaviour
         _playerInputs = GetComponentInParent<PlayerInput>();
     }
 
-    void Start()
+    private void Start()
     {
         _inputManager.OnInteract.AddListener(InteractTower);
     }
 
-    void Update()
+    private void Update()
     {
         _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius, _interactableList, _interactableLayer);
     }

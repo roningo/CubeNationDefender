@@ -8,13 +8,13 @@ public class SpawnEnemy : MonoBehaviour
     [SerializeField] private GameObject _enemyPf;
     [SerializeField] private Transform _homePosition;
     [SerializeField] private float _spawnTime = 1f;
-    
-    void Start()
+
+    private void Start()
     {
         InvokeRepeating(nameof(Spawner), 1f, _spawnTime);
     }
 
-    void Spawner()
+    private void Spawner()
     {
         GameObject enemy = Instantiate(_enemyPf, transform.position, Quaternion.identity);
 

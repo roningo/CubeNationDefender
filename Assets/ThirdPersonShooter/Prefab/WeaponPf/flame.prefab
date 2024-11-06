@@ -122,7 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputManager: {fileID: 0}
   _bullet: {fileID: 7091664260378054835, guid: be5070fe0e4b2204398a266f0f6083d4, type: 3}
-  _fireForce: 10
+  _fireForce: 1
   _upwardForce: 0
   _fireRate: 10
   _spread: 0.03
@@ -136,6 +136,6 @@ MonoBehaviour:
   _recoilForce: 0
   _fireEffect: {fileID: 0}
   firePoint: {fileID: 3948227359536055043}
-  throwMode: 0
+  shootMode: 0
   _forceRatio: 0
   isMovementPrediction: 0

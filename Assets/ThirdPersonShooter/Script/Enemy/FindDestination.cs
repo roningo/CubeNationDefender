@@ -16,7 +16,7 @@ public class FindDestination : MonoBehaviour
     private int _targetCount;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         _currentTarget = homeDestination;
         _ai = GetComponent<NavMeshAgent>();
@@ -24,7 +24,7 @@ public class FindDestination : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         _targetCount = Physics.OverlapSphereNonAlloc(_sightPoint.position, _sightRadius, _targetList, _sightLayer);
 

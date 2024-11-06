@@ -26,7 +26,7 @@ public class TowerShooterController : MonoBehaviour
         _towerShoot = GetComponent<TurretAuto>();
     }
 
-    void Start()
+    private void Start()
     {
         _inputManager.OnShoot.AddListener(() => _towerShoot.TriggerShoot(_mouseWorldGameObject));
         _inputManager.OnInteract.AddListener(ExitTurret);

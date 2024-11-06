@@ -6,7 +6,7 @@ public class FloatingText : MonoBehaviour
     public Vector3 offset = new Vector3(0f, 1.5f, 0f);
     public Vector3 randomPosition = Vector3.zero;
 
-    void Start()
+    private void Start()
     {
         Destroy(gameObject, destroyTime);
 

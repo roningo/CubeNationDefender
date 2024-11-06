@@ -11,7 +11,7 @@ public class PlacementReview : MonoBehaviour
     [SerializeField] private Material _previewMaterialPrefab;
     private Material _previewMaterialInstance;
 
-    void Start()
+    private void Start()
     {
         _previewMaterialInstance = new Material(_previewMaterialPrefab);
         _cellIndicator.SetActive(false);

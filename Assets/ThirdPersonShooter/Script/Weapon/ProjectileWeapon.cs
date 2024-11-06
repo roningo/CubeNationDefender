@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class ProjectileWeapon : MonoBehaviour
 {
@@ -33,12 +34,12 @@ public class ProjectileWeapon : MonoBehaviour
     //ref
     public Transform firePoint;
 
-    public ShootMode shootMode = ShootMode.DIRECT;
+    public ShootMode shootMode = ShootMode.Direct;
 
     public enum ShootMode
     {
-        DIRECT,
-        THROW,
+        Direct,
+        Throw,
     }
 
     [Range(0, 1)]
@@ -53,35 +54,35 @@ public class ProjectileWeapon : MonoBehaviour
     //
     private bool _allowInvoke = true;
 
-    void Start()
+    private void Start()
     {
         //magazine full
         _bulletsLeft = _magazineSize;
         _readyToShoot = true;
     }
 
-    void Update()
+    private void Update()
     {
         CheckReload();
     }
 
     //on changing weapon, disable old and enable new, OnEnable will run for re-initialization purposes 
-    void OnEnable()
+    private void OnEnable()
     {
         if (inputManager)
             inputManager.OnShoot.AddListener(ListenShoot);
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         if (inputManager)
             inputManager.OnShoot.RemoveListener(ListenShoot);
     }
 
     //cant RemoveListener(() => DetectShoot()) correctly, below solve the case
-    void ListenShoot() => DetectShoot(inputManager ? inputManager.GetMouseWorldGameObject() : new GameObject());
+    private void ListenShoot() => DetectShoot(inputManager ? inputManager.GetMouseWorldGameObject() : new GameObject());
 
-    public void DetectShoot(GameObject targetObject, Action fireAnimate = null)
+    protected void DetectShoot(GameObject targetObject, Action fireAnimate = null)
     {
         if (!_allowHold) inputManager.starterAssetsInputs.shoot = false;
 
@@ -107,10 +108,10 @@ public class ProjectileWeapon : MonoBehaviour
 
         switch (shootMode)
         {
-            case ShootMode.DIRECT:
+            case ShootMode.Direct:
                 DirectShoot(currentBullet, targetObject);
                 break;
-            case ShootMode.THROW:
+            case ShootMode.Throw:
                 ThrowShoot(currentBullet, targetObject);
                 break;
         }
@@ -224,7 +225,7 @@ public class ProjectileWeapon : MonoBehaviour
     }
 
 
-    public void ThrowShoot(GameObject currentBullet, GameObject targetObject)
+    private void ThrowShoot(GameObject currentBullet, GameObject targetObject)
     {
         ThrowData throwData = GetThrowData(firePoint.position, targetObject);
         Vector3 bulletVelocity = throwData.ThrowVelocity;
@@ -232,7 +233,7 @@ public class ProjectileWeapon : MonoBehaviour
         Throw(bulletVelocity, currentBullet);
     }
 
-    public ThrowData GetThrowData(Vector3 firePoint, GameObject targetObject)
+    protected ThrowData GetThrowData(Vector3 firePoint, GameObject targetObject)
     {
         ThrowData throwData = CalculateThrowData(
             targetObject.transform.position,
@@ -355,7 +356,7 @@ public class ProjectileWeapon : MonoBehaviour
         };
     }
 
-    public struct ThrowData
+    protected struct ThrowData
     {
         public Vector3 ThrowVelocity;
         public float Angle;

@@ -8,11 +8,11 @@ public class DamageOverTimeEffect : EffectScripable
 
     private Health _health;
 
-    public override void OverrideSetup() {
+    protected override void OverrideSetup() {
         _health = activeMonoBehaviour.GetComponent<Health>();
     }
 
-    public override void OverrideEffect() {
+    protected override void OverrideEffect() {
         _health.ReceivedDamage(damage);
     }
 }

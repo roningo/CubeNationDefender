@@ -24,7 +24,7 @@ public class TurretAuto : ProjectileWeapon
 
     private bool _hasAnimator;
 
-    void Awake()
+    private void Awake()
     {
         attackRageTrigger.EnteredTriggerEvent.AddListener(OnAttackTriggerEnter);
         attackRageTrigger.ExitTriggerEvent.AddListener(OnAttackTriggerExit);
@@ -37,7 +37,7 @@ public class TurretAuto : ProjectileWeapon
     }
 
     // Update is called once per frame
-    void Update()
+    private void Update()
     {
         if (!autoMode) return;
         
@@ -53,7 +53,7 @@ public class TurretAuto : ProjectileWeapon
         TriggerShoot(currentTarget);
     }
 
-    void OnAttackTriggerEnter(Collider other)
+    private void OnAttackTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Enemy")) return;
         
@@ -61,7 +61,7 @@ public class TurretAuto : ProjectileWeapon
         UpdateTarget();
     }
 
-    void OnAttackTriggerExit(Collider other)
+    private void OnAttackTriggerExit(Collider other)
     {
         if (!other.gameObject.CompareTag("Enemy")) return;
         
@@ -102,7 +102,7 @@ public class TurretAuto : ProjectileWeapon
         float turningSpeed = autoMode ? Time.deltaTime * _turningSpeed : float.MaxValue;
         Vector3 targetDirection = currentTarget.transform.position - _core.transform.position;
         ThrowData throwData = GetThrowData(firePoint.position, currentTarget);
-        if (shootMode == ShootMode.THROW)
+        if (shootMode == ShootMode.Throw)
             targetDirection = throwData.ThrowVelocity;
 
         //turn

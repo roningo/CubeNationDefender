@@ -9,17 +9,17 @@ public class CustomTrigger : MonoBehaviour
     public UnityEvent<Collider> StayTriggerEvent;
     public UnityEvent<Collider> ExitTriggerEvent;
 
-    void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         EnteredTriggerEvent?.Invoke(other);
     }
 
-    void OnTriggerStay(Collider other)
+    private void OnTriggerStay(Collider other)
     {
         StayTriggerEvent?.Invoke(other);
     }
 
-    void OnTriggerExit(Collider other)
+    private void OnTriggerExit(Collider other)
     {
         ExitTriggerEvent?.Invoke(other);
     }

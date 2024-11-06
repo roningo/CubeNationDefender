@@ -17,7 +17,7 @@ public class WeaponSystem : MonoBehaviour
     private GameObject _model;
 
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         ConstraintSource constraintSource = new()
         {

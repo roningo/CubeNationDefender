@@ -37,7 +37,7 @@ public class CustomProjectile : MonoBehaviour
         PENETRATE,
     }
 
-    void Start()
+    private void Start()
     {
         if (TryGetComponent<TrailRenderer>(out TrailRenderer trailRenderer))
         {
@@ -48,7 +48,7 @@ public class CustomProjectile : MonoBehaviour
         Setup();
     }
 
-    void Update()
+    private void Update()
     {
         transform.forward = rb.velocity;
         //collisions up to explode
