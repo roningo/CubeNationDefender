@@ -8,13 +8,13 @@ public class EffectSystem : MonoBehaviour
 
     private void Update()
     {
-        //remove outdate effect
+        //remove outdated effect
         if (effectList.Any(e => e.lifeTimeLeft <= 0))
         {
             List<EffectScripable> removeList = effectList.FindAll(e => e.lifeTimeLeft <= 0);
             foreach (EffectScripable removeEffect in removeList)
             {
-                //need to destroy to force stop the coroutine just in case
+                //need to destroy just in case
                 Destroy(removeEffect);
                 effectList.Remove(removeEffect);
             }

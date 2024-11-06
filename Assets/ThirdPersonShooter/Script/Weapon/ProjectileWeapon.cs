@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 public class ProjectileWeapon : MonoBehaviour
 {
@@ -33,7 +34,14 @@ public class ProjectileWeapon : MonoBehaviour
     //ref
     public Transform firePoint;
 
-    public bool throwMode = false;
+    public ShootMode shootMode = ShootMode.DIRECT;
+
+    public enum ShootMode
+    {
+        DIRECT,
+        THROW,
+    }
+
     [Range(0, 1)]
     [Tooltip("Using a values closer to 0 will make the agent throw with the lower force"
         + "down to the least possible force (highest angle) to reach the target.\n"
@@ -98,10 +106,11 @@ public class ProjectileWeapon : MonoBehaviour
         //spawn bullet
         GameObject currentBullet = Instantiate(_bullet, firePoint.position, Quaternion.identity);
 
-        if (throwMode)
-            ThrowShoot(currentBullet, targetObject);
-        else
+        if (shootMode == ShootMode.DIRECT)
             DirectShoot(currentBullet, targetObject);
+        else if (shootMode == ShootMode.THROW)
+            ThrowShoot(currentBullet, targetObject);
+
 
         //effect
         if (_fireEffect != null)

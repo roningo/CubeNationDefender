@@ -264,3 +264,4 @@ MonoBehaviour:
   maxCollisions: 0
   maxLifetime: 2
   explodeOnImpact: 1
+  effectScripable: {fileID: 0}

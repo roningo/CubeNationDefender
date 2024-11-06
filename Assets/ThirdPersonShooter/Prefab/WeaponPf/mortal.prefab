@@ -144,9 +144,6 @@ MonoBehaviour:
   _recoilForce: 0
   _fireEffect: {fileID: 0}
   firePoint: {fileID: 6169198556063961449}
-  throwMode: 1
+  shootMode: 1
   _forceRatio: 0
   isMovementPrediction: 1
-  OnLook:
-    m_PersistentCalls:
-      m_Calls: []

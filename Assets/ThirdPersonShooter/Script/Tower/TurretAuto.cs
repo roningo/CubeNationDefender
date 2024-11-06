@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -40,48 +39,40 @@ public class TurretAuto : ProjectileWeapon
     // Update is called once per frame
     void Update()
     {
-        if (autoMode)
+        if (!autoMode) return;
+        
+        if (enemiesInRange.Any(e => !e))
         {
-            if (enemiesInRange.Any(e => e == null))
-            {
-                enemiesInRange.RemoveAll(e => e == null);
-                UpdateTarget();
-            }
-
-            if (currentTarget != null)
-            {
-                AimDirection(currentTarget);
-                TriggerShoot(currentTarget);
-            }
+            enemiesInRange.RemoveAll(e => !e);
+            UpdateTarget();
         }
+
+        if (!currentTarget) return;
+        
+        AimDirection(currentTarget);
+        TriggerShoot(currentTarget);
     }
 
     void OnAttackTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            enemiesInRange.Add(other.gameObject);
-            UpdateTarget();
-        }
+        if (!other.gameObject.CompareTag("Enemy")) return;
+        
+        enemiesInRange.Add(other.gameObject);
+        UpdateTarget();
     }
 
     void OnAttackTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy"))
-        {
-            enemiesInRange.Remove(other.gameObject);
-            UpdateTarget();
-        }
+        if (!other.gameObject.CompareTag("Enemy")) return;
+        
+        enemiesInRange.Remove(other.gameObject);
+        UpdateTarget();
     }
 
     private void UpdateTarget()
     {
-
-        if (currentTarget != null && enemiesInRange.Contains(currentTarget)) return;
-        if (enemiesInRange.Count > 0)
-            currentTarget = enemiesInRange.First();
-        else
-            currentTarget = null;
+        if (currentTarget && enemiesInRange.Contains(currentTarget)) return;
+        currentTarget = enemiesInRange.Count > 0 ? enemiesInRange.First() : null;
     }
 
     // public void AimDirection(GameObject currentTarget)
@@ -111,7 +102,7 @@ public class TurretAuto : ProjectileWeapon
         float turningSpeed = autoMode ? Time.deltaTime * _turningSpeed : float.MaxValue;
         Vector3 targetDirection = currentTarget.transform.position - _core.transform.position;
         ThrowData throwData = GetThrowData(firePoint.position, currentTarget);
-        if (throwMode)
+        if (shootMode == ShootMode.THROW)
             targetDirection = throwData.ThrowVelocity;
 
         //turn

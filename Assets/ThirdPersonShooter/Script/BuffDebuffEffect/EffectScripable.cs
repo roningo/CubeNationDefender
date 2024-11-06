@@ -6,6 +6,7 @@ using UnityEngine;
 public class EffectScripable : ScriptableObject
 {
     public String effectName;
+    [Tooltip("Set Tick Rate 0 for fix value effect")]
     public float tickRate;
     public float maxLifeTime;
 
@@ -53,6 +54,7 @@ public class EffectScripable : ScriptableObject
     public IEnumerator LifeTimeEffect()
     {
         durationTimer.Start();
+        //not yet 
         // while (durationTimer.IsRunning && durationTimer.Elapsed.Seconds < maxLifeTime)
         // {
         //     OverrideEffect();

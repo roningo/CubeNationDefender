@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 0}
-  _bullet: {fileID: 7091664260378054835, guid: 0567584b76f00d64c957f06963dcc0b5, type: 3}
+  _bullet: {fileID: 7091664260378054835, guid: be5070fe0e4b2204398a266f0f6083d4, type: 3}
   _fireForce: 10
   _upwardForce: 0
   _fireRate: 10

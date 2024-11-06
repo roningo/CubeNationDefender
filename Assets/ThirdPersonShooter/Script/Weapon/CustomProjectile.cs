@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class CustomProjectile : MonoBehaviour
 {
@@ -22,11 +23,19 @@ public class CustomProjectile : MonoBehaviour
     public int maxCollisions;
     public float maxLifetime;
     public bool explodeOnImpact = true;
+    public BulletMode bulletMode = BulletMode.IMPACT;
 
     private int collisions;
     private bool _triggered = false;
 
-    public EffectScripable effectScripable;
+    public EffectScripable effect;
+
+    public enum BulletMode
+    {       
+        IMPACT,
+        BOUNCE,
+        PENETRATE,
+    }
 
     void Start()
     {
@@ -69,7 +78,6 @@ public class CustomProjectile : MonoBehaviour
             {
                 //check enemies in explosionRange
                 Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, enemyLayer);
-
                 foreach (Collider e in enemies)
                 {
                     //get emnemies component to call damage
@@ -77,6 +85,7 @@ public class CustomProjectile : MonoBehaviour
                         health.ReceivedDamage(damage);
                     ProjectileEffect(e);
 
+                    //knockback
                     if (e.TryGetComponent<Rigidbody>(out Rigidbody erb))
                         erb.AddExplosionForce(explosionForce, transform.position, explosionRange);
                 }
@@ -88,9 +97,9 @@ public class CustomProjectile : MonoBehaviour
 
     private void ProjectileEffect(Collider other)
     {
-        if (other.gameObject.TryGetComponent<EffectSystem>(out EffectSystem effectSystem) && effectScripable)
+        if (other.gameObject.TryGetComponent<EffectSystem>(out EffectSystem effectSystem) && effect)
         {
-            EffectScripable currentEffect = effectScripable;
+            EffectScripable currentEffect = effect;
             effectSystem.AddEffect(currentEffect);
         }
     }
