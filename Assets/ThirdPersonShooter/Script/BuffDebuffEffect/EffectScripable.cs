@@ -6,8 +6,10 @@ using UnityEngine;
 public class EffectScripable : ScriptableObject
 {
     public String effectName;
+
     [Tooltip("Set Tick Rate 0 for fix value effect")]
     public float tickRate;
+
     public float maxLifeTime;
 
     [HideInInspector] public float lifeTimeLeft;
@@ -21,12 +23,7 @@ public class EffectScripable : ScriptableObject
         lifeTimeLeft = maxLifeTime;
         durationTimer.Reset();
         OverrideSetup();
-        if (tickRate != 0)
-            //if tick timing effect like damage overtime or heal over time 
-            mono.StartCoroutine(TickingEffect());
-        else
-            //if life time value effect
-            mono.StartCoroutine(LifeTimeEffect());
+        mono.StartCoroutine(tickRate != 0 ? TickingEffect() : LifeTimeEffect());
     }
 
     public void ResetEffect()
@@ -36,6 +33,7 @@ public class EffectScripable : ScriptableObject
         durationTimer.Start();
     }
 
+    //if tick timing effect like damage overtime or heal over time 
     public IEnumerator TickingEffect()
     {
         float timePerTick = 1 / tickRate;
@@ -47,10 +45,12 @@ public class EffectScripable : ScriptableObject
             OverrideEffect();
             yield return new WaitForSeconds(timePerTick);
         }
+
         durationTimer.Reset();
         yield break;
     }
 
+    //if life time value effect
     public IEnumerator LifeTimeEffect()
     {
         durationTimer.Start();
@@ -65,11 +65,12 @@ public class EffectScripable : ScriptableObject
     }
 
     // override this for setup effect
-    public virtual void OverrideSetup() { }
+    public virtual void OverrideSetup()
+    {
+    }
 
     // override this for effect action
-    public virtual void OverrideEffect() { }
+    public virtual void OverrideEffect()
+    {
+    }
 }
-
-
-

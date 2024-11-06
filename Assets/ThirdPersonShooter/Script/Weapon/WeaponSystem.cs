@@ -35,31 +35,32 @@ public class WeaponSystem : MonoBehaviour
 
     private void OnScroll()
     {
-        if (!_triggered)
+        if (_triggered) return;
+        _triggered = true;
+
+        int previousSelectedIndex = _selectedIndex;
+
+        float scroll = _inputManager.starterAssetsInputs.scroll.normalized.y;
+        switch (scroll)
         {
-            _triggered = true;
-
-            int previousSelectedIndex = _selectedIndex;
-
-            float scroll = _inputManager.starterAssetsInputs.scroll.normalized.y;
-            if (scroll > 0)
-            {
-                if (_selectedIndex >= _weaponList.Count - 1)
-                    _selectedIndex = 0;
-                else _selectedIndex++;
-            }
-            else if (scroll < 0)
-            {
-                if (_selectedIndex <= 0)
-                    _selectedIndex = _weaponList.Count - 1;
-                else _selectedIndex--;
-            }
-
-            if (previousSelectedIndex != _selectedIndex)
-                SelectedWeapon();
-
-            Invoke(nameof(ResetTrigger), 0.01f);
+            case > 0 when _selectedIndex >= _weaponList.Count - 1:
+                _selectedIndex = 0;
+                break;
+            case > 0:
+                _selectedIndex++;
+                break;
+            case < 0 when _selectedIndex <= 0:
+                _selectedIndex = _weaponList.Count - 1;
+                break;
+            case < 0:
+                _selectedIndex--;
+                break;
         }
+
+        if (previousSelectedIndex != _selectedIndex)
+            SelectedWeapon();
+
+        Invoke(nameof(ResetTrigger), 0.01f);
     }
 
     private void ResetTrigger()
@@ -78,7 +79,6 @@ public class WeaponSystem : MonoBehaviour
     {
         Destroy(_model);
         weapon.GetComponent<ProjectileWeapon>().inputManager = _inputManager;
-        _model = Instantiate(weapon);
-        _model.transform.SetParent(transform, false);
+        _model = Instantiate(weapon, transform, false);
     }
 }

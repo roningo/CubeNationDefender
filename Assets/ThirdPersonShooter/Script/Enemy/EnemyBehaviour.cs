@@ -32,18 +32,14 @@ public class EnemyBehaviour : MonoBehaviour
         {
             foreach (Collider collapseObject in _targetList)
             {
-                if (collapseObject != null && collapseObject.gameObject.CompareTag("Player"))
-                {
-                    NavMeshPath path = new();
-                    _currentTarget = collapseObject.gameObject.transform;
-                    if (_ai.CalculatePath(_currentTarget.gameObject.transform.position, path) && path.status == NavMeshPathStatus.PathComplete)
-                        SetDestination();
-                    else
-                    {
-                        _currentTarget = homeDestination;
-                        SetDestination();
-                    }
-                }
+                if (!collapseObject || !collapseObject.gameObject.CompareTag("Player")) continue;
+
+                NavMeshPath path = new();
+                _currentTarget = collapseObject.gameObject.transform;
+                _ai.CalculatePath(_currentTarget.gameObject.transform.position, path);
+                if (path.status != NavMeshPathStatus.PathComplete)
+                    _currentTarget = homeDestination;
+                SetDestination();
             }
         }
         else if (_currentTarget != homeDestination)
@@ -67,4 +63,3 @@ public class EnemyBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position + transform.forward, 1);
     }
 }
-

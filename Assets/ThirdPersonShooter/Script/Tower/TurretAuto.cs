@@ -32,8 +32,8 @@ public class TurretAuto : ProjectileWeapon
         Transform rangeFind = this.gameObject.transform.Find("Range");
         if (rangeFind && rangeFind.TryGetComponent<SphereCollider>(out SphereCollider sphereResult))
             sphereResult.radius = _fireRange;
-        _fireAnimate = GetComponent<Animator>();
-        _hasAnimator = TryGetComponent(out _fireAnimate);
+        // _fireAnimate = GetComponent<Animator>();
+        _hasAnimator = TryGetComponent<Animator>(out _fireAnimate);
     }
 
     // Update is called once per frame

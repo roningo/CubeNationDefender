@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class ProjectileWeapon : MonoBehaviour
 {
@@ -44,9 +43,11 @@ public class ProjectileWeapon : MonoBehaviour
 
     [Range(0, 1)]
     [Tooltip("Using a values closer to 0 will make the agent throw with the lower force"
-        + "down to the least possible force (highest angle) to reach the target.\n"
-        + "Using a value of 1 the agent will always throw with the MaxThrowForce below.")]
-    [SerializeField] private float _forceRatio = 0;
+             + "down to the least possible force (highest angle) to reach the target.\n"
+             + "Using a value of 1 the agent will always throw with the MaxThrowForce below.")]
+    [SerializeField]
+    private float _forceRatio = 0;
+
     public bool isMovementPrediction;
 
     //
@@ -85,17 +86,15 @@ public class ProjectileWeapon : MonoBehaviour
         if (!_allowHold) inputManager.starterAssetsInputs.shoot = false;
 
         //shooting
-        if (_readyToShoot && !_reloading && _bulletsLeft > 0)
-        {
-            //set bullet shoot to 0
-            _bulletShoot = 0;
+        if (!_readyToShoot || _reloading || _bulletsLeft <= 0) return;
 
-            fireAnimate?.Invoke();
-            Shoot(targetObject);
+        //set bullet shoot to 0
+        _bulletShoot = 0;
 
-            CheckReload();
+        fireAnimate?.Invoke();
+        Shoot(targetObject);
 
-        }
+        CheckReload();
     }
 
     private void Shoot(GameObject targetObject)
@@ -106,14 +105,19 @@ public class ProjectileWeapon : MonoBehaviour
         //spawn bullet
         GameObject currentBullet = Instantiate(_bullet, firePoint.position, Quaternion.identity);
 
-        if (shootMode == ShootMode.DIRECT)
-            DirectShoot(currentBullet, targetObject);
-        else if (shootMode == ShootMode.THROW)
-            ThrowShoot(currentBullet, targetObject);
+        switch (shootMode)
+        {
+            case ShootMode.DIRECT:
+                DirectShoot(currentBullet, targetObject);
+                break;
+            case ShootMode.THROW:
+                ThrowShoot(currentBullet, targetObject);
+                break;
+        }
 
 
         //effect
-        if (_fireEffect != null)
+        if (_fireEffect)
             Instantiate(_fireEffect, firePoint.position, Quaternion.identity);
 
         //invoke reset
@@ -137,7 +141,6 @@ public class ProjectileWeapon : MonoBehaviour
                 Shoot(targetObject);
             else
                 this.Wait(_timeBetweenBrust, () => Shoot(targetObject));
-
         }
     }
 
@@ -155,7 +158,6 @@ public class ProjectileWeapon : MonoBehaviour
 
         //auto reload
         if (_bulletsLeft <= 0 && !_reloading) Reload();
-
     }
 
     private void Reload()
@@ -169,10 +171,6 @@ public class ProjectileWeapon : MonoBehaviour
         _bulletsLeft = _magazineSize;
         _reloading = false;
     }
-
-
-
-
 
 
     public void DirectShoot(GameObject currentBullet, GameObject targetObject)
@@ -224,8 +222,6 @@ public class ProjectileWeapon : MonoBehaviour
         else
             Debug.LogError("Projectile Rigidbody not found");
     }
-
-
 
 
     public void ThrowShoot(GameObject currentBullet, GameObject targetObject)
@@ -315,7 +311,7 @@ public class ProjectileWeapon : MonoBehaviour
             Mathf.Sqrt(
                 gravity
                 * (deltaY + Mathf.Sqrt(Mathf.Pow(deltaY, 2)
-                + Mathf.Pow(deltaXZ, 2)))),
+                                       + Mathf.Pow(deltaXZ, 2)))),
             0.01f,
             _fireForce
         );
@@ -336,7 +332,7 @@ public class ProjectileWeapon : MonoBehaviour
                 (Mathf.Pow(throwStrength, 2) + Mathf.Sqrt( //or this: (Mathf.Pow(throwStrength, 2) - Mathf.Sqrt(
                     Mathf.Pow(throwStrength, 4) - gravity
                     * (gravity * Mathf.Pow(deltaXZ, 2)
-                    + 2 * deltaY * Mathf.Pow(throwStrength, 2)))
+                       + 2 * deltaY * Mathf.Pow(throwStrength, 2)))
                 ) / (gravity * deltaXZ)
             );
         }

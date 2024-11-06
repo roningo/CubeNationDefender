@@ -39,36 +39,34 @@ public class InteractSystem : MonoBehaviour
     {
         _inputManager.starterAssetsInputs.interact = false;
 
-        if (_interactableCount > 0)
+        if (_interactableCount <= 0) return;
+        
+        foreach (Collider collapseObject in _interactableList)
         {
-            foreach (Collider collapseObject in _interactableList)
-            {
-                if (collapseObject != null && collapseObject.gameObject.CompareTag("Tower"))
-                {
-                    _placementSystem.GetComponent<PlacementSystem>().StopPlacement();
+            if (collapseObject == null || !collapseObject.gameObject.CompareTag("Tower")) continue;
+            
+            _placementSystem.GetComponent<PlacementSystem>().StopPlacement();
 
-                    //camera toggle
-                    Transform towerRoot = collapseObject.transform.Find("TowerCameraRoot");
-                    _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
-                    _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
-                    _towerVirtualCamera.gameObject.SetActive(true);
-                    // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
+            //camera toggle
+            Transform towerRoot = collapseObject.transform.Find("TowerCameraRoot");
+            _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
+            _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
+            _towerVirtualCamera.gameObject.SetActive(true);
+            // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
 
-                    //self toggle
-                    _playerInputs.enabled = false;
-                    GetComponentInParent<ThirdPersonShooterController>().enabled = false;
+            //self toggle
+            _playerInputs.enabled = false;
+            GetComponentInParent<ThirdPersonShooterController>().enabled = false;
 
-                    //Hit object toggle
-                    collapseObject.GetComponent<TurretAuto>().autoMode = false;
-                    collapseObject.GetComponent<TowerController>().enabled = true;
-                    collapseObject.GetComponent<PlayerInput>().enabled = true;
-                    collapseObject.GetComponent<TowerShooterController>().enabled = true;
+            //Hit object toggle
+            collapseObject.GetComponent<TurretAuto>().autoMode = false;
+            collapseObject.GetComponent<TowerController>().enabled = true;
+            collapseObject.GetComponent<PlayerInput>().enabled = true;
+            collapseObject.GetComponent<TowerShooterController>().enabled = true;
 
-                    this.gameObject.transform.parent.gameObject.SetActive(false); //hide self
+            this.gameObject.transform.parent.gameObject.SetActive(false); //hide self
 
-                    return;
-                }
-            }
+            break;
         }
     }
 }

@@ -11,6 +11,12 @@ public class InputManager : MonoBehaviour
     [SerializeField] private LayerMask _aimColliderLayerMask = new LayerMask();
 
     public UnityEvent OnShoot, OnScroll, OnInteract, OnExit;
+    private Camera _camera;
+
+    private void Start()
+    {
+        _camera = Camera.main;
+    }
 
     private void Awake()
     {
@@ -23,14 +29,17 @@ public class InputManager : MonoBehaviour
         {
             OnShoot?.Invoke();
         }
+
         if (starterAssetsInputs.scroll != Vector2.zero)
         {
             OnScroll?.Invoke();
         }
+
         if (starterAssetsInputs.interact)
         {
             OnInteract?.Invoke();
         }
+
         if (starterAssetsInputs.alpha0)
         {
             OnExit?.Invoke();
@@ -49,17 +58,18 @@ public class InputManager : MonoBehaviour
         return mouseIndicator;
     }
 
-    private void FindMouseWord() {
+    private void FindMouseWord()
+    {
         Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
-        Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+        if (!_camera) return;
+        Ray ray = _camera.ScreenPointToRay(screenCenterPoint);
 
         Vector3 targetPoint;
-        if (Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _aimColliderLayerMask))
-            targetPoint = raycastHit.point;
-        else
-            targetPoint = ray.GetPoint(100);
+        targetPoint = Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _aimColliderLayerMask)
+            ? raycastHit.point
+            : ray.GetPoint(100);
 
-        if (mouseIndicator != null)
+        if (mouseIndicator)
             mouseIndicator.transform.position = targetPoint;
     }
 

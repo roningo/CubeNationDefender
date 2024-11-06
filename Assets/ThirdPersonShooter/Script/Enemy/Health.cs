@@ -1,7 +1,6 @@
 using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
@@ -24,28 +23,24 @@ public class Health : MonoBehaviour
 
     public void ReceivedDamage(float damage)
     {
-        if (damage > 0)
-        {
-            _currentHealth -= damage;
-            ChangeHealthBar($"-{damage.ToString()}");
+        if (damage <= 0) return;
 
-            if (_currentHealth <= 0)
-                OnDeath();
-        }
+        _currentHealth -= damage;
+        ChangeHealthBar($"-{damage.ToString()}");
+
+        if (_currentHealth <= 0)
+            OnDeath();
     }
 
     public void ReceivedHealing(float heal)
     {
-        if (heal > 0)
-        {
-            _maxHealth += heal;
-            ChangeHealthBar($"+{heal.ToString()}");
+        if (heal <= 0) return;
 
-            if (_currentHealth >= _maxHealth)
-            {
-                _currentHealth = _maxHealth;
-            }
-        }
+        _maxHealth += heal;
+        ChangeHealthBar($"+{heal.ToString()}");
+
+        if (_currentHealth >= _maxHealth)
+            _currentHealth = _maxHealth;
     }
 
     private void OnDeath()
@@ -76,19 +71,17 @@ public class Health : MonoBehaviour
     private void ChangeHealthBar(String showText)
     {
         foreach (ProgressBar pb in _healthBar)
-        {
             pb.SetProgress(_currentHealth / _maxHealth);
-        }
+
         ShowFloatingText(showText);
     }
 
     private void ShowFloatingText(String showText)
     {
-        if (_floatingText)
-        {
-            GameObject text = Instantiate(_floatingText.gameObject, transform.position, Quaternion.identity);
-            text.GetComponent<TextMeshPro>().text = showText;
-            text.transform.LookAt(_faceCamera.transform, Vector3.up);
-        }
+        if (!_floatingText) return;
+
+        GameObject text = Instantiate(_floatingText.gameObject, transform.position, Quaternion.identity);
+        text.GetComponent<TextMeshPro>().text = showText;
+        text.transform.LookAt(_faceCamera.transform, Vector3.up);
     }
 }

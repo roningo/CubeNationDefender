@@ -8,16 +8,15 @@ public class EffectSystem : MonoBehaviour
 
     private void Update()
     {
+        if (!effectList.Any(e => e.lifeTimeLeft <= 0)) return; 
+        
         //remove outdated effect
-        if (effectList.Any(e => e.lifeTimeLeft <= 0))
+        List<EffectScripable> removeList = effectList.FindAll(e => e.lifeTimeLeft <= 0);
+        foreach (EffectScripable removeEffect in removeList)
         {
-            List<EffectScripable> removeList = effectList.FindAll(e => e.lifeTimeLeft <= 0);
-            foreach (EffectScripable removeEffect in removeList)
-            {
-                //need to destroy just in case
-                Destroy(removeEffect);
-                effectList.Remove(removeEffect);
-            }
+            //need to destroy just in case
+            Destroy(removeEffect);
+            effectList.Remove(removeEffect);
         }
     }
 
@@ -47,7 +46,7 @@ public class EffectSystem : MonoBehaviour
             EffectScripable e = effectList.Find(e => e.name.CompareTo(newEffect.name) == 0);
             return effectList.IndexOf(e);
         }
+
         return -1;
     }
 }
-

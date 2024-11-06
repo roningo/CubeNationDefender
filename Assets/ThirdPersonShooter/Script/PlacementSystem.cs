@@ -49,20 +49,20 @@ public class PlacementSystem : MonoBehaviour
         else if (starterAssetsInputs.alpha7) StartPlacement(6);
 
         if (_selectedTowerIndex < 0) return;
+        
         Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
         Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
         Vector3 cellPosition = _grid.CellToWorld(gridPosition);
         Vector3 cellIndicatorPosition = new Vector3(cellPosition.x, mousePosition.y, cellPosition.z);
 
 
-        if (_lastDetectedPosition != gridPosition)
-        {
-            bool placementValidity = CheckPlacementValidity(gridPosition, _selectedTowerIndex);
+        if (_lastDetectedPosition == gridPosition) return;
+        
+        bool placementValidity = CheckPlacementValidity(gridPosition, _selectedTowerIndex);
 
-            _placementReview.UpdatePosition(cellIndicatorPosition, placementValidity);
+        _placementReview.UpdatePosition(cellIndicatorPosition, placementValidity);
 
-            _lastDetectedPosition = gridPosition;
-        }
+        _lastDetectedPosition = gridPosition;
     }
 
     private void StartPlacement(int ID)

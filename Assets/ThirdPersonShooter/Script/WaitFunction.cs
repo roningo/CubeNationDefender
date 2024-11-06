@@ -11,9 +11,7 @@ public static class WaitFunction
 
     private static IEnumerator InvokeAction(float delay, Action action)
     {
-        if (delay >= 0)
-            yield return new WaitForSeconds(delay);
+        if (delay >= 0) yield return new WaitForSeconds(delay);
         action?.Invoke();
     }
 }
-

@@ -7,11 +7,11 @@ public class GridData : MonoBehaviour
     Dictionary<Vector3Int, PlacementData> placedObject = new();
     
     public void AddObjectAt(Vector3Int gridPosition,
-                            int ID,
+                            int id,
                             int placedObjectIndex)
     {
         List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition);
-        PlacementData data = new PlacementData(positionToOccupy, ID, placedObjectIndex);
+        PlacementData data = new PlacementData(positionToOccupy, id, placedObjectIndex);
         foreach(var pos in positionToOccupy) 
         {
             if(placedObject.ContainsKey(pos))
@@ -41,13 +41,13 @@ public class GridData : MonoBehaviour
 
 public class PlacementData
 {
-    public List<Vector3Int> occupiedPosition;
+    public List<Vector3Int> OccupiedPosition;
     public int ID { get; private set; }
     public int PlacedOnjectIndex { get; private set; }
 
     public PlacementData(List<Vector3Int> occupiedPosition, int iD, int placedOnjectIndex)
         {
-            this.occupiedPosition = occupiedPosition;
+            OccupiedPosition = occupiedPosition;
             ID = iD;
             PlacedOnjectIndex = placedOnjectIndex;
         }

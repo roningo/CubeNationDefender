@@ -23,7 +23,7 @@ public class PlacementReview : MonoBehaviour
         _previewObject = Instantiate(prefab);
         foreach (Collider collider in _previewObject.GetComponentsInChildren<Collider>())
         {
-            if (collider != null)
+            if (collider)
                 collider.enabled = false;
         }
         PreparePreview(_previewObject);

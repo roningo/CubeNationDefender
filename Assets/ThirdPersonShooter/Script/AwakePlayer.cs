@@ -14,8 +14,7 @@ public class AwakePlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!_thirdPersonShooterController.enabled) {
+        if (!_thirdPersonShooterController.enabled)
             _thirdPersonShooterController.enabled = true;
-        } 
     }
 }
