@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2799662604827662017}
   - component: {fileID: 4321953920248020015}
   - component: {fileID: 5861493280875973617}
-  - component: {fileID: -8176535510894373192}
+  - component: {fileID: 5707854361131383195}
   m_Layer: 15
   m_Name: RocketProjectilePf
   m_TagString: Projectile
@@ -241,7 +241,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &-8176535510894373192
+--- !u!114 &5707854361131383195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -250,10 +250,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1954257580130986123}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd8bd1ce178d8a4ba4f43fe27a07c49, type: 3}
+  m_Script: {fileID: 11500000, guid: d4dd99428b8ad17408d0b3426f198b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 4321953920248020015}
+  rigidbody: {fileID: 4321953920248020015}
   explosion: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
@@ -265,4 +265,5 @@ MonoBehaviour:
   explosionForce: 5
   maxCollisions: 0
   maxLifetime: 2
-  explodeOnImpact: 1
+  projectileMode: 0
+  effect: {fileID: 0}

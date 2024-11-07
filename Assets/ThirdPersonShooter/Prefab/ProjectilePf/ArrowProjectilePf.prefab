@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6714098446431707514}
   - component: {fileID: -6500981908192444549}
   - component: {fileID: -7519641272414758514}
-  - component: {fileID: -3331751364198329884}
+  - component: {fileID: -7087242202263983161}
   m_Layer: 15
   m_Name: ArrowProjectilePf
   m_TagString: Projectile
@@ -243,7 +243,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &-3331751364198329884
+--- !u!114 &-7087242202263983161
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -252,10 +252,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2143931553402575989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd8bd1ce178d8a4ba4f43fe27a07c49, type: 3}
+  m_Script: {fileID: 11500000, guid: d4dd99428b8ad17408d0b3426f198b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: -6500981908192444549}
+  rigidbody: {fileID: -6500981908192444549}
   explosion: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
@@ -267,7 +267,8 @@ MonoBehaviour:
   explosionForce: 0
   maxCollisions: 0
   maxLifetime: 2
-  explodeOnImpact: 1
+  projectileMode: 0
+  effect: {fileID: 0}
 --- !u!1 &3718367215155022463
 GameObject:
   m_ObjectHideFlags: 0

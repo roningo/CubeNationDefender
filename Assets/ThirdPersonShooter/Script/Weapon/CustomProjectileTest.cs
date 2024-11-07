@@ -1,11 +1,11 @@
 using System.Diagnostics;
 using UnityEngine;
-using Debug = UnityEngine.Debug;
 
+[RequireComponent(typeof(Collider))]
 public class CustomProjectileTest : MonoBehaviour
 {
     //assignable
-    public Rigidbody rb;
+    public new Rigidbody rigidbody;
     public GameObject explosion;
     public LayerMask enemyLayer;
 
@@ -43,6 +43,10 @@ public class CustomProjectileTest : MonoBehaviour
         Penetrate,
     }
 
+    private Vector3 _lastPosition;
+    private Vector3 _lastVelocity;
+    private Vector3 _lastAngularVelocity;
+
     private void Start()
     {
         if (TryGetComponent<TrailRenderer>(out TrailRenderer trailRenderer))
@@ -63,12 +67,8 @@ public class CustomProjectileTest : MonoBehaviour
         //assign to collider
         GetComponent<Collider>().material = physicMat;
 
-        if (projectileMode == ProjectileMode.Penetrate)
-            if (TryGetComponent<Collider>(out Collider selfCollider))
-                selfCollider.isTrigger = true;
-
         //set gravity
-        rb.useGravity = useGravity;
+        rigidbody.useGravity = useGravity;
 
         //set Timer
         _durationTimer.Start();
@@ -76,8 +76,16 @@ public class CustomProjectileTest : MonoBehaviour
 
     private void Update()
     {
-        transform.forward = rb.velocity;
+        transform.forward = rigidbody.velocity;
+        if (projectileMode == ProjectileMode.Penetrate) FixedUpdate();
         if (CheckReadyToDamaged()) DamageDeal(_impactCollision);
+    }
+
+    private void FixedUpdate()
+    {
+        _lastPosition = transform.position;
+        _lastVelocity = rigidbody.velocity;
+        _lastAngularVelocity = rigidbody.angularVelocity;
     }
 
     private bool CheckReadyToDamaged()
@@ -94,6 +102,10 @@ public class CustomProjectileTest : MonoBehaviour
         if (_triggered) return;
         _triggered = true;
         _impactCollision = null;
+
+        bool canDestroy = !(projectileMode == ProjectileMode.Penetrate
+                            && other
+                            && other.CompareTag("Enemy"));
 
         //instantiate explode
         if (explosion) Instantiate(explosion, transform.position, Quaternion.identity);
@@ -121,7 +133,7 @@ public class CustomProjectileTest : MonoBehaviour
             }
         }
 
-        Invoke(nameof(DelayDestroy), float.MinValue);
+        DestroyProjectile(canDestroy);
     }
 
     private void ProjectileEffect(Collider other)
@@ -132,21 +144,33 @@ public class CustomProjectileTest : MonoBehaviour
         effectSystem.AddEffect(currentEffect);
     }
 
-    private void DelayDestroy()
+    private void DestroyProjectile(bool canDestroy = true)
     {
         _triggered = false;
-        if (projectileMode != ProjectileMode.Penetrate
-        || _isOutOfTime)
+        if (canDestroy)
             Destroy(gameObject);
     }
 
     private void OnCollisionEnter(Collision other)
     {
+        Collider otherCollider = other.collider;
+
+        if (projectileMode == ProjectileMode.Penetrate && otherCollider.CompareTag("Enemy"))
+            IgnoreColliderCheck(otherCollider);
+
         if (!_impactCollision)
-            _impactCollision = other.collider;
+            _impactCollision = otherCollider;
 
         if (other.collider.CompareTag("Enemy"))
             _collisions++; //count collisions
+    }
+
+    private void IgnoreColliderCheck(Collider other)
+    {
+        transform.position = _lastPosition;
+        rigidbody.velocity = _lastVelocity;
+        rigidbody.angularVelocity = _lastAngularVelocity;
+        Physics.IgnoreCollision(transform.GetComponent<Collider>(), other);
     }
 
     private void OnDrawGizmosSelected()

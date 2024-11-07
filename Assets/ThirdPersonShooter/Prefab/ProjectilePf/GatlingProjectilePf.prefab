@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7984573487813798844}
   - component: {fileID: 6602070945693711335}
   - component: {fileID: 2696951975975143890}
-  - component: {fileID: -625802343946847077}
+  - component: {fileID: -1923140635965110462}
   m_Layer: 15
   m_Name: GatlingProjectilePf
   m_TagString: Projectile
@@ -239,7 +239,7 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
---- !u!114 &-625802343946847077
+--- !u!114 &-1923140635965110462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -248,10 +248,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 7091664260378054835}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd8bd1ce178d8a4ba4f43fe27a07c49, type: 3}
+  m_Script: {fileID: 11500000, guid: d4dd99428b8ad17408d0b3426f198b4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rb: {fileID: 6602070945693711335}
+  rigidbody: {fileID: 6602070945693711335}
   explosion: {fileID: 0}
   enemyLayer:
     serializedVersion: 2
@@ -263,5 +263,5 @@ MonoBehaviour:
   explosionForce: 0
   maxCollisions: 0
   maxLifetime: 2
-  explodeOnImpact: 1
-  effectScripable: {fileID: 0}
+  projectileMode: 0
+  effect: {fileID: 0}
