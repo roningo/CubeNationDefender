@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.Serialization;
 
 public class ProjectileWeapon : MonoBehaviour
 {
@@ -100,7 +99,6 @@ public class ProjectileWeapon : MonoBehaviour
 
     private void Shoot(GameObject targetObject)
     {
-        Vector3 targetPosition = targetObject.transform.position;
         _readyToShoot = false;
 
         //spawn bullet
@@ -172,35 +170,48 @@ public class ProjectileWeapon : MonoBehaviour
         _bulletsLeft = _magazineSize;
         _reloading = false;
     }
-
-
+    
     public void DirectShoot(GameObject currentBullet, GameObject targetObject)
     {
-        Vector3 targetPosition = targetObject.transform.position;
-        //caculate direction
-        Vector3 directionWithoutSpread = targetPosition - firePoint.position;
-
-        if (isMovementPrediction)
-            directionWithoutSpread = PredictedShootData(directionWithoutSpread, targetObject);
-
         //caculate spread
         float x = UnityEngine.Random.Range(-_spread, _spread);
         float y = UnityEngine.Random.Range(-_spread, _spread);
         float z = UnityEngine.Random.Range(-_spread, _spread);
 
-        //caculate direction
-        Vector3 directionWithSpread = directionWithoutSpread.normalized + new Vector3(x, y, z);
-
+        // caculate direction
+        Vector3 shootData = GetShootData(firePoint.position, targetObject);
+        Vector3 directionWithSpread = shootData.normalized + new Vector3(x, y, z);
         Vector3 bulletVelocity = directionWithSpread.normalized * _fireForce + firePoint.up * _upwardForce;
+        
         Shoot(bulletVelocity, currentBullet);
+    }
+    
+    protected Vector3 GetShootData(Vector3 firePoint, GameObject targetObject)
+    {
+        Vector3 aimPosition = ObjectPositionFunction.GetCenterOrPosition(targetObject);
+
+        //caculate direction
+        Vector3 directionWithoutSpread = aimPosition - firePoint;
+
+        if (isMovementPrediction)
+            directionWithoutSpread = PredictedShootData(directionWithoutSpread.normalized, targetObject);
+
+        return directionWithoutSpread;
     }
 
     private Vector3 PredictedShootData(Vector3 directShootData, GameObject targetObject)
     {
+        Vector3 aimPosition = ObjectPositionFunction.GetCenterOrPosition(targetObject);
+
         Vector3 shootVelocity = directShootData * _fireForce;
         shootVelocity.y = 0;
-        Vector3 targetPosition = targetObject.transform.position;
-        Vector3 displacement = targetPosition - firePoint.position;
+        Vector3 targetPosition = aimPosition;
+        Vector3 displacement = new Vector3(
+            targetPosition.x,
+            firePoint.position.y,
+            targetPosition.z
+        ) - firePoint.position;
+        // Vector3 displacement = targetPosition - firePoint.position;
         float time = displacement.magnitude / shootVelocity.magnitude;
         Vector3 targetMovement = new();
 
@@ -212,14 +223,19 @@ public class ProjectileWeapon : MonoBehaviour
             targetPosition.y + targetMovement.y,
             targetPosition.z + targetMovement.z
         );
+        
+        Vector3 newShootVelocity = Vector3.ClampMagnitude(
+            newTargetPosition - firePoint.position,
+            _fireForce
+        );
 
-        return newTargetPosition - firePoint.position;
+        return newShootVelocity;
     }
 
     private void Shoot(Vector3 bulletVelocity, GameObject currentBullet)
     {
-        if (currentBullet.TryGetComponent<Rigidbody>(out Rigidbody rb))
-            rb.AddForce(bulletVelocity, ForceMode.Impulse);
+        if (currentBullet.TryGetComponent<Rigidbody>(out Rigidbody bulletRigidbody))
+            bulletRigidbody.AddForce(bulletVelocity, ForceMode.Impulse);
         else
             Debug.LogError("Projectile Rigidbody not found");
     }
@@ -235,8 +251,10 @@ public class ProjectileWeapon : MonoBehaviour
 
     protected ThrowData GetThrowData(Vector3 firePoint, GameObject targetObject)
     {
+        Vector3 aimPosition = ObjectPositionFunction.GetCenterOrPosition(targetObject);
+        
         ThrowData throwData = CalculateThrowData(
-            targetObject.transform.position,
+            aimPosition,
             firePoint
         );
 
@@ -248,10 +266,12 @@ public class ProjectileWeapon : MonoBehaviour
 
     private ThrowData PredictedThrowData(ThrowData directThrowData, GameObject targetObject)
     {
+        Vector3 aimPosition = ObjectPositionFunction.GetCenterOrPosition(targetObject);
+        
         Vector3 throwVelocity = directThrowData.ThrowVelocity;
         throwVelocity.y = 0;
+        Vector3 targetPosition = aimPosition;
         float time = directThrowData.DeltaXZ / throwVelocity.magnitude;
-        Vector3 targetPosition = targetObject.transform.position;
         Vector3 targetMovement = new();
 
         if (targetObject.TryGetComponent<NavMeshAgent>(out NavMeshAgent targetAgent))
@@ -277,9 +297,9 @@ public class ProjectileWeapon : MonoBehaviour
         return predictiveThrowData;
     }
 
-    private void Throw(Vector3 bulletVelocity, GameObject currentBullet)
+    private void Throw(Vector3 bulletVelocity, GameObject bulletObject)
     {
-        if (currentBullet.TryGetComponent<Rigidbody>(out Rigidbody rb))
+        if (bulletObject.TryGetComponent<Rigidbody>(out Rigidbody rb))
         {
             rb.useGravity = true;
             rb.isKinematic = false;

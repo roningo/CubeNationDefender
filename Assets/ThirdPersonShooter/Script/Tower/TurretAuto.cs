@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class TurretAuto : ProjectileWeapon
 {
-    [Header("Turret stats")]
-
-    public CustomTrigger attackRageTrigger;
+    [Header("Turret stats")] public CustomTrigger attackRageTrigger;
 
     [SerializeField] private GameObject _core, _barrel;
     [SerializeField] private float _turningSpeed = 20f;
@@ -40,7 +38,7 @@ public class TurretAuto : ProjectileWeapon
     private void Update()
     {
         if (!autoMode) return;
-        
+
         if (enemiesInRange.Any(e => !e))
         {
             enemiesInRange.RemoveAll(e => !e);
@@ -48,7 +46,7 @@ public class TurretAuto : ProjectileWeapon
         }
 
         if (!currentTarget) return;
-        
+
         AimDirection(currentTarget);
         TriggerShoot(currentTarget);
     }
@@ -56,7 +54,7 @@ public class TurretAuto : ProjectileWeapon
     private void OnAttackTriggerEnter(Collider other)
     {
         if (!other.gameObject.CompareTag("Enemy")) return;
-        
+
         enemiesInRange.Add(other.gameObject);
         UpdateTarget();
     }
@@ -64,7 +62,7 @@ public class TurretAuto : ProjectileWeapon
     private void OnAttackTriggerExit(Collider other)
     {
         if (!other.gameObject.CompareTag("Enemy")) return;
-        
+
         enemiesInRange.Remove(other.gameObject);
         UpdateTarget();
     }
@@ -97,22 +95,33 @@ public class TurretAuto : ProjectileWeapon
     //     _core.transform.rotation = Quaternion.Slerp(_core.transform.rotation, Quaternion.LookRotation(aimAt - _core.transform.position), turningSpeed);
     // }
 
-    public void AimDirection(GameObject currentTarget)
+    public void AimDirection(GameObject targetObject)
     {
+        // Vector3 aimPosition = ObjectPositionFunction.GetCenterOrPosition(targetObject);
+
         float turningSpeed = autoMode ? Time.deltaTime * _turningSpeed : float.MaxValue;
-        Vector3 targetDirection = currentTarget.transform.position - _core.transform.position;
-        ThrowData throwData = GetThrowData(firePoint.position, currentTarget);
-        if (shootMode == ShootMode.Throw)
-            targetDirection = throwData.ThrowVelocity;
+        Vector3 targetDirection = new();
+        switch (shootMode)
+        {
+            case ShootMode.Throw:
+                ThrowData throwData = GetThrowData(firePoint.position, targetObject);
+                targetDirection = throwData.ThrowVelocity;
+                break;
+            case ShootMode.Direct:
+                Vector3 shootData = GetShootData(firePoint.position, targetObject);
+                targetDirection = shootData;
+                break;
+        }
 
         //turn
         Vector3 projectedToCore = Vector3.ProjectOnPlane(targetDirection, _core.transform.up);
-        _core.transform.rotation = Quaternion.Slerp(_core.transform.rotation, Quaternion.LookRotation(projectedToCore), turningSpeed);
+        _core.transform.rotation = Quaternion.Slerp(_core.transform.rotation, Quaternion.LookRotation(projectedToCore),
+            turningSpeed);
 
         //up down
         Vector3 projectedToBarrel = Vector3.ProjectOnPlane(targetDirection, -_barrel.transform.right);
-        _barrel.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation, Quaternion.LookRotation(projectedToBarrel), turningSpeed);
-
+        _barrel.transform.rotation = Quaternion.Slerp(_barrel.transform.rotation,
+            Quaternion.LookRotation(projectedToBarrel), turningSpeed);
     }
 
     public void TriggerShoot(GameObject targetObject)

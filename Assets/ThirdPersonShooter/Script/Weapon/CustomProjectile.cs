@@ -1,17 +1,16 @@
-using System;
+using System.Diagnostics;
 using UnityEngine;
-using UnityEngine.Serialization;
 
+[RequireComponent(typeof(Collider))]
 public class CustomProjectile : MonoBehaviour
 {
     //assignable
-    public Rigidbody rb;
+    public new Rigidbody rigidbody;
     public GameObject explosion;
     public LayerMask enemyLayer;
 
     //stats
-    [Range(0f, 1f)]
-    public float bounciness;
+    [Range(0f, 1f)] public float bounciness;
     public bool useGravity;
 
     //damage
@@ -22,20 +21,31 @@ public class CustomProjectile : MonoBehaviour
     //Lifetime  
     public int maxCollisions;
     public float maxLifetime;
-    public bool explodeOnImpact = true;
-    public BulletMode bulletMode = BulletMode.IMPACT;
+    public ProjectileMode projectileMode = ProjectileMode.Impact;
 
-    private int collisions;
-    private bool _triggered = false;
+    private int _collisions;
+    private bool _triggered;
 
     public EffectScripable effect;
 
-    public enum BulletMode
-    {       
-        IMPACT,
-        BOUNCE,
-        PENETRATE,
+    private Collider _impactCollision;
+
+    private bool _isImpact;
+    private bool _isCollisionMax;
+    private bool _isOutOfTime;
+
+    private readonly Stopwatch _durationTimer = new();
+
+    public enum ProjectileMode
+    {
+        Impact,
+        Bounce,
+        Penetrate,
     }
+
+    private Vector3 _lastPosition;
+    private Vector3 _lastVelocity;
+    private Vector3 _lastAngularVelocity;
 
     private void Start()
     {
@@ -45,81 +55,9 @@ public class CustomProjectile : MonoBehaviour
             trailRenderer.startWidth = 0.05f; //spawn width
             trailRenderer.endWidth = 0f; //end width
         }
-        Setup();
-    }
 
-    private void Update()
-    {
-        transform.forward = rb.velocity;
-        //collisions up to explode
-        if (maxCollisions != 0 && collisions >= maxCollisions) DamageDeal();
-
-        //count down lifetime
-        maxLifetime -= Time.deltaTime;
-        if (maxLifetime <= 0) DamageDeal();
-    }
-
-    private void DamageDeal(Collision other = null)
-    {
-        if (!_triggered)
-        {
-            _triggered = true;
-
-            //instantiate explode
-            if (explosion) Instantiate(explosion, transform.position, Quaternion.identity);
-
-            if (other != null && explosionRange <= 0) //hit-type projectile
-            {
-                if (other.gameObject.TryGetComponent<Health>(out Health health))
-                    health.ReceivedDamage(damage);
-                ProjectileEffect(other.collider);
-            }
-            else //explode-type projectile
-            {
-                //check enemies in explosionRange
-                Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, enemyLayer);
-                foreach (Collider e in enemies)
-                {
-                    //get emnemies component to call damage
-                    if (e.TryGetComponent<Health>(out Health health))
-                        health.ReceivedDamage(damage);
-                    ProjectileEffect(e);
-
-                    //knockback
-                    if (e.TryGetComponent<Rigidbody>(out Rigidbody erb))
-                        erb.AddExplosionForce(explosionForce, transform.position, explosionRange);
-                }
-            }
-
-            Invoke(nameof(DelayDestroy), float.MinValue);
-        }
-    }
-
-    private void ProjectileEffect(Collider other)
-    {
-        if (other.gameObject.TryGetComponent<EffectSystem>(out EffectSystem effectSystem) && effect)
-        {
-            EffectScripable currentEffect = effect;
-            effectSystem.AddEffect(currentEffect);
-        }
-    }
-
-    private void DelayDestroy()
-    {
-        Destroy(gameObject);
-    }
-
-    void OnCollisionEnter(Collision other)
-    {
-        if (explodeOnImpact) DamageDeal(other);
-        else if (other.collider.CompareTag("Enemy"))
-            collisions++; //count collisions
-    }
-
-    private void Setup()
-    {
         //create new physic material
-        PhysicMaterial physic_mat = new()
+        PhysicMaterial physicMat = new()
         {
             bounciness = this.bounciness,
             frictionCombine = PhysicMaterialCombine.Minimum,
@@ -127,10 +65,112 @@ public class CustomProjectile : MonoBehaviour
         };
 
         //assign to collider
-        GetComponent<Collider>().material = physic_mat;
+        GetComponent<Collider>().material = physicMat;
 
         //set gravity
-        rb.useGravity = useGravity;
+        rigidbody.useGravity = useGravity;
+
+        //set Timer
+        _durationTimer.Start();
+    }
+
+    private void Update()
+    {
+        transform.forward = rigidbody.velocity;
+        if (projectileMode == ProjectileMode.Penetrate) FixedUpdate();
+        if (CheckReadyToDamaged()) DamageDeal(_impactCollision);
+    }
+
+    private void FixedUpdate()
+    {
+        _lastPosition = transform.position;
+        _lastVelocity = rigidbody.velocity;
+        _lastAngularVelocity = rigidbody.angularVelocity;
+    }
+
+    private bool CheckReadyToDamaged()
+    {
+        _isImpact = _impactCollision;
+        _isCollisionMax = maxCollisions != 0 && _collisions >= maxCollisions;
+        _isOutOfTime = _durationTimer.IsRunning && _durationTimer.Elapsed.TotalSeconds >= maxLifetime;
+
+        return _isImpact || _isCollisionMax || _isOutOfTime;
+    }
+
+    private void DamageDeal(Collider other = null)
+    {
+        if (_triggered) return;
+        _triggered = true;
+        _impactCollision = null;
+
+        bool canDestroy = !(projectileMode == ProjectileMode.Penetrate
+                            && other
+                            && other.CompareTag("Enemy"));
+
+        //instantiate explode
+        if (explosion) Instantiate(explosion, transform.position, Quaternion.identity);
+
+        if (other && explosionRange <= 0) //hit-type projectile
+        {
+            if (other.gameObject.TryGetComponent<Health>(out Health health))
+                health.ReceivedDamage(damage);
+            ProjectileEffect(other);
+        }
+        else //explode-type projectile
+        {
+            //check enemies in explosionRange
+            Collider[] enemies = Physics.OverlapSphere(transform.position, explosionRange, enemyLayer);
+            foreach (Collider e in enemies)
+            {
+                //get enemies component to call damage
+                if (e.TryGetComponent<Health>(out Health health))
+                    health.ReceivedDamage(damage);
+                ProjectileEffect(e);
+
+                //knock back
+                if (e.TryGetComponent<Rigidbody>(out Rigidbody erb))
+                    erb.AddExplosionForce(explosionForce, transform.position, explosionRange);
+            }
+        }
+
+        DestroyProjectile(canDestroy);
+    }
+
+    private void ProjectileEffect(Collider other)
+    {
+        if (!other.gameObject.TryGetComponent<EffectSystem>(out EffectSystem effectSystem) || !effect) return;
+
+        EffectScripable currentEffect = effect;
+        effectSystem.AddEffect(currentEffect);
+    }
+
+    private void DestroyProjectile(bool canDestroy = true)
+    {
+        _triggered = false;
+        if (canDestroy)
+            Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter(Collision other)
+    {
+        Collider otherCollider = other.collider;
+
+        if (projectileMode == ProjectileMode.Penetrate && otherCollider.CompareTag("Enemy"))
+            IgnoreColliderCheck(otherCollider);
+
+        if (!_impactCollision)
+            _impactCollision = otherCollider;
+
+        if (other.collider.CompareTag("Enemy"))
+            _collisions++; //count collisions
+    }
+
+    private void IgnoreColliderCheck(Collider other)
+    {
+        transform.position = _lastPosition;
+        rigidbody.velocity = _lastVelocity;
+        rigidbody.angularVelocity = _lastAngularVelocity;
+        Physics.IgnoreCollision(transform.GetComponent<Collider>(), other);
     }
 
     private void OnDrawGizmosSelected()

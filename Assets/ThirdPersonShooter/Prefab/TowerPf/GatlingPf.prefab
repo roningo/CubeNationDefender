@@ -490,12 +490,9 @@ MonoBehaviour:
   _recoilForce: 0
   _fireEffect: {fileID: 0}
   firePoint: {fileID: 6235665026946512200}
-  _throwMode: 0
+  shootMode: 0
   _forceRatio: 0
   isMovementPrediction: 0
-  OnLook:
-    m_PersistentCalls:
-      m_Calls: []
   attackRageTrigger: {fileID: 748410626325020788}
   _core: {fileID: 1411937860711338693}
   _barrel: {fileID: 5701301881829033254}
