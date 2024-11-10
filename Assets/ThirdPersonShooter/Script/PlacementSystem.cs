@@ -7,8 +7,8 @@ public class PlacementSystem : MonoBehaviour
 {
     private StarterAssetsInputs starterAssetsInputs;
 
-    [Tooltip("Set camera for placement tower")]
-    [SerializeField] private CinemachineVirtualCamera _towerVirtualCamera;
+    [Tooltip("Set camera for placement tower")] [SerializeField]
+    private CinemachineVirtualCamera _towerVirtualCamera;
 
     [SerializeField] private GameObject _mouseIndicator;
     [SerializeField] private InputManager _inputManager;
@@ -27,7 +27,7 @@ public class PlacementSystem : MonoBehaviour
 
     private void Awake()
     {
-        starterAssetsInputs = GetComponentInParent<StarterAssetsInputs>();
+        starterAssetsInputs = _inputManager.GetComponent<StarterAssetsInputs>();
         _placementReview = GetComponent<PlacementReview>();
     }
 
@@ -49,7 +49,7 @@ public class PlacementSystem : MonoBehaviour
         else if (starterAssetsInputs.alpha7) StartPlacement(6);
 
         if (_selectedTowerIndex < 0) return;
-        
+
         Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
         Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
         Vector3 cellPosition = _grid.CellToWorld(gridPosition);
@@ -57,7 +57,7 @@ public class PlacementSystem : MonoBehaviour
 
 
         if (_lastDetectedPosition == gridPosition) return;
-        
+
         bool placementValidity = CheckPlacementValidity(gridPosition, _selectedTowerIndex);
 
         _placementReview.UpdatePosition(cellIndicatorPosition, placementValidity);
@@ -74,6 +74,7 @@ public class PlacementSystem : MonoBehaviour
             Debug.LogError($"ID not found {ID}");
             return;
         }
+
         _placementReview.StartShowing(_database.objectDatas[_selectedTowerIndex].Prefab);
         _inputManager.OnShoot.AddListener(PlaceTower);
         _inputManager.OnExit.AddListener(StopPlacement);
@@ -101,10 +102,13 @@ public class PlacementSystem : MonoBehaviour
             GameObject player = this.gameObject.transform.parent.gameObject;
             towerShooterController.player = player;
 
-            Transform inputFind = towerSetup.transform.Find("InputManager");
-            if (_mouseIndicator && inputFind && inputFind.TryGetComponent<InputManager>(out InputManager inputResult))
+            if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController shooterController))
             {
-                inputResult.mouseIndicator = _mouseIndicator;
+                shooterController._inputManager = _inputManager;
+            }
+            if (towerSetup.TryGetComponent<TowerController>(out TowerController towerController))
+            {
+                towerController.input = starterAssetsInputs;
             }
         }
 
@@ -114,7 +118,6 @@ public class PlacementSystem : MonoBehaviour
         selectedData.AddObjectAt(gridPosition, _database.objectDatas[_selectedTowerIndex].ID, _placedTower.Count - 1);
 
         _placementReview.UpdatePosition(placementPosition, false);
-
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedTowerIndex)

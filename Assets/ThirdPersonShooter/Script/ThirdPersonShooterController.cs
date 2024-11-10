@@ -9,16 +9,16 @@ public class ThirdPersonShooterController : MonoBehaviour
     [SerializeField] private float _normalSensitivity;
     [SerializeField] private float _aimSensitivity;
     [SerializeField] private InputManager _inputManager;
-
-    private ThirdPersonController _thirdPersonController;
+    
     private StarterAssetsInputs _starterAssetsInputs;
+    private ThirdPersonController _thirdPersonController;
     private PlayerInput _playerInputs;
 
     private void Awake()
     {
         _thirdPersonController = GetComponent<ThirdPersonController>();
-        _starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-        _playerInputs = GetComponent<PlayerInput>();
+        _playerInputs = _inputManager.GetComponent<PlayerInput>();
+        _starterAssetsInputs = _inputManager.GetComponent<StarterAssetsInputs>();
     }
 
     private void Start()

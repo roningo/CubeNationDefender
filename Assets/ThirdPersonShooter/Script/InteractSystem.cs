@@ -15,19 +15,18 @@ public class InteractSystem : MonoBehaviour
     [Header("Toggle On Interact")]
     [SerializeField] private CinemachineVirtualCamera _towerVirtualCamera;
     [SerializeField] private GameObject _playerRoot;
-    private PlayerInput _playerInputs;
 
     private Collider[] _interactableList = new Collider[3];
     private int _interactableCount;
 
-    private void Awake()
-    {
-        _playerInputs = GetComponentInParent<PlayerInput>();
-    }
-
-    private void Start()
+    private void OnEnable()
     {
         _inputManager.OnInteract.AddListener(InteractTower);
+    }
+
+    private void OnDisable()
+    {
+        _inputManager.OnInteract.RemoveListener(InteractTower);
     }
 
     private void Update()
@@ -55,16 +54,14 @@ public class InteractSystem : MonoBehaviour
             // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
 
             //self toggle
-            _playerInputs.enabled = false;
             GetComponentInParent<ThirdPersonShooterController>().enabled = false;
 
             //Hit object toggle
             collapseObject.GetComponent<TurretAuto>().autoMode = false;
             collapseObject.GetComponent<TowerController>().enabled = true;
-            collapseObject.GetComponent<PlayerInput>().enabled = true;
             collapseObject.GetComponent<TowerShooterController>().enabled = true;
 
-            this.gameObject.transform.parent.gameObject.SetActive(false); //hide self
+            gameObject.transform.parent.gameObject.SetActive(false); //hide self
 
             break;
         }

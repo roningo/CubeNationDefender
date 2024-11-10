@@ -1,6 +1,6 @@
 using UnityEngine;
 
-//player can't place tower on switch from turret, turn off and on ThirdPersonShooterController solve this case
+//player can't place tower on exit from turret, turn off and on ThirdPersonShooterController solve this case
 public class AwakePlayer : MonoBehaviour
 {
     private ThirdPersonShooterController _thirdPersonShooterController;

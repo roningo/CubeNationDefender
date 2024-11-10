@@ -1,6 +1,8 @@
+using System;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
+using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
 public class TowerShooterController : MonoBehaviour
@@ -10,7 +12,7 @@ public class TowerShooterController : MonoBehaviour
     public CinemachineVirtualCamera towerVirtualCamera;
     [SerializeField] private float _normalSensitivity;
     [SerializeField] private float _aimSensitivity;
-    [SerializeField] private InputManager _inputManager;
+    public InputManager _inputManager;
 
     private TowerController _towerController;
     private PlayerInput _playerInputs;
@@ -26,10 +28,16 @@ public class TowerShooterController : MonoBehaviour
         _towerShoot = GetComponent<TurretAuto>();
     }
 
-    private void Start()
+    private void OnEnable()
     {
         _inputManager.OnShoot.AddListener(() => _towerShoot.TriggerShoot(_mouseWorldGameObject));
         _inputManager.OnInteract.AddListener(ExitTurret);
+    }
+
+    private void OnDisable()
+    {
+        _inputManager.OnShoot.RemoveListener(() => _towerShoot.TriggerShoot(_mouseWorldGameObject));
+        _inputManager.OnInteract.RemoveListener(ExitTurret);
     }
 
     private void Update()
@@ -48,7 +56,6 @@ public class TowerShooterController : MonoBehaviour
 
         towerVirtualCamera.gameObject.SetActive(false);
         _towerController.enabled = false;
-        _playerInputs.enabled = false;
-        this.enabled = false;
+        enabled = false;
     }
 }

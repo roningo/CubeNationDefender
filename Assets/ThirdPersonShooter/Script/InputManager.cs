@@ -20,7 +20,7 @@ public class InputManager : MonoBehaviour
 
     private void Awake()
     {
-        starterAssetsInputs = GetComponentInParent<StarterAssetsInputs>();
+        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
     }
 
     private void Update()
@@ -64,8 +64,7 @@ public class InputManager : MonoBehaviour
         if (!_camera) return;
         Ray ray = _camera.ScreenPointToRay(screenCenterPoint);
 
-        Vector3 targetPoint;
-        targetPoint = Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _aimColliderLayerMask)
+        Vector3 targetPoint = Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _aimColliderLayerMask)
             ? raycastHit.point
             : ray.GetPoint(100);
 
