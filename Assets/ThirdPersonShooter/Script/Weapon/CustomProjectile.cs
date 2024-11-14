@@ -57,11 +57,11 @@ public class CustomProjectile : MonoBehaviour
         }
 
         //create new physic material
-        PhysicMaterial physicMat = new()
+        PhysicsMaterial physicMat = new()
         {
-            bounciness = this.bounciness,
-            frictionCombine = PhysicMaterialCombine.Minimum,
-            bounceCombine = PhysicMaterialCombine.Maximum
+            bounciness = bounciness,
+            frictionCombine = PhysicsMaterialCombine.Minimum,
+            bounceCombine = PhysicsMaterialCombine.Maximum
         };
 
         //assign to collider
@@ -76,7 +76,7 @@ public class CustomProjectile : MonoBehaviour
 
     private void Update()
     {
-        transform.forward = rigidbody.velocity;
+        transform.forward = rigidbody.linearVelocity;
         if (projectileMode == ProjectileMode.Penetrate) FixedUpdate();
         if (CheckReadyToDamaged()) DamageDeal(_impactCollision);
     }
@@ -84,7 +84,7 @@ public class CustomProjectile : MonoBehaviour
     private void FixedUpdate()
     {
         _lastPosition = transform.position;
-        _lastVelocity = rigidbody.velocity;
+        _lastVelocity = rigidbody.linearVelocity;
         _lastAngularVelocity = rigidbody.angularVelocity;
     }
 
@@ -168,7 +168,7 @@ public class CustomProjectile : MonoBehaviour
     private void IgnoreColliderCheck(Collider other)
     {
         transform.position = _lastPosition;
-        rigidbody.velocity = _lastVelocity;
+        rigidbody.linearVelocity = _lastVelocity;
         rigidbody.angularVelocity = _lastAngularVelocity;
         Physics.IgnoreCollision(transform.GetComponent<Collider>(), other);
     }

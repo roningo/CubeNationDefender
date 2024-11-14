@@ -103,13 +103,10 @@ public class PlacementSystem : MonoBehaviour
             towerShooterController.player = player;
 
             if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController shooterController))
-            {
                 shooterController._inputManager = _inputManager;
-            }
+
             if (towerSetup.TryGetComponent<TowerController>(out TowerController towerController))
-            {
                 towerController.input = starterAssetsInputs;
-            }
         }
 
         GameObject newTower = Instantiate(towerSetup, placementPosition, Quaternion.identity);

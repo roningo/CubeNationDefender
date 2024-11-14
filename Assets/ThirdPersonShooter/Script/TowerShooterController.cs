@@ -1,8 +1,6 @@
-using System;
 using UnityEngine;
 using Cinemachine;
 using StarterAssets;
-using Unity.VisualScripting;
 using UnityEngine.InputSystem;
 
 public class TowerShooterController : MonoBehaviour
@@ -30,13 +28,13 @@ public class TowerShooterController : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputManager.OnShoot.AddListener(() => _towerShoot.TriggerShoot(_mouseWorldGameObject));
+        _inputManager.OnShoot.AddListener(ListenShoot);
         _inputManager.OnInteract.AddListener(ExitTurret);
     }
 
     private void OnDisable()
     {
-        _inputManager.OnShoot.RemoveListener(() => _towerShoot.TriggerShoot(_mouseWorldGameObject));
+        _inputManager.OnShoot.RemoveListener(ListenShoot);
         _inputManager.OnInteract.RemoveListener(ExitTurret);
     }
 
@@ -45,6 +43,8 @@ public class TowerShooterController : MonoBehaviour
         _mouseWorldGameObject = _inputManager.GetMouseWorldGameObject();
         _towerShoot.AimDirection(_mouseWorldGameObject);
     }
+
+    private void ListenShoot() => _towerShoot.TriggerShoot(_mouseWorldGameObject);
 
     private void ExitTurret()
     {
