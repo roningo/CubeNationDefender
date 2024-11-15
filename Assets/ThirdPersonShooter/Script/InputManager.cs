@@ -1,89 +1,91 @@
-using System;
 using StarterAssets;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class InputManager : MonoBehaviour
+namespace ThirdPersonShooter.Script
 {
-    [HideInInspector] public StarterAssetsInputs starterAssetsInputs;
-
-    public GameObject mouseIndicator;
-    [SerializeField] private LayerMask _aimColliderLayerMask = new LayerMask();
-
-    public UnityEvent OnShoot, OnScroll, OnInteract, OnExit;
-    private Camera _camera;
-
-    private void Start()
+    public class InputManager : MonoBehaviour
     {
-        _camera = Camera.main;
-    }
+        [HideInInspector] public StarterAssetsInputs starterAssetsInputs;
 
-    private void Awake()
-    {
-        starterAssetsInputs = GetComponent<StarterAssetsInputs>();
-    }
+        public GameObject mouseIndicator;
+        [SerializeField] private LayerMask _aimColliderLayerMask = new LayerMask();
 
-    private void Update()
-    {
-        if (starterAssetsInputs.shoot)
+        public UnityEvent OnShoot, OnScroll, OnInteract, OnExit;
+        private Camera _camera;
+
+        private void Start()
         {
-            OnShoot?.Invoke();
+            _camera = Camera.main;
         }
 
-        if (starterAssetsInputs.scroll != Vector2.zero)
+        private void Awake()
         {
-            OnScroll?.Invoke();
+            starterAssetsInputs = GetComponent<StarterAssetsInputs>();
         }
 
-        if (starterAssetsInputs.interact)
+        private void Update()
         {
-            OnInteract?.Invoke();
+            if (starterAssetsInputs.shoot)
+            {
+                OnShoot?.Invoke();
+            }
+
+            if (starterAssetsInputs.scroll != Vector2.zero)
+            {
+                OnScroll?.Invoke();
+            }
+
+            if (starterAssetsInputs.interact)
+            {
+                OnInteract?.Invoke();
+            }
+
+            if (starterAssetsInputs.alpha0)
+            {
+                OnExit?.Invoke();
+            }
         }
 
-        if (starterAssetsInputs.alpha0)
+        public Vector3 GetMouseWorldPosition()
         {
-            OnExit?.Invoke();
+            FindMouseWord();
+            return mouseIndicator.transform.position;
         }
+
+        public GameObject GetMouseWorldGameObject()
+        {
+            FindMouseWord();
+            return mouseIndicator;
+        }
+
+        private void FindMouseWord()
+        {
+            Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
+            if (!_camera) return;
+            Ray ray = _camera.ScreenPointToRay(screenCenterPoint);
+
+            Vector3 targetPoint = Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _aimColliderLayerMask)
+                ? raycastHit.point
+                : ray.GetPoint(100);
+
+            if (mouseIndicator)
+                mouseIndicator.transform.position = targetPoint;
+        }
+
+        // public Vector3 GetGunPointPosition()
+        // {
+
+        //     Vector3 GunPointPosition = Vector3.zero;
+        //     Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
+        //     Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
+
+        //     Vector3 targetPoint = ray.GetPoint(10);
+
+        //     if (mouseIndicator != null)
+        //         mouseIndicator.transform.position = targetPoint;
+        //     GunPointPosition = targetPoint;
+        //     return GunPointPosition;
+        // }
     }
-
-    public Vector3 GetMouseWorldPosition()
-    {
-        FindMouseWord();
-        return mouseIndicator.transform.position;
-    }
-
-    public GameObject GetMouseWorldGameObject()
-    {
-        FindMouseWord();
-        return mouseIndicator;
-    }
-
-    private void FindMouseWord()
-    {
-        Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
-        if (!_camera) return;
-        Ray ray = _camera.ScreenPointToRay(screenCenterPoint);
-
-        Vector3 targetPoint = Physics.Raycast(ray, out RaycastHit raycastHit, float.MaxValue, _aimColliderLayerMask)
-            ? raycastHit.point
-            : ray.GetPoint(100);
-
-        if (mouseIndicator)
-            mouseIndicator.transform.position = targetPoint;
-    }
-
-    // public Vector3 GetGunPointPosition()
-    // {
-
-    //     Vector3 GunPointPosition = Vector3.zero;
-    //     Vector2 screenCenterPoint = new(Screen.width / 2f, Screen.height / 2f);
-    //     Ray ray = Camera.main.ScreenPointToRay(screenCenterPoint);
-
-    //     Vector3 targetPoint = ray.GetPoint(10);
-
-    //     if (mouseIndicator != null)
-    //         mouseIndicator.transform.position = targetPoint;
-    //     GunPointPosition = targetPoint;
-    //     return GunPointPosition;
-    // }
 }

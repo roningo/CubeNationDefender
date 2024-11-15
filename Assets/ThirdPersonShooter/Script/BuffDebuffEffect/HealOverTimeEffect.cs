@@ -1,19 +1,23 @@
+using ThirdPersonShooter.Script.Enemy;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Effect/Heal Over Time Effect")]
-public class HealOverTimeEffect : EffectScripable
+namespace ThirdPersonShooter.Script.BuffDebuffEffect
 {
-    [Header("Effect stats")]
-    public float heal;
+    [CreateAssetMenu(menuName = "Effect/Heal Over Time Effect")]
+    public class HealOverTimeEffect : EffectScripable
+    {
+        [Header("Effect stats")]
+        public float heal;
 
-    private Health _health;
+        private Health _health;
 
-    protected override void OverrideSetup() {
-        _health = activeMonoBehaviour.GetComponent<Health>();
-    }
+        protected override void OverrideSetup() {
+            _health = activeMonoBehaviour.GetComponent<Health>();
+        }
 
-    protected override void OverrideEffect() {
-        _health.ReceivedHealing(heal);
+        protected override void OverrideEffect() {
+            _health.ReceivedHealing(heal);
+        }
     }
 }
 

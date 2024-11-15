@@ -1,12 +1,15 @@
 using UnityEngine;
 
-public class FollowTarget : MonoBehaviour
+namespace ThirdPersonShooter.Script
 {
-    public Transform target;
-    public Vector3 offset = new Vector3(0f, 1.3f, 0f);
-
-    private void Update()
+    public class FollowTarget : MonoBehaviour
     {
-        transform.position = target.position + offset;
+        public Transform target;
+        public Vector3 offset = new Vector3(0f, 1.3f, 0f);
+
+        private void Update()
+        {
+            transform.position = target.position + offset;
+        }
     }
 }

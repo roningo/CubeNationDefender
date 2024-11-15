@@ -1,11 +1,14 @@
 using UnityEngine;
 
-public class FaceCamera : MonoBehaviour
+namespace ThirdPersonShooter.Script
 {
-    public Camera faceCamera;
-
-    private void Update()
+    public class FaceCamera : MonoBehaviour
     {
-        transform.LookAt(faceCamera.transform, Vector3.up);
+        public Camera faceCamera;
+
+        private void Update()
+        {
+            transform.LookAt(faceCamera.transform, Vector3.up);
+        }
     }
 }

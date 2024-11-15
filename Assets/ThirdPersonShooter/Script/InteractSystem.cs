@@ -1,69 +1,72 @@
 using Cinemachine;
 using StarterAssets;
+using ThirdPersonShooter.Script.Tower;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-public class InteractSystem : MonoBehaviour
+namespace ThirdPersonShooter.Script
 {
-    [SerializeField] private Transform _interactPoint;
-    [SerializeField] private float _interactRadius = 0.7f;
-    [SerializeField] private LayerMask _interactableLayer;
-
-    [SerializeField] private InputManager _inputManager;
-    [SerializeField] private PlacementSystem _placementSystem;
-
-    [Header("Toggle On Interact")]
-    [SerializeField] private CinemachineVirtualCamera _towerVirtualCamera;
-    [SerializeField] private GameObject _playerRoot;
-
-    private Collider[] _interactableList = new Collider[3];
-    private int _interactableCount;
-
-    private void OnEnable()
+    public class InteractSystem : MonoBehaviour
     {
-        _inputManager.OnInteract.AddListener(InteractTower);
-    }
+        [SerializeField] private Transform _interactPoint;
+        [SerializeField] private float _interactRadius = 0.7f;
+        [SerializeField] private LayerMask _interactableLayer;
 
-    private void OnDisable()
-    {
-        _inputManager.OnInteract.RemoveListener(InteractTower);
-    }
+        [SerializeField] private InputManager _inputManager;
+        [SerializeField] private PlacementSystem _placementSystem;
 
-    private void Update()
-    {
-        _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius, _interactableList, _interactableLayer);
-    }
+        [Header("Toggle On Interact")]
+        [SerializeField] private CinemachineVirtualCamera _towerVirtualCamera;
+        [SerializeField] private GameObject _playerRoot;
 
-    private void InteractTower()
-    {
-        _inputManager.starterAssetsInputs.interact = false;
+        private Collider[] _interactableList = new Collider[3];
+        private int _interactableCount;
 
-        if (_interactableCount <= 0) return;
-        
-        foreach (Collider collapseObject in _interactableList)
+        private void OnEnable()
         {
-            if (collapseObject == null || !collapseObject.gameObject.CompareTag("Tower")) continue;
+            _inputManager.OnInteract.AddListener(InteractTower);
+        }
+
+        private void OnDisable()
+        {
+            _inputManager.OnInteract.RemoveListener(InteractTower);
+        }
+
+        private void Update()
+        {
+            _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius, _interactableList, _interactableLayer);
+        }
+
+        private void InteractTower()
+        {
+            _inputManager.starterAssetsInputs.interact = false;
+
+            if (_interactableCount <= 0) return;
+        
+            foreach (Collider collapseObject in _interactableList)
+            {
+                if (collapseObject == null || !collapseObject.gameObject.CompareTag("Tower")) continue;
             
-            _placementSystem.GetComponent<PlacementSystem>().StopPlacement();
+                _placementSystem.GetComponent<PlacementSystem>().StopPlacement();
 
-            //camera toggle
-            Transform towerRoot = collapseObject.transform.Find("TowerCameraRoot");
-            _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
-            _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
-            _towerVirtualCamera.gameObject.SetActive(true);
-            // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
+                //camera toggle
+                Transform towerRoot = collapseObject.transform.Find("TowerCameraRoot");
+                _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
+                _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
+                _towerVirtualCamera.gameObject.SetActive(true);
+                // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
 
-            //self toggle
-            GetComponentInParent<ThirdPersonShooterController>().enabled = false;
+                //self toggle
+                GetComponentInParent<ThirdPersonShooterController>().enabled = false;
 
-            //Hit object toggle
-            collapseObject.GetComponent<TurretAuto>().autoMode = false;
-            collapseObject.GetComponent<TowerController>().enabled = true;
-            collapseObject.GetComponent<TowerShooterController>().enabled = true;
+                //Hit object toggle
+                collapseObject.GetComponent<TurretAuto>().autoMode = false;
+                collapseObject.GetComponent<TowerController>().enabled = true;
+                collapseObject.GetComponent<TowerShooterController>().enabled = true;
 
-            gameObject.transform.parent.gameObject.SetActive(false); //hide self
+                gameObject.transform.parent.gameObject.SetActive(false); //hide self
 
-            break;
+                break;
+            }
         }
     }
 }

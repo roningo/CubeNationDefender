@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public static class ObjectPositionFunction
+namespace ThirdPersonShooter.Script
 {
-    public static Vector3 GetCenterOrPosition(GameObject gameObject)
+    public static class ObjectPositionFunction
     {
-        Vector3 centerOrPosition = gameObject.TryGetComponent<Collider>(out Collider coll)
-            ? coll.bounds.center
-            : gameObject.transform.position;
+        public static Vector3 GetCenterOrPosition(GameObject gameObject)
+        {
+            Vector3 centerOrPosition = gameObject.TryGetComponent<Collider>(out Collider coll)
+                ? coll.bounds.center
+                : gameObject.transform.position;
 
-        return centerOrPosition;
+            return centerOrPosition;
+        }
     }
 }

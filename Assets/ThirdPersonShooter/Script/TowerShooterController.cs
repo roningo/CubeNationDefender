@@ -1,61 +1,65 @@
-using UnityEngine;
 using Cinemachine;
 using StarterAssets;
+using ThirdPersonShooter.Script.Tower;
+using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class TowerShooterController : MonoBehaviour
+namespace ThirdPersonShooter.Script
 {
-
-    public GameObject player;
-    public CinemachineVirtualCamera towerVirtualCamera;
-    [SerializeField] private float _normalSensitivity;
-    [SerializeField] private float _aimSensitivity;
-    public InputManager _inputManager;
-
-    private TowerController _towerController;
-    private PlayerInput _playerInputs;
-
-    private TurretAuto _towerShoot;
-    private GameObject _mouseWorldGameObject;
-
-    private void Awake()
+    public class TowerShooterController : MonoBehaviour
     {
-        _towerController = GetComponent<TowerController>();
-        _playerInputs = GetComponent<PlayerInput>();
 
-        _towerShoot = GetComponent<TurretAuto>();
-    }
+        public GameObject player;
+        public CinemachineVirtualCamera towerVirtualCamera;
+        [SerializeField] private float _normalSensitivity;
+        [SerializeField] private float _aimSensitivity;
+        public InputManager _inputManager;
 
-    private void OnEnable()
-    {
-        _inputManager.OnShoot.AddListener(ListenShoot);
-        _inputManager.OnInteract.AddListener(ExitTurret);
-    }
+        private TowerController _towerController;
+        private PlayerInput _playerInputs;
 
-    private void OnDisable()
-    {
-        _inputManager.OnShoot.RemoveListener(ListenShoot);
-        _inputManager.OnInteract.RemoveListener(ExitTurret);
-    }
+        private TurretAuto _towerShoot;
+        private GameObject _mouseWorldGameObject;
 
-    private void Update()
-    {
-        _mouseWorldGameObject = _inputManager.GetMouseWorldGameObject();
-        _towerShoot.AimDirection(_mouseWorldGameObject);
-    }
+        private void Awake()
+        {
+            _towerController = GetComponent<TowerController>();
+            _playerInputs = GetComponent<PlayerInput>();
 
-    private void ListenShoot() => _towerShoot.TriggerShoot(_mouseWorldGameObject);
+            _towerShoot = GetComponent<TurretAuto>();
+        }
 
-    private void ExitTurret()
-    {
-        _inputManager.starterAssetsInputs.interact = false;
+        private void OnEnable()
+        {
+            _inputManager.OnShoot.AddListener(ListenShoot);
+            _inputManager.OnInteract.AddListener(ExitTurret);
+        }
 
-        _towerShoot.autoMode = true; //automode
+        private void OnDisable()
+        {
+            _inputManager.OnShoot.RemoveListener(ListenShoot);
+            _inputManager.OnInteract.RemoveListener(ExitTurret);
+        }
 
-        player.SetActive(true);
+        private void Update()
+        {
+            _mouseWorldGameObject = _inputManager.GetMouseWorldGameObject();
+            _towerShoot.AimDirection(_mouseWorldGameObject);
+        }
 
-        towerVirtualCamera.gameObject.SetActive(false);
-        _towerController.enabled = false;
-        enabled = false;
+        private void ListenShoot() => _towerShoot.TriggerShoot(_mouseWorldGameObject);
+
+        private void ExitTurret()
+        {
+            _inputManager.starterAssetsInputs.interact = false;
+
+            _towerShoot.autoMode = true; //automode
+
+            player.SetActive(true);
+
+            towerVirtualCamera.gameObject.SetActive(false);
+            _towerController.enabled = false;
+            enabled = false;
+        }
     }
 }

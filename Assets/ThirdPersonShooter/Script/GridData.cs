@@ -2,53 +2,56 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridData : MonoBehaviour
+namespace ThirdPersonShooter.Script
 {
-    Dictionary<Vector3Int, PlacementData> placedObject = new();
-    
-    public void AddObjectAt(Vector3Int gridPosition,
-                            int id,
-                            int placedObjectIndex)
+    public class GridData : MonoBehaviour
     {
-        List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition);
-        PlacementData data = new PlacementData(positionToOccupy, id, placedObjectIndex);
-        foreach(var pos in positionToOccupy) 
+        Dictionary<Vector3Int, PlacementData> placedObject = new();
+    
+        public void AddObjectAt(Vector3Int gridPosition,
+            int id,
+            int placedObjectIndex)
         {
-            if(placedObject.ContainsKey(pos))
-                throw new Exception($"Cell occupied {pos}");
-            placedObject[pos] = data; 
+            List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition);
+            PlacementData data = new PlacementData(positionToOccupy, id, placedObjectIndex);
+            foreach(var pos in positionToOccupy) 
+            {
+                if(placedObject.ContainsKey(pos))
+                    throw new Exception($"Cell occupied {pos}");
+                placedObject[pos] = data; 
+            }
+        }
+
+        private List<Vector3Int> CalculatePosition(Vector3Int gridPosition)
+        {
+            List<Vector3Int> returnVal = new();
+            returnVal.Add(gridPosition);
+            return returnVal;
+        }
+    
+        public bool CanPlacedObjectAt(Vector3Int gridPosition)
+        {
+            List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition);
+            foreach(var pos in positionToOccupy) 
+            {
+                if(placedObject.ContainsKey(pos))
+                    return false;
+            }
+            return true;
         }
     }
 
-    private List<Vector3Int> CalculatePosition(Vector3Int gridPosition)
+    public class PlacementData
     {
-        List<Vector3Int> returnVal = new();
-        returnVal.Add(gridPosition);
-        return returnVal;
-    }
-    
-    public bool CanPlacedObjectAt(Vector3Int gridPosition)
-    {
-        List<Vector3Int> positionToOccupy = CalculatePosition(gridPosition);
-        foreach(var pos in positionToOccupy) 
-        {
-            if(placedObject.ContainsKey(pos))
-                return false;
-        }
-        return true;
-    }
-}
+        public List<Vector3Int> OccupiedPosition;
+        public int ID { get; private set; }
+        public int PlacedOnjectIndex { get; private set; }
 
-public class PlacementData
-{
-    public List<Vector3Int> OccupiedPosition;
-    public int ID { get; private set; }
-    public int PlacedOnjectIndex { get; private set; }
-
-    public PlacementData(List<Vector3Int> occupiedPosition, int iD, int placedOnjectIndex)
+        public PlacementData(List<Vector3Int> occupiedPosition, int iD, int placedOnjectIndex)
         {
             OccupiedPosition = occupiedPosition;
             ID = iD;
             PlacedOnjectIndex = placedOnjectIndex;
         }
+    }
 }
