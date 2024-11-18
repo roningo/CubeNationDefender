@@ -32,8 +32,8 @@ namespace ThirdPersonShooter.Script.Tower
 
         private void Awake()
         {
-            attackRageTrigger.EnteredTriggerEvent.AddListener(OnAttackTriggerEnter);
-            attackRageTrigger.ExitTriggerEvent.AddListener(OnAttackTriggerExit);
+            attackRageTrigger.enteredTriggerEvent.AddListener(OnAttackTriggerEnter);
+            attackRageTrigger.exitTriggerEvent.AddListener(OnAttackTriggerExit);
 
             GameObject rangeObject = attackRageTrigger.gameObject;
             if (rangeObject && rangeObject.TryGetComponent<SphereCollider>(out SphereCollider sphereResult))

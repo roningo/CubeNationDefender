@@ -45,7 +45,7 @@ namespace ThirdPersonShooter.Script.Weapon
 
         [Range(0, 1)]
         [Tooltip("Using a values closer to 0 will make the agent throw with the lower force"
-                 + "down to the least possible force (highest angle) to reach the target.\n"
+                 + "down to the least possible force (highest angle) to reach the Target.\n"
                  + "Using a value of 1 the agent will always throw with the MaxThrowForce below.")]
         [SerializeField]
         private float _forceRatio = 0;
@@ -285,7 +285,7 @@ namespace ThirdPersonShooter.Script.Weapon
                 targetPosition.z + targetMovement.z
             );
 
-            // Option Calculate again the trajectory based on target position
+            // Option Calculate again the trajectory based on Target position
             ThrowData predictiveThrowData = CalculateThrowData(
                 newTargetPosition,
                 firePoint.position
@@ -315,7 +315,7 @@ namespace ThirdPersonShooter.Script.Weapon
         {
             // v = initial velocity, assume max speed for now
             // x = distance to travel on X/Z plane only
-            // y = difference in altitudes from thrown point to target hit point
+            // y = difference in altitudes from thrown point to Target hit point
             // g = gravity
 
             Vector3 displacement = new Vector3(
@@ -362,7 +362,7 @@ namespace ThirdPersonShooter.Script.Weapon
 
             if (float.IsNaN(angle))
                 // you will need to handle this case when there
-                // is no feasible angle to throw the object and reach the target.
+                // is no feasible angle to throw the object and reach the Target.
                 return new ThrowData();
 
             Vector3 initialVelocity =

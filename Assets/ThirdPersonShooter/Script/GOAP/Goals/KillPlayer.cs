@@ -2,7 +2,7 @@
 
 namespace ThirdPersonShooter.Script.GOAP.Goals
 {
-    public class HomeReachGoal : GoalBase
+    public class KillPlayer : GoalBase
     {
     }
 }

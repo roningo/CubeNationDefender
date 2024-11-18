@@ -1,27 +1,28 @@
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ThirdPersonShooter.Script
 {
     public class CustomTrigger : MonoBehaviour
     {
-        public UnityEvent<Collider> EnteredTriggerEvent;
-        public UnityEvent<Collider> StayTriggerEvent;
-        public UnityEvent<Collider> ExitTriggerEvent;
+        public UnityEvent<Collider> enteredTriggerEvent;
+        public UnityEvent<Collider> stayTriggerEvent;
+        public UnityEvent<Collider> exitTriggerEvent;
 
         private void OnTriggerEnter(Collider other)
         {
-            EnteredTriggerEvent?.Invoke(other);
+            enteredTriggerEvent?.Invoke(other);
         }
 
         private void OnTriggerStay(Collider other)
         {
-            StayTriggerEvent?.Invoke(other);
+            stayTriggerEvent?.Invoke(other);
         }
 
         private void OnTriggerExit(Collider other)
         {
-            ExitTriggerEvent?.Invoke(other);
+            exitTriggerEvent?.Invoke(other);
         }
     }
 }
