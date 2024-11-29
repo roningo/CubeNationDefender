@@ -58,10 +58,6 @@ namespace ThirdPersonShooter.Script
 
             if (_selectedTowerIndex < 0) return;
 
-            // Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
-            // Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
-            // Vector3 cellPosition = _grid.CellToWorld(gridPosition);
-            // Vector3 cellIndicatorPosition = new Vector3(cellPosition.x, mousePosition.y, cellPosition.z);
             PlacementPositionScan();
 
             if (_lastDetectedPosition == _currentGridPosition) return;
