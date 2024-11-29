@@ -28,8 +28,15 @@ namespace ThirdPersonShooter.Script
                 if (collider)
                     collider.enabled = false;
             }
+
             PreparePreview(_previewObject);
             _cellIndicator.SetActive(true);
+        }
+
+        private void ToggleShowing(bool showEnable)
+        {
+            _previewObject.SetActive(showEnable);
+            _cellIndicator.SetActive(showEnable);
         }
 
         private void PreparePreview(GameObject previewObject)
@@ -42,6 +49,7 @@ namespace ThirdPersonShooter.Script
                 {
                     materials[i] = _previewMaterialInstance;
                 }
+
                 renderer.materials = materials;
             }
         }
@@ -54,9 +62,14 @@ namespace ThirdPersonShooter.Script
 
         public void UpdatePosition(Vector3 position, bool validity)
         {
-            MovePreview(position);
-            MoveCursor(position);
-            ApplyFeedback(validity);
+            if (position != Vector3.zero)
+            {
+                MovePreview(position);
+                MoveCursor(position);
+                ApplyFeedback(validity);
+                ToggleShowing(true);
+            }
+            else ToggleShowing(false);
         }
 
         private void MovePreview(Vector3 position)

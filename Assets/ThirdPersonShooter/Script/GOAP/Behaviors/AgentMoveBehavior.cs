@@ -50,13 +50,13 @@ namespace ThirdPersonShooter.Script.GOAP.Behaviors
             _currentTarget = target;
             _lastPosition = _currentTarget.Position;
 
-            // NavMeshPath path = new();
-            // _navMeshAgent.CalculatePath(_currentTarget.Position, path);
-            // if (path.status != NavMeshPathStatus.PathComplete)
-                _navMeshAgent.SetDestination(_currentTarget.Position);
-            // else
-                // _agentBehaviour.SetGoal<HomeReachGoal>(true);
-            
+            NavMeshPath path = new();
+            _navMeshAgent.CalculatePath(_currentTarget.Position, path);
+            if (path.status != NavMeshPathStatus.PathComplete)
+                _agentBehaviour.SetGoal<HomeReachGoal>(true);
+
+            _navMeshAgent.SetDestination(_currentTarget.Position);
+
             _animator.SetBool(Walk, true);
         }
 

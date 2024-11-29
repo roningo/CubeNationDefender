@@ -22,7 +22,7 @@ TagManager:
   - Agent
   - Target
   - IgnoreCollision
-  - IgnoreRaycast
+  - 
   - Interactable
   - Enemy
   - Projectile

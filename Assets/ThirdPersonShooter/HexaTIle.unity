@@ -13448,9 +13448,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1253260981}
     - target: {fileID: 6291607306521149462, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: _maxHeightPlaceable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291607306521149462, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: _towerVirtualCamera
       value: 
       objectReference: {fileID: 1793077571}
+    - target: {fileID: 6291607306521149462, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: _placeLayerMask.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
     - target: {fileID: 7841805014126652191, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: _inputManager
       value: 
@@ -13473,12 +13481,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 411119928}
     m_Modifications:
     - target: {fileID: 1444790866749056, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
+      propertyPath: m_Layer
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1444790866749056, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1943117728638778, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_Name
       value: CelIIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 1943117728638778, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
+      propertyPath: m_Layer
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1943117728638778, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_IsActive

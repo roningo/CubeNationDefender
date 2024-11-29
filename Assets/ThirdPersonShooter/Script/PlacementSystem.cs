@@ -6,12 +6,16 @@ using UnityEngine;
 
 namespace ThirdPersonShooter.Script
 {
+    [RequireComponent(typeof(PlacementReview))]
     public class PlacementSystem : MonoBehaviour
     {
         private StarterAssetsInputs starterAssetsInputs;
 
         [Tooltip("Set camera for placement tower")] [SerializeField]
         private CinemachineVirtualCamera _towerVirtualCamera;
+
+        [SerializeField] private float _maxHeightPlaceable;
+        [SerializeField] private LayerMask _placeLayerMask;
 
         [SerializeField] private GameObject _mouseIndicator;
         [SerializeField] private InputManager _inputManager;
@@ -22,7 +26,8 @@ namespace ThirdPersonShooter.Script
         private int _selectedTowerIndex = -1;
 
         private GridData _towerPlacementData;
-
+        private Vector3Int _currentGridPosition;
+        private Vector3 _currentViewPosition;
         private PlacementReview _placementReview;
         private Vector3Int _lastDetectedPosition = Vector3Int.zero;
 
@@ -53,24 +58,23 @@ namespace ThirdPersonShooter.Script
 
             if (_selectedTowerIndex < 0) return;
 
-            Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
-            Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
-            Vector3 cellPosition = _grid.CellToWorld(gridPosition);
-            Vector3 cellIndicatorPosition = new Vector3(cellPosition.x, mousePosition.y, cellPosition.z);
+            // Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
+            // Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
+            // Vector3 cellPosition = _grid.CellToWorld(gridPosition);
+            // Vector3 cellIndicatorPosition = new Vector3(cellPosition.x, mousePosition.y, cellPosition.z);
+            PlacementPositionScan();
 
+            if (_lastDetectedPosition == _currentGridPosition) return;
 
-            if (_lastDetectedPosition == gridPosition) return;
-
-            bool placementValidity = CheckPlacementValidity(gridPosition, _selectedTowerIndex);
-
-            _placementReview.UpdatePosition(cellIndicatorPosition, placementValidity);
-
-            _lastDetectedPosition = gridPosition;
+            PlacementPositionUpdate();
+            _lastDetectedPosition = _currentGridPosition;
         }
 
         private void StartPlacement(int ID)
         {
             StopPlacement();
+            PlacementPositionScan();
+
             _selectedTowerIndex = _database.objectDatas.FindIndex(data => data.ID == ID);
             if (_selectedTowerIndex < 0)
             {
@@ -79,30 +83,63 @@ namespace ThirdPersonShooter.Script
             }
 
             _placementReview.StartShowing(_database.objectDatas[_selectedTowerIndex].Prefab);
+
+            PlacementPositionUpdate();
             _inputManager.OnShoot.AddListener(PlaceTower);
             _inputManager.OnExit.AddListener(StopPlacement);
+        }
+
+        private void PlacementPositionScan()
+        {
+            Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
+            Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
+            Vector3 cellPosition = _grid.CellToWorld(gridPosition);
+            Vector3 currentViewPosition = new Vector3(cellPosition.x, mousePosition.y, cellPosition.z);
+
+            // check if player are looking at wall
+            // down ray to the floor in range _maxHeightPlaceable
+            Ray ray = new Ray(currentViewPosition + new Vector3(0, 0.01f, 0), Vector3.down);
+            Vector3 placePosition =
+                Physics.Raycast(ray, out RaycastHit raycastHit, _maxHeightPlaceable, _placeLayerMask)
+                    ? raycastHit.point
+                    : Vector3.zero;
+
+            if (placePosition != Vector3.zero)
+            {
+                _currentViewPosition = placePosition;
+                _currentGridPosition = gridPosition;
+            }
+            else
+            {
+                _currentViewPosition = Vector3.zero;
+                _currentGridPosition = Vector3Int.zero;
+            }
+        }
+
+        private void PlacementPositionUpdate()
+        {
+            bool placementValidity = CheckPlacementValidity(_currentGridPosition);
+            _placementReview.UpdatePosition(_currentViewPosition, placementValidity);
         }
 
         private void PlaceTower()
         {
             _inputManager.starterAssetsInputs.shoot = false;
 
-            Vector3 mousePosition = _inputManager.GetMouseWorldPosition();
-            Vector3Int gridPosition = _grid.WorldToCell(mousePosition);
-            Vector3 cellPosition = _grid.CellToWorld(gridPosition);
-            Vector3 placementPosition = new Vector3(cellPosition.x, mousePosition.y, cellPosition.z);
+            PlacementPositionScan();
+            if (_currentViewPosition == Vector3.zero) return;
 
-            bool placementValidity = CheckPlacementValidity(gridPosition, _selectedTowerIndex);
+            bool placementValidity = CheckPlacementValidity(_currentGridPosition);
             if (!placementValidity) return;
 
-            AudioSource.PlayClipAtPoint(_placeAudio, placementPosition);
+            AudioSource.PlayClipAtPoint(_placeAudio, _currentViewPosition);
 
             //setup for controllable turret
             GameObject towerSetup = _database.objectDatas[_selectedTowerIndex].Prefab;
             if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController towerShooterController))
             {
                 towerShooterController.towerVirtualCamera = _towerVirtualCamera;
-                GameObject player = this.gameObject.transform.parent.gameObject;
+                GameObject player = gameObject.transform.parent.gameObject;
                 towerShooterController.player = player;
 
                 if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController shooterController))
@@ -112,15 +149,16 @@ namespace ThirdPersonShooter.Script
                     towerController.input = starterAssetsInputs;
             }
 
-            GameObject newTower = Instantiate(towerSetup, placementPosition, Quaternion.identity);
+            GameObject newTower = Instantiate(towerSetup, _currentViewPosition, Quaternion.identity);
             _placedTower.Add(newTower);
             GridData selectedData = _towerPlacementData;
-            selectedData.AddObjectAt(gridPosition, _database.objectDatas[_selectedTowerIndex].ID, _placedTower.Count - 1);
+            selectedData.AddObjectAt(_currentGridPosition, _database.objectDatas[_selectedTowerIndex].ID,
+                _placedTower.Count - 1);
 
-            _placementReview.UpdatePosition(placementPosition, false);
+            PlacementPositionUpdate();
         }
 
-        private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedTowerIndex)
+        private bool CheckPlacementValidity(Vector3Int gridPosition)
         {
             GridData selectedData = _towerPlacementData;
             return selectedData.CanPlacedObjectAt(gridPosition);

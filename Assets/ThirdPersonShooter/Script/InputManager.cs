@@ -9,7 +9,7 @@ namespace ThirdPersonShooter.Script
         [HideInInspector] public StarterAssetsInputs starterAssetsInputs;
 
         public GameObject mouseIndicator;
-        [SerializeField] private LayerMask _aimColliderLayerMask = new LayerMask();
+        [SerializeField] private LayerMask _aimColliderLayerMask;
 
         public UnityEvent OnShoot, OnScroll, OnInteract, OnExit;
         private Camera _camera;
