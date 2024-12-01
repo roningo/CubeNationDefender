@@ -39,6 +39,21 @@ namespace ThirdPersonShooter.Script
             }
             return true;
         }
+
+        public int GetResponseIndex(Vector3Int gridPosition)
+        {
+            if (!placedObject.TryGetValue(gridPosition, out var value))
+                return -1;
+            return value.PlacedOnjectIndex;
+        }
+
+        public void RemoveObjectAt(Vector3Int gridPosition)
+        {
+            foreach (var pos in placedObject[gridPosition].OccupiedPosition)
+            {
+                placedObject.Remove(pos);
+            }
+        }
     }
 
     public class PlacementData

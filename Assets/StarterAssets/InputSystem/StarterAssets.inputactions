@@ -150,6 +150,24 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "Alpha8",
+                    "type": "PassThrough",
+                    "id": "eafcf204-eea8-423c-9288-0bed448467ce",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Alpha9",
+                    "type": "PassThrough",
+                    "id": "14660778-8804-4b2d-952e-a0578ff0ec06",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Exit",
                     "type": "PassThrough",
                     "id": "5aae713a-7f98-473a-9398-dc672e33fd9f",
@@ -476,6 +494,28 @@
                     "processors": "",
                     "groups": "KeyboardMouse",
                     "action": "Alpha7",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8929fba5-60d1-4bf6-9e21-0d8ef178d53f",
+                    "path": "<Keyboard>/8",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Alpha8",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a67503a7-142b-4c2b-b34a-b211dd465afd",
+                    "path": "<Keyboard>/9",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Alpha9",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },

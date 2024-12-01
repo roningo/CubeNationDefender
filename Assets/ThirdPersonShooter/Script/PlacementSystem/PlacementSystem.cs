@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Cinemachine;
 using StarterAssets;
 using ThirdPersonShooter.Script.Tower;
@@ -15,6 +14,7 @@ namespace ThirdPersonShooter.Script
         private CinemachineVirtualCamera _towerVirtualCamera;
 
         [SerializeField] private float _maxHeightPlaceable;
+
         [SerializeField] private LayerMask _placeLayerMask;
 
         [SerializeField] private GameObject _mouseIndicator;
@@ -23,15 +23,15 @@ namespace ThirdPersonShooter.Script
 
         [SerializeField] private AudioClip _placeAudio;
         [SerializeField] private TowerDatabaseSO _database;
-        private int _selectedTowerIndex = -1;
+
+        [SerializeField] private TowerPlacer _towerPlacer;
+        private IBuildingState _buildingState;
 
         private GridData _towerPlacementData;
+        private Vector3 _currentPlacePosition;
         private Vector3Int _currentGridPosition;
-        private Vector3 _currentViewPosition;
         private PlacementReview _placementReview;
         private Vector3Int _lastDetectedPosition = Vector3Int.zero;
-
-        private List<GameObject> _placedTower = new();
 
         private void Awake()
         {
@@ -51,36 +51,45 @@ namespace ThirdPersonShooter.Script
             if (starterAssetsInputs.alpha1) StartPlacement(0);
             else if (starterAssetsInputs.alpha2) StartPlacement(1);
             else if (starterAssetsInputs.alpha3) StartPlacement(2);
-            else if (starterAssetsInputs.alpha4) StartPlacement(3);
-            else if (starterAssetsInputs.alpha5) StartPlacement(4);
-            else if (starterAssetsInputs.alpha6) StartPlacement(5);
-            else if (starterAssetsInputs.alpha7) StartPlacement(6);
-
-            if (_selectedTowerIndex < 0) return;
+            else if (starterAssetsInputs.alpha9) StartRemoving();
+            if (_buildingState == null) return;
 
             PlacementPositionScan();
 
             if (_lastDetectedPosition == _currentGridPosition) return;
 
-            PlacementPositionUpdate();
+            _buildingState.UpdateState(_currentPlacePosition, _currentGridPosition);
             _lastDetectedPosition = _currentGridPosition;
         }
 
         private void StartPlacement(int ID)
         {
             StopPlacement();
+            _buildingState = new PlacementState(ID,
+                _placementReview,
+                _database,
+                _towerPlacementData,
+                _towerPlacer,
+                _towerVirtualCamera,
+                gameObject,
+                _inputManager,
+                starterAssetsInputs);
+
             PlacementPositionScan();
+            _buildingState.UpdateState(_currentPlacePosition, _currentGridPosition);
 
-            _selectedTowerIndex = _database.objectDatas.FindIndex(data => data.ID == ID);
-            if (_selectedTowerIndex < 0)
-            {
-                Debug.LogError($"ID not found {ID}");
-                return;
-            }
+            _inputManager.OnShoot.AddListener(PlaceTower);
+            _inputManager.OnExit.AddListener(StopPlacement);
+        }
 
-            _placementReview.StartShowing(_database.objectDatas[_selectedTowerIndex].Prefab);
-
-            PlacementPositionUpdate();
+        private void StartRemoving()
+        {
+            StopPlacement();
+            _buildingState = new RemovingState(
+                _placementReview,
+                _towerPlacementData,
+                _towerPlacer);
+            
             _inputManager.OnShoot.AddListener(PlaceTower);
             _inputManager.OnExit.AddListener(StopPlacement);
         }
@@ -102,71 +111,34 @@ namespace ThirdPersonShooter.Script
 
             if (placePosition != Vector3.zero)
             {
-                _currentViewPosition = placePosition;
+                _currentPlacePosition = placePosition;
                 _currentGridPosition = gridPosition;
             }
             else
             {
-                _currentViewPosition = Vector3.zero;
+                _currentPlacePosition = Vector3.zero;
                 _currentGridPosition = Vector3Int.zero;
             }
-        }
-
-        private void PlacementPositionUpdate()
-        {
-            bool placementValidity = CheckPlacementValidity(_currentGridPosition);
-            _placementReview.UpdatePosition(_currentViewPosition, placementValidity);
         }
 
         private void PlaceTower()
         {
             _inputManager.starterAssetsInputs.shoot = false;
 
-            PlacementPositionScan();
-            if (_currentViewPosition == Vector3.zero) return;
+            if (_currentPlacePosition == Vector3.zero) return;
 
-            bool placementValidity = CheckPlacementValidity(_currentGridPosition);
-            if (!placementValidity) return;
-
-            AudioSource.PlayClipAtPoint(_placeAudio, _currentViewPosition);
-
-            //setup for controllable turret
-            GameObject towerSetup = _database.objectDatas[_selectedTowerIndex].Prefab;
-            if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController towerShooterController))
-            {
-                towerShooterController.towerVirtualCamera = _towerVirtualCamera;
-                GameObject player = gameObject.transform.parent.gameObject;
-                towerShooterController.player = player;
-
-                if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController shooterController))
-                    shooterController._inputManager = _inputManager;
-
-                if (towerSetup.TryGetComponent<TowerController>(out TowerController towerController))
-                    towerController.input = starterAssetsInputs;
-            }
-
-            GameObject newTower = Instantiate(towerSetup, _currentViewPosition, Quaternion.identity);
-            _placedTower.Add(newTower);
-            GridData selectedData = _towerPlacementData;
-            selectedData.AddObjectAt(_currentGridPosition, _database.objectDatas[_selectedTowerIndex].ID,
-                _placedTower.Count - 1);
-
-            PlacementPositionUpdate();
-        }
-
-        private bool CheckPlacementValidity(Vector3Int gridPosition)
-        {
-            GridData selectedData = _towerPlacementData;
-            return selectedData.CanPlacedObjectAt(gridPosition);
+            _buildingState.OnAction(_currentPlacePosition, _currentGridPosition);
         }
 
         public void StopPlacement()
         {
-            _selectedTowerIndex = -1;
-            _placementReview.StopShowing();
+            if (_buildingState == null) return;
+
+            _buildingState.EndState();
             _inputManager.OnShoot.RemoveListener(PlaceTower);
             _inputManager.OnExit.RemoveListener(StopPlacement);
             _lastDetectedPosition = Vector3Int.zero;
+            _buildingState = null;
         }
     }
 }

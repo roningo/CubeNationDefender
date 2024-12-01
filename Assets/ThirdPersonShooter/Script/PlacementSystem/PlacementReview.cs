@@ -20,7 +20,7 @@ namespace ThirdPersonShooter.Script
             _cellIndicatorRenderer = _cellIndicator.GetComponentInChildren<Renderer>();
         }
 
-        public void StartShowing(GameObject prefab)
+        public void StartShowingPlacementReview(GameObject prefab)
         {
             _previewObject = Instantiate(prefab);
             foreach (Collider collider in _previewObject.GetComponentsInChildren<Collider>())
@@ -33,9 +33,16 @@ namespace ThirdPersonShooter.Script
             _cellIndicator.SetActive(true);
         }
 
+        public void StartShowingRemoveReview()
+        {
+            ApplyFeedbackCellIndicator(false);
+            _cellIndicator.SetActive(true);
+        }
+
         private void ToggleShowing(bool showEnable)
         {
-            _previewObject.SetActive(showEnable);
+            if (_previewObject)
+                _previewObject.SetActive(showEnable);
             _cellIndicator.SetActive(showEnable);
         }
 
@@ -57,16 +64,23 @@ namespace ThirdPersonShooter.Script
         public void StopShowing()
         {
             _cellIndicator.SetActive(false);
-            Destroy(_previewObject);
+            if (_previewObject)
+                Destroy(_previewObject);
         }
 
         public void UpdatePosition(Vector3 position, bool validity)
         {
             if (position != Vector3.zero)
             {
-                MovePreview(position);
+                if (_previewObject)
+                {
+                    MovePreview(position);
+                    ApplyFeedbackPreview(validity);
+                }
+
                 MoveCursor(position);
-                ApplyFeedback(validity);
+                ApplyFeedbackCellIndicator(validity);
+
                 ToggleShowing(true);
             }
             else ToggleShowing(false);
@@ -82,12 +96,17 @@ namespace ThirdPersonShooter.Script
             _cellIndicator.transform.position = position;
         }
 
-        private void ApplyFeedback(bool validity)
+        private void ApplyFeedbackPreview(bool validity)
+        {
+            Color c = validity ? Color.white : Color.red;
+            c.a = 0.5f;
+            _previewMaterialInstance.color = c;
+        }
+
+        private void ApplyFeedbackCellIndicator(bool validity)
         {
             Color c = validity ? Color.white : Color.red;
             _cellIndicatorRenderer.material.color = c;
-            c.a = 0.5f;
-            _previewMaterialInstance.color = c;
         }
     }
 }
