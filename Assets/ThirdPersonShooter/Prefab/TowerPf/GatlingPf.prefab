@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5870073031608398751}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: strech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4297380347654846013}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: B_ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +75,7 @@ GameObject:
   - component: {fileID: 7609830640225988560}
   - component: {fileID: 6585776367445556455}
   - component: {fileID: 2452891719018718395}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cylinder.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -161,7 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6235665026946512200}
   - component: {fileID: 8074102967243930632}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: FirePoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -222,7 +222,7 @@ GameObject:
   - component: {fileID: 9111599283562154932}
   - component: {fileID: 5564793541848110231}
   - component: {fileID: 5560277346016360284}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: gatling
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 490662837589423757}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: S_ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,13 +416,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3eda3f10f96d5344d92ddd7505c72e4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnteredTriggerEvent:
+  enteredTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  StayTriggerEvent:
+  stayTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
-  ExitTriggerEvent:
+  exitTriggerEvent:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1 &2611268910999013593
@@ -600,7 +600,7 @@ GameObject:
   - component: {fileID: 6892780926825908873}
   - component: {fileID: 3030433793170959583}
   - component: {fileID: 207588923258592337}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cylinder.004
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -684,7 +684,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5100143131316672401}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: TowerCameraRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -717,7 +717,7 @@ GameObject:
   - component: {fileID: 5979013405006169575}
   - component: {fileID: 4010301452870370955}
   - component: {fileID: 1962662044417811974}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cylinder.002
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -804,7 +804,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3300310376334594976}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Geometry
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -836,7 +836,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8607749636290768236}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: root
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -869,7 +869,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 304985139316911242}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: T_ctrl
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -901,7 +901,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7798049782436100286}
   - component: {fileID: 6219586844857071454}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: rig_cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -958,7 +958,7 @@ GameObject:
   - component: {fileID: 7739834210104535537}
   - component: {fileID: 1232789005315832934}
   - component: {fileID: 4090286075808093835}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cube.001
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1043,7 +1043,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4972746812162223991}
   - component: {fileID: 3775620996101746687}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Not The Default Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1135,7 +1135,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7255919064426211133}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Armature
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1169,7 +1169,7 @@ GameObject:
   - component: {fileID: 6417606938275139053}
   - component: {fileID: 293493509357440977}
   - component: {fileID: 1682008202681618734}
-  m_Layer: 13
+  m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

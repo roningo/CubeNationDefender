@@ -18,7 +18,7 @@ namespace ThirdPersonShooter.Script
         [SerializeField] private CinemachineVirtualCamera _towerVirtualCamera;
         [SerializeField] private GameObject _playerRoot;
 
-        private Collider[] _interactableList = new Collider[3];
+        private Collider[] _interactableList = new Collider[1];
         private int _interactableCount;
 
         private void OnEnable()

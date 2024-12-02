@@ -6678,7 +6678,7 @@ IL_001f:
 		InputDevice_t8BCF67533E872A75779C24C93D1D7085B72D364B* L_6 = V_0;
 		NullCheck(L_5);
 		bool L_7;
-		L_7 = VirtualFuncInvoker1< bool, RuntimeObject* >::Invoke(114, L_5, L_6);
+		L_7 = VirtualFuncInvoker1< bool, RuntimeObject* >::Invoke(115, L_5, L_6);
 		if (L_7)
 		{
 			goto IL_002e;
@@ -9909,7 +9909,7 @@ IL_0139:
 		L_56 = Object_GetType_mE10A8FC1E57F3DF29972CCBC026C2DC3942263B3(L_55, NULL);
 		NullCheck(L_56);
 		Type_t* L_57;
-		L_57 = VirtualFuncInvoker0< Type_t* >::Invoke(116, L_56);
+		L_57 = VirtualFuncInvoker0< Type_t* >::Invoke(117, L_56);
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		int32_t L_58;
 		L_58 = Type_GetTypeCode_m2CE476933AF4B381D7A52F4343B70E9878FDF466(L_57, NULL);
@@ -14033,7 +14033,7 @@ IL_0042:
 		Type_t* L_10 = ___0_type;
 		NullCheck(L_10);
 		TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* L_11;
-		L_11 = VirtualFuncInvoker0< TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(113, L_10);
+		L_11 = VirtualFuncInvoker0< TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(114, L_10);
 		V_0 = (bool)0;
 		V_1 = L_11;
 		V_2 = 0;
@@ -14129,7 +14129,7 @@ IL_0091:
 		Type_t* L_34 = ___0_type;
 		NullCheck(L_34);
 		Type_t* L_35;
-		L_35 = VirtualFuncInvoker0< Type_t* >::Invoke(111, L_34);
+		L_35 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_34);
 		___0_type = L_35;
 		Type_t* L_36 = ___0_type;
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
@@ -14164,7 +14164,7 @@ IL_00b9:
 		Type_t* L_42 = ___0_type;
 		NullCheck(L_42);
 		Type_t* L_43;
-		L_43 = VirtualFuncInvoker0< Type_t* >::Invoke(111, L_42);
+		L_43 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_42);
 		___0_type = L_43;
 		Type_t* L_44 = ___0_type;
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_45 = { reinterpret_cast<intptr_t> (&il2cpp_defaults.object_class->byval_arg) };

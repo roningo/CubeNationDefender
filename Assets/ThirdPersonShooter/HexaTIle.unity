@@ -10373,7 +10373,7 @@ MonoBehaviour:
   mouseIndicator: {fileID: 1253260981}
   _aimColliderLayerMask:
     serializedVersion: 2
-    m_Bits: 147457
+    m_Bits: 147456
   OnShoot:
     m_PersistentCalls:
       m_Calls: []
@@ -10384,6 +10384,9 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   OnExit:
+    m_PersistentCalls:
+      m_Calls: []
+  OnRemove:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &849189870
@@ -10429,6 +10432,8 @@ MonoBehaviour:
   alpha5: 0
   alpha6: 0
   alpha7: 0
+  alpha8: 0
+  alpha9: 0
   escape: 0
   analogMovement: 0
   cursorLocked: 1
@@ -13387,6 +13392,10 @@ PrefabInstance:
       propertyPath: _aimVirtualCamera
       value: 
       objectReference: {fileID: 1376553996}
+    - target: {fileID: 3775612230981753590, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3893294197879345259, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: m_LocalPosition.x
       value: 8.26
@@ -13435,6 +13444,10 @@ PrefabInstance:
       propertyPath: _input
       value: 
       objectReference: {fileID: 849189871}
+    - target: {fileID: 4416926081852918490, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
+      propertyPath: GroundLayers.m_Bits
+      value: 131072
+      objectReference: {fileID: 0}
     - target: {fileID: 6291607306521149462, guid: 64dce48905ffd9b4293e595fa6941544, type: 3}
       propertyPath: _grid
       value: 
@@ -13489,7 +13502,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1444790866749056, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_Layer
-      value: 4
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1444790866749056, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_IsActive
@@ -13501,7 +13514,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1943117728638778, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_Layer
-      value: 4
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 1943117728638778, guid: b1f609afe25f80440bc59f50422a1591, type: 3}
       propertyPath: m_IsActive
@@ -15497,7 +15510,7 @@ GameObject:
   - component: {fileID: 1253260984}
   - component: {fileID: 1253260983}
   - component: {fileID: 1253260982}
-  m_Layer: 4
+  m_Layer: 11
   m_Name: MouseWorldIndicator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24926,7 +24939,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &2307054327233901443
 GameObject:
   m_ObjectHideFlags: 0
@@ -25219,7 +25232,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3678848139387322696, guid: 662f873651205634dbc4d112ff3d81f5, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3986641217878527077, guid: 662f873651205634dbc4d112ff3d81f5, type: 3}
       propertyPath: m_Enabled
