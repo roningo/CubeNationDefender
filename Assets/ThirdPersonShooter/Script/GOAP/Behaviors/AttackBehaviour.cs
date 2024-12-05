@@ -11,5 +11,10 @@ namespace ThirdPersonShooter.Script.GOAP.Behaviors
         {
             _meleeHurtBox.gameObject.SetActive(true);
         }
+        
+        public void EndAttack(int _)
+        {
+            _meleeHurtBox.gameObject.SetActive(false);
+        }
     }
 }
