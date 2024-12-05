@@ -4,7 +4,7 @@ using StarterAssets;
 using ThirdPersonShooter.Script.Tower;
 using UnityEngine;
 
-namespace ThirdPersonShooter.Script
+namespace ThirdPersonShooter.Script.Placement
 {
     public class PlacementState : IBuildingState
     {

@@ -1,0 +1,15 @@
+﻿using ThirdPersonShooter.Script.GOAP.Sensors;
+using UnityEngine;
+
+namespace ThirdPersonShooter.Script.GOAP.Behaviors
+{
+    public class AttackBehaviour : MonoBehaviour
+    {
+        [SerializeField] private MeleeHurtBox _meleeHurtBox;
+        
+        public void BeginAttack(int _)
+        {
+            _meleeHurtBox.gameObject.SetActive(true);
+        }
+    }
+}

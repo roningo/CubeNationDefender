@@ -1,15 +1,20 @@
-﻿using CrashKonijn.Goap.Behaviours;
+﻿using System.Collections;
+using System.Diagnostics;
+using CrashKonijn.Goap.Behaviours;
 using CrashKonijn.Goap.Classes;
 using CrashKonijn.Goap.Enums;
 using CrashKonijn.Goap.Interfaces;
 using ThirdPersonShooter.Script.GOAP.Config;
+using ThirdPersonShooter.Script.GOAP.Sensors;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 
 namespace ThirdPersonShooter.Script.GOAP.Actions
 {
     public class MeleeAction : ActionBase<AttackData>, IInjectable
     {
         private AttackConfigSO _attackConfig;
+        private bool _canAttack = true;
 
         public override void Created()
         {
@@ -27,11 +32,14 @@ namespace ThirdPersonShooter.Script.GOAP.Actions
             bool shouldAttack = data.Target != null &&
                                 Vector3.Distance(data.Target.Position, agent.transform.position)
                                 <= _attackConfig.meleeRadius;
-            data.Animator.SetBool(AttackData.Attack, shouldAttack);
-
+            
             if (shouldAttack)
+            {
                 agent.transform.LookAt(data.Target.Position);
-
+                data.Animator.SetTrigger(AttackData.Attack);
+                // agent.GetComponentInChildren<MeleeHurtBox>(true).gameObject.SetActive(true);
+            }
+            
             return data.Timer > 0
                 ? ActionRunState.Continue
                 : ActionRunState.Stop;
@@ -41,6 +49,7 @@ namespace ThirdPersonShooter.Script.GOAP.Actions
         {
             data.Animator.SetBool(AttackData.Attack, false);
         }
+
 
         public void Inject(DependencyInjector injector)
         {

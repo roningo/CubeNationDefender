@@ -3,7 +3,7 @@ using StarterAssets;
 using ThirdPersonShooter.Script.Tower;
 using UnityEngine;
 
-namespace ThirdPersonShooter.Script
+namespace ThirdPersonShooter.Script.Placement
 {
     [RequireComponent(typeof(PlacementReview))]
     public class PlacementSystem : MonoBehaviour

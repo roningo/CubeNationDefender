@@ -2,9 +2,9 @@ using System;
 using TMPro;
 using UnityEngine;
 
-namespace ThirdPersonShooter.Script.Enemy
+namespace ThirdPersonShooter.Script.BioStats
 {
-    public class Health : MonoBehaviour
+    public class Health : MonoBehaviour,IHealth
     {
         [SerializeField] private float _maxHealth = 100f;
 
@@ -45,7 +45,7 @@ namespace ThirdPersonShooter.Script.Enemy
                 _currentHealth = _maxHealth;
         }
 
-        private void OnDeath()
+        public void OnDeath()
         {
             Destroy(this.gameObject, float.MinValue);
         }

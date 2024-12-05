@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ThirdPersonShooter.Script
+namespace ThirdPersonShooter.Script.Placement
 {
     public class PlacementReview : MonoBehaviour
     {
@@ -35,7 +35,6 @@ namespace ThirdPersonShooter.Script
 
         public void StartShowingRemoveReview()
         {
-            ApplyFeedbackCellIndicator(false);
             _cellIndicator.SetActive(true);
         }
 

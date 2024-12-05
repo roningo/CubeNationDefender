@@ -1,3 +1,4 @@
+using ThirdPersonShooter.Script.BioStats;
 using UnityEngine;
 
 namespace ThirdPersonShooter.Script.Enemy

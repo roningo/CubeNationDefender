@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ThirdPersonShooter.Script
+namespace ThirdPersonShooter.Script.Placement
 {
     public class GridData : MonoBehaviour
     {

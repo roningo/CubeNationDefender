@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Cube Attack Config SO
   m_EditorClassIdentifier: 
   sensorRadius: 5
-  meleeRadius: 1
+  meleeRadius: 1.5
   meleeCost: 3
   attackDelay: 1
   attackAbleLayerMask:

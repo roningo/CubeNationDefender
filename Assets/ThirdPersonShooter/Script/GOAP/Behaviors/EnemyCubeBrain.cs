@@ -1,4 +1,5 @@
 ﻿using CrashKonijn.Goap.Behaviours;
+using ThirdPersonShooter.Script.BioStats;
 using ThirdPersonShooter.Script.GOAP.Config;
 using ThirdPersonShooter.Script.GOAP.Goals;
 using ThirdPersonShooter.Script.GOAP.Sensors;
@@ -10,6 +11,7 @@ namespace ThirdPersonShooter.Script.GOAP.Behaviors
     public class EnemyCubeBrain : MonoBehaviour
     {
         [SerializeField] private PlayerSensor _playerSensor;
+        [SerializeField] private MeleeHurtBox _meleeHurtBox;
         [SerializeField] private AttackConfigSO _attackConfig;
         private AgentBehaviour _agentBehaviour;
 
@@ -29,6 +31,12 @@ namespace ThirdPersonShooter.Script.GOAP.Behaviors
         {
             _playerSensor.playerEnterEvent.AddListener(PlayerSensorOnEnter);
             _playerSensor.playerExitEvent.AddListener(PlayerSensorOnExit);
+            _meleeHurtBox.playerEnterEvent.AddListener(PlayerHit);
+        }
+
+        private void PlayerHit(Transform player)
+        {
+            player.GetComponent<PlayerHealth>().ReceivedDamage(10f);
         }
 
         private void OnDisable()

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace ThirdPersonShooter.Script
+namespace ThirdPersonShooter.Script.Placement
 {
     public interface IBuildingState
     {

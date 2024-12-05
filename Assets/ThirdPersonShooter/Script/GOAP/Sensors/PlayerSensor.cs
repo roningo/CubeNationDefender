@@ -1,11 +1,5 @@
-﻿using System;
-using CrashKonijn.Goap.Classes;
-using CrashKonijn.Goap.Interfaces;
-using CrashKonijn.Goap.Sensors;
-using ThirdPersonShooter.Script.GOAP.Config;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.Serialization;
 
 namespace ThirdPersonShooter.Script.GOAP.Sensors
 {

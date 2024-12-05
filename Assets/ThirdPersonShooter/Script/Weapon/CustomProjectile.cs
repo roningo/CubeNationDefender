@@ -1,6 +1,6 @@
 using System.Diagnostics;
+using ThirdPersonShooter.Script.BioStats;
 using ThirdPersonShooter.Script.BuffDebuffEffect;
-using ThirdPersonShooter.Script.Enemy;
 using UnityEngine;
 
 namespace ThirdPersonShooter.Script.Weapon
