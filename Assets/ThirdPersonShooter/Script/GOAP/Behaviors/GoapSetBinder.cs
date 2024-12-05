@@ -6,12 +6,22 @@ namespace ThirdPersonShooter.Script.GOAP.Behaviors
     [RequireComponent(typeof(AgentBehaviour))]
     public class GoapSetBinder : MonoBehaviour
     {
-        [SerializeField] private GoapRunnerBehaviour _goapRunner;
+        public GoapRunnerBehaviour goapRunner;
 
         private void Awake()
         {
+            if(goapRunner)
+            {
+                AgentBehaviour agentBehaviour = GetComponent<AgentBehaviour>();
+                agentBehaviour.GoapSet = goapRunner.GetGoapSet("EnemyCubeSet");
+            }
+        }
+        
+        public void Setup(GoapRunnerBehaviour goapRunner)
+        {
+            this.goapRunner = goapRunner;
             AgentBehaviour agentBehaviour = GetComponent<AgentBehaviour>();
-            agentBehaviour.GoapSet = _goapRunner.GetGoapSet("EnemyCubeSet");
+            agentBehaviour.GoapSet = this.goapRunner.GetGoapSet("EnemyCubeSet");
         }
     }
 }

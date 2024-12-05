@@ -1,4 +1,6 @@
+using CrashKonijn.Goap.Behaviours;
 using ThirdPersonShooter.Script.BioStats;
+using ThirdPersonShooter.Script.GOAP.Behaviors;
 using UnityEngine;
 
 namespace ThirdPersonShooter.Script.Enemy
@@ -7,9 +9,10 @@ namespace ThirdPersonShooter.Script.Enemy
     {
         [SerializeField] private Camera _faceCamera;
         [SerializeField] private Canvas _healthBarCanvas;
+        [SerializeField] private Transform _homePosition;
+        [SerializeField] private GoapRunnerBehaviour _goapRunner;
 
         [SerializeField] private GameObject _enemyPf;
-        [SerializeField] private Transform _homePosition;
         [SerializeField] private float _spawnTime = 1f;
 
         private void Start()
@@ -19,13 +22,16 @@ namespace ThirdPersonShooter.Script.Enemy
 
         private void Spawner()
         {
-            GameObject enemy = Instantiate(_enemyPf, transform.position, Quaternion.identity);
+            GameObject enemySetup = Instantiate(_enemyPf, transform.position, Quaternion.identity);
 
-            if (enemy.TryGetComponent<FindDestination>(out FindDestination findDestination))
+            if (enemySetup.TryGetComponent<FindDestination>(out FindDestination findDestination))
                 findDestination.homeDestination = _homePosition;
 
-            if (enemy.TryGetComponent<Health>(out Health health))
+            if (enemySetup.TryGetComponent<Health>(out Health health))
                 health.SetupHealthBar(_healthBarCanvas, _faceCamera);
+
+            if (enemySetup.TryGetComponent<GoapSetBinder>(out GoapSetBinder goapSetBinder))
+                goapSetBinder.Setup(_goapRunner);
         }
     }
 }
