@@ -15,6 +15,7 @@ MonoBehaviour:
   sensorRadius: 5
   meleeRadius: 1.5
   meleeCost: 3
+  meleeDamage: 10
   attackDelay: 1
   attackAbleLayerMask:
     serializedVersion: 2

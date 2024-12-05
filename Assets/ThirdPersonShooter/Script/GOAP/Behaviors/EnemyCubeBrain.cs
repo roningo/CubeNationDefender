@@ -36,7 +36,7 @@ namespace ThirdPersonShooter.Script.GOAP.Behaviors
 
         private void PlayerHit(Transform player)
         {
-            player.GetComponent<PlayerHealth>().ReceivedDamage(10f);
+            player.GetComponent<PlayerHealth>().ReceivedDamage(_attackConfig.meleeDamage);
         }
 
         private void OnDisable()
