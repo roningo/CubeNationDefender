@@ -31,36 +31,36 @@ namespace ThirdPersonShooter.Script
             }
         }
 
-        public void SetProgress(float Progress)
+        public void SetProgress(float progress)
         {
-            SetProgress(Progress, DefaultSpeed);
+            SetProgress(progress, DefaultSpeed);
         }
 
-        public void SetProgress(float Progress, float Speed)
+        public void SetProgress(float progress, float speed)
         {
-            if (Progress < 0 || Progress > 1)
+            if (progress < 0 || progress > 1)
             {
-                Debug.LogWarning($"Invalid progress passed, expected value is between 0 and 1, got {Progress}. Clamping.");
-                Progress = Mathf.Clamp01(Progress);
+                Debug.LogWarning($"Invalid progress passed, expected value is between 0 and 1, got {progress}. Clamping.");
+                progress = Mathf.Clamp01(progress);
             }
 
-            if (Progress == ProgressImage.fillAmount) return;
+            if (progress == ProgressImage.fillAmount) return;
 
             if (AnimationCoroutine != null)
                 StopCoroutine(AnimationCoroutine);
 
-            AnimationCoroutine = StartCoroutine(AnimateProgress(Progress, Speed));
+            AnimationCoroutine = StartCoroutine(AnimateProgress(progress, speed));
         }
 
-        private IEnumerator AnimateProgress(float Progress, float Speed)
+        private IEnumerator AnimateProgress(float progress, float speed)
         {
             float time = 0;
             float initialProgress = ProgressImage.fillAmount;
 
             while (time < 1)
             {
-                ProgressImage.fillAmount = Mathf.Lerp(initialProgress, Progress, time);
-                time += Time.deltaTime * Speed;
+                ProgressImage.fillAmount = Mathf.Lerp(initialProgress, progress, time);
+                time += Time.deltaTime * speed;
 
                 ProgressImage.color = ColorGradient.Evaluate(1 - ProgressImage.fillAmount);
 
@@ -68,10 +68,10 @@ namespace ThirdPersonShooter.Script
                 yield return null;
             }
 
-            ProgressImage.fillAmount = Progress;
+            ProgressImage.fillAmount = progress;
             ProgressImage.color = ColorGradient.Evaluate(1 - ProgressImage.fillAmount);
 
-            OnProgress?.Invoke(Progress);
+            OnProgress?.Invoke(progress);
             OnCompleted?.Invoke();
         }
     }

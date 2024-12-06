@@ -1,6 +1,6 @@
-using Cinemachine;
 using StarterAssets;
 using ThirdPersonShooter.Script.Tower;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

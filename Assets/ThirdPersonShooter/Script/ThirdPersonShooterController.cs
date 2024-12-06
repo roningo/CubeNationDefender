@@ -1,5 +1,5 @@
-using Cinemachine;
 using StarterAssets;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -25,6 +25,7 @@ namespace ThirdPersonShooter.Script
 
         private void Start()
         {
+            Cursor.lockState = CursorLockMode.Locked;
             _thirdPersonController.SetRotateOnMove(false);
             _playerInputs.enabled = false; //restart playerInput
         }

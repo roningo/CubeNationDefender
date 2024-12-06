@@ -8,7 +8,8 @@ namespace ThirdPersonShooter.Script
 
         private void Update()
         {
-            transform.LookAt(faceCamera.transform, Vector3.up);
+            if (faceCamera)
+                transform.LookAt(faceCamera.transform, Vector3.up);
         }
     }
 }
