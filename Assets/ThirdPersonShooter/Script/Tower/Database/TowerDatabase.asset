@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6038c793e49035c44831a3ed55547b36, type: 3}
   m_Name: TowerDatabase
   m_EditorClassIdentifier: 
-  objectDatas:
+  towerDatas:
   - <Name>k__BackingField: Gatling
     <ID>k__BackingField: 0
     <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: dafe0a70d13bdfc4f9b7d401d762fa61, type: 3}

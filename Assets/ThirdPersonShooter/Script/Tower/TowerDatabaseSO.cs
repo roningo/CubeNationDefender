@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace ThirdPersonShooter.Script.Tower
 {
     [CreateAssetMenu]
     public class TowerDatabaseSO : ScriptableObject
     {
-        public List<ObjectData> objectDatas;
+        public List<ObjectData> towerDatas;
     }
 
     [Serializable]

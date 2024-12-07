@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.UI;
 
 namespace ThirdPersonShooter.Script.Weapon
 {
@@ -9,12 +10,13 @@ namespace ThirdPersonShooter.Script.Weapon
     {
         [SerializeField] private InputManager _inputManager;
 
-        [SerializeField] private List<GameObject> _weaponList;
+        [SerializeField] private WeaponDatabaseSO _weaponDatabase;
+        [SerializeField] private Image _currentWeaponImage;
         [SerializeField] private Transform _weaponParent;
         [SerializeField] private int _selectedIndex = 0;
 
         private bool _triggered = false;
-    
+
         private GameObject _activeWeapon;
         private GameObject _model;
 
@@ -27,10 +29,12 @@ namespace ThirdPersonShooter.Script.Weapon
                 weight = 1
             };
 
-            if (gameObject.TryGetComponent<ParentConstraint>(out ParentConstraint parentConstraint) && parentConstraint.sourceCount <= 0)
+            if (gameObject.TryGetComponent<ParentConstraint>(out ParentConstraint parentConstraint) &&
+                parentConstraint.sourceCount <= 0)
             {
                 parentConstraint.AddSource(constraintSource);
             }
+
             _inputManager.OnScroll.AddListener(OnScroll);
             SelectedWeapon();
         }
@@ -45,14 +49,14 @@ namespace ThirdPersonShooter.Script.Weapon
             float scroll = _inputManager.starterAssetsInputs.scroll.normalized.y;
             switch (scroll)
             {
-                case > 0 when _selectedIndex >= _weaponList.Count - 1:
+                case > 0 when _selectedIndex >= _weaponDatabase.weaponDatas.Count - 1:
                     _selectedIndex = 0;
                     break;
                 case > 0:
                     _selectedIndex++;
                     break;
                 case < 0 when _selectedIndex <= 0:
-                    _selectedIndex = _weaponList.Count - 1;
+                    _selectedIndex = _weaponDatabase.weaponDatas.Count - 1;
                     break;
                 case < 0:
                     _selectedIndex--;
@@ -72,9 +76,11 @@ namespace ThirdPersonShooter.Script.Weapon
 
         private void SelectedWeapon()
         {
-            _activeWeapon = _weaponList[_selectedIndex];
+            _activeWeapon = _weaponDatabase.weaponDatas[_selectedIndex].Prefab;
             GameObject weapon = _activeWeapon;
             Spawn(weapon);
+            if (_currentWeaponImage)
+                _currentWeaponImage.sprite = _weaponDatabase.weaponDatas[_selectedIndex].Icon;
         }
 
         public void Spawn(GameObject weapon)

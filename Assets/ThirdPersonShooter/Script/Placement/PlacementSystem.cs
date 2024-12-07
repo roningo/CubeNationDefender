@@ -22,7 +22,7 @@ namespace ThirdPersonShooter.Script.Placement
         [SerializeField] private Grid _grid;
 
         [SerializeField] private AudioClip _placeAudio;
-        [SerializeField] private TowerDatabaseSO _database;
+        [SerializeField] private TowerDatabaseSO _towerDatabase;
 
         [SerializeField] private TowerPlacer _towerPlacer;
         private IBuildingState _buildingState;
@@ -67,7 +67,7 @@ namespace ThirdPersonShooter.Script.Placement
             StopPlacement();
             _buildingState = new PlacementState(ID,
                 _placementReview,
-                _database,
+                _towerDatabase,
                 _towerPlacementData,
                 _towerPlacer,
                 _towerVirtualCamera,

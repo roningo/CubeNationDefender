@@ -40,9 +40,9 @@ namespace ThirdPersonShooter.Script.Placement
             _inputManager = inputManager;
             _starterAssetsInputs = starterAssetsInputs;
 
-            _selectedTowerIndex = _towerDatabase.objectDatas.FindIndex(data => data.ID == id);
+            _selectedTowerIndex = _towerDatabase.towerDatas.FindIndex(data => data.ID == id);
             if (_selectedTowerIndex > -1)
-                _placementReview.StartShowingPlacementReview(_towerDatabase.objectDatas[_selectedTowerIndex].Prefab);
+                _placementReview.StartShowingPlacementReview(_towerDatabase.towerDatas[_selectedTowerIndex].Prefab);
             else
                 throw new Exception($"Placement ID not found {_id}");
         }
@@ -60,7 +60,7 @@ namespace ThirdPersonShooter.Script.Placement
             // AudioSource.PlayClipAtPoint(_placeAudio, _currentViewPosition);
 
             //setup for controllable turret
-            GameObject towerSetup = _towerDatabase.objectDatas[_selectedTowerIndex].Prefab;
+            GameObject towerSetup = _towerDatabase.towerDatas[_selectedTowerIndex].Prefab;
             if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController towerShooterController))
             {
                 towerShooterController.towerVirtualCamera = _towerVirtualCamera;
@@ -77,7 +77,7 @@ namespace ThirdPersonShooter.Script.Placement
             int index = _towerPlacer.PlaceTower(towerSetup, placePosition);
 
             GridData selectedData = _towerData;
-            selectedData.AddObjectAt(gridPosition, _towerDatabase.objectDatas[_selectedTowerIndex].ID,
+            selectedData.AddObjectAt(gridPosition, _towerDatabase.towerDatas[_selectedTowerIndex].ID,
                 index);
 
             PlacementPositionUpdate(placePosition, gridPosition);
