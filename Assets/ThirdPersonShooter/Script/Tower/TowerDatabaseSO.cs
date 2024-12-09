@@ -8,11 +8,11 @@ namespace ThirdPersonShooter.Script.Tower
     [CreateAssetMenu]
     public class TowerDatabaseSO : ScriptableObject
     {
-        public List<ObjectData> towerDatas;
+        public List<TowerData> towerDatas;
     }
 
     [Serializable]
-    public class ObjectData 
+    public class TowerData 
     {
         [field: SerializeField]
         public string Name { get; private set; }
@@ -20,5 +20,7 @@ namespace ThirdPersonShooter.Script.Tower
         public int ID { get; private set; }
         [field: SerializeField]
         public GameObject Prefab { get; private set; }
+        [field: SerializeField]
+        public Sprite Icon { get; private set; }
     }
 }

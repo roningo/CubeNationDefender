@@ -14,22 +14,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponDatas:
   - <Name>k__BackingField: Crossbow
-    <ID>k__BackingField: 0
-    <Prefab>k__BackingField: {fileID: 125810125309864352, guid: cc4e0ebd20e54384490e778d4ed4d3f4, type: 3}
-    <Icon>k__BackingField: {fileID: 21300000, guid: 7e0816637c3ab97458fe4e63ea729c2b, type: 3}
-  - <Name>k__BackingField: Rocket
     <ID>k__BackingField: 1
+    <Prefab>k__BackingField: {fileID: 125810125309864352, guid: cc4e0ebd20e54384490e778d4ed4d3f4, type: 3}
+    <Icon>k__BackingField: {fileID: 21300000, guid: 7750688e797f19c4c87403f6ca50854d, type: 3}
+  - <Name>k__BackingField: Rocket
+    <ID>k__BackingField: 2
     <Prefab>k__BackingField: {fileID: 6238303973554666312, guid: 2e0d0a96c9cafc84183e6661f42bc3f1, type: 3}
     <Icon>k__BackingField: {fileID: 21300000, guid: a88519fec8744384882833dd005e425a, type: 3}
   - <Name>k__BackingField: Shotgun
-    <ID>k__BackingField: 2
+    <ID>k__BackingField: 3
     <Prefab>k__BackingField: {fileID: 6378212233718594665, guid: 674ddca16ab693442b7a09da1c4aae03, type: 3}
     <Icon>k__BackingField: {fileID: 21300000, guid: abb013dcd7cc29c498956541330cbda6, type: 3}
   - <Name>k__BackingField: Grenade
-    <ID>k__BackingField: 3
-    <Prefab>k__BackingField: {fileID: 3937604931964242408, guid: 4a5fc61c115e3de4ba1c0d8749ac0cbe, type: 3}
-    <Icon>k__BackingField: {fileID: 21300000, guid: 4c12579c9df5f5c4f9069670bfd836f2, type: 3}
-  - <Name>k__BackingField: Flame Thrower
     <ID>k__BackingField: 4
+    <Prefab>k__BackingField: {fileID: 3937604931964242408, guid: 4a5fc61c115e3de4ba1c0d8749ac0cbe, type: 3}
+    <Icon>k__BackingField: {fileID: 21300000, guid: 3e23181f8ede48b4fa0edcff3f5bca99, type: 3}
+  - <Name>k__BackingField: Flame Thrower
+    <ID>k__BackingField: 5
     <Prefab>k__BackingField: {fileID: 6378212233718594665, guid: c151050c2a769c14a8c05e342831ee67, type: 3}
     <Icon>k__BackingField: {fileID: 21300000, guid: 6cf1b448a31f7554487fbe7e0388dc28, type: 3}

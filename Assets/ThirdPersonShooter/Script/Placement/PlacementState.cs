@@ -64,8 +64,7 @@ namespace ThirdPersonShooter.Script.Placement
             if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController towerShooterController))
             {
                 towerShooterController.towerVirtualCamera = _towerVirtualCamera;
-                GameObject player = _player.transform.parent.gameObject;
-                towerShooterController.player = player;
+                towerShooterController.player = _player;
 
                 if (towerSetup.TryGetComponent<TowerShooterController>(out TowerShooterController shooterController))
                     shooterController._inputManager = _inputManager;

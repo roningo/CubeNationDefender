@@ -1,8 +1,10 @@
+using System;
 using StarterAssets;
 using ThirdPersonShooter.Script.Placement;
 using ThirdPersonShooter.Script.Tower;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace ThirdPersonShooter.Script
 {
@@ -15,16 +17,24 @@ namespace ThirdPersonShooter.Script
         [SerializeField] private InputManager _inputManager;
         [SerializeField] private PlacementSystem _placementSystem;
 
-        [Header("Toggle On Interact")]
-        [SerializeField] private CinemachineVirtualCamera _towerVirtualCamera;
-        [SerializeField] private GameObject _playerRoot;
+        [Header("Toggle On Interact")] [SerializeField]
+        private CinemachineVirtualCamera _towerVirtualCamera;
+
+        [SerializeField] private GameObject _player;
 
         private Collider[] _interactableList = new Collider[1];
         private int _interactableCount;
 
+        [SerializeField] private Sprite _interactSprite;
+
+        public UnityEvent<Sprite> InteractEvent;
+
         private void OnEnable()
         {
             _inputManager.OnInteract.AddListener(InteractTower);
+
+            //add delay to make sure InteractEvent is not null
+            Invoke(nameof(SetPreviousActionImage), float.MinValue);
         }
 
         private void OnDisable()
@@ -34,7 +44,8 @@ namespace ThirdPersonShooter.Script
 
         private void Update()
         {
-            _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius, _interactableList, _interactableLayer);
+            _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius,
+                _interactableList, _interactableLayer);
         }
 
         private void InteractTower()
@@ -42,11 +53,11 @@ namespace ThirdPersonShooter.Script
             _inputManager.starterAssetsInputs.interact = false;
 
             if (_interactableCount <= 0) return;
-        
+
             foreach (Collider collapseObject in _interactableList)
             {
                 if (collapseObject == null || !collapseObject.gameObject.CompareTag("Tower")) continue;
-            
+
                 _placementSystem.GetComponent<PlacementSystem>().StopPlacement();
 
                 //camera toggle
@@ -54,20 +65,24 @@ namespace ThirdPersonShooter.Script
                 _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
                 _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
                 _towerVirtualCamera.gameObject.SetActive(true);
-                // _towerVirtualCamera.transform.forward =_playerRoot.transform.forward;
 
                 //self toggle
-                GetComponentInParent<ThirdPersonShooterController>().enabled = false;
+                _player.GetComponent<ThirdPersonShooterController>().enabled = false;
 
                 //Hit object toggle
                 collapseObject.GetComponent<TurretAuto>().autoMode = false;
                 collapseObject.GetComponent<TowerController>().enabled = true;
                 collapseObject.GetComponent<TowerShooterController>().enabled = true;
 
-                gameObject.transform.parent.gameObject.SetActive(false); //hide self
+                InteractEvent?.Invoke(_interactSprite);
+
+                //hide self
+                _player.SetActive(false);
 
                 break;
             }
         }
+
+        private void SetPreviousActionImage() => InteractEvent?.Invoke(null);
     }
 }

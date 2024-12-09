@@ -14,11 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerDatas:
   - <Name>k__BackingField: Gatling
-    <ID>k__BackingField: 0
-    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: dafe0a70d13bdfc4f9b7d401d762fa61, type: 3}
-  - <Name>k__BackingField: FlameThrower
     <ID>k__BackingField: 1
-    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: 62c54da4f49ac674d8bcdc9cead6f1f6, type: 3}
-  - <Name>k__BackingField: Mortar
+    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: dafe0a70d13bdfc4f9b7d401d762fa61, type: 3}
+    <Icon>k__BackingField: {fileID: 21300000, guid: 7e0816637c3ab97458fe4e63ea729c2b, type: 3}
+  - <Name>k__BackingField: FlameThrower
     <ID>k__BackingField: 2
+    <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: 62c54da4f49ac674d8bcdc9cead6f1f6, type: 3}
+    <Icon>k__BackingField: {fileID: 21300000, guid: 6cf1b448a31f7554487fbe7e0388dc28, type: 3}
+  - <Name>k__BackingField: Mortar
+    <ID>k__BackingField: 3
     <Prefab>k__BackingField: {fileID: 2611268910999013593, guid: a425b02931a3a5f4c99102bb898c758d, type: 3}
+    <Icon>k__BackingField: {fileID: 21300000, guid: 790d584eb7c441b4eaa739ecf36aee49, type: 3}

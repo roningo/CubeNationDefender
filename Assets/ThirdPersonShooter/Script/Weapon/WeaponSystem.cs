@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Animations;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace ThirdPersonShooter.Script.Weapon
@@ -11,10 +14,11 @@ namespace ThirdPersonShooter.Script.Weapon
         [SerializeField] private InputManager _inputManager;
 
         [SerializeField] private WeaponDatabaseSO _weaponDatabase;
-        [SerializeField] private Image _currentWeaponImage;
         [SerializeField] private Transform _weaponParent;
         [SerializeField] private int _selectedIndex = 0;
 
+        public UnityEvent<Sprite> SelectedWeaponEvent;
+        
         private bool _triggered = false;
 
         private GameObject _activeWeapon;
@@ -34,9 +38,17 @@ namespace ThirdPersonShooter.Script.Weapon
             {
                 parentConstraint.AddSource(constraintSource);
             }
-
+        }
+        
+        private void OnEnable()
+        {
             _inputManager.OnScroll.AddListener(OnScroll);
             SelectedWeapon();
+        }
+
+        private void OnDisable()
+        {
+            _inputManager.OnScroll.RemoveListener(OnScroll);
         }
 
         private void OnScroll()
@@ -79,11 +91,11 @@ namespace ThirdPersonShooter.Script.Weapon
             _activeWeapon = _weaponDatabase.weaponDatas[_selectedIndex].Prefab;
             GameObject weapon = _activeWeapon;
             Spawn(weapon);
-            if (_currentWeaponImage)
-                _currentWeaponImage.sprite = _weaponDatabase.weaponDatas[_selectedIndex].Icon;
+            
+            SelectedWeaponEvent?.Invoke(_weaponDatabase.weaponDatas[_selectedIndex].Icon);
         }
 
-        public void Spawn(GameObject weapon)
+        private void Spawn(GameObject weapon)
         {
             Destroy(_model);
             weapon.GetComponent<ProjectileWeapon>().inputManager = _inputManager;
