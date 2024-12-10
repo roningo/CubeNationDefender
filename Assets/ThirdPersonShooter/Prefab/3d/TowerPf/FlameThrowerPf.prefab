@@ -299,7 +299,7 @@ MonoBehaviour:
   firePoint: {fileID: 6235665026946512200}
   shootMode: 0
   _forceRatio: 0
-  isMovementPrediction: 0
+  isMovementPrediction: 1
   attackRageTrigger: {fileID: 748410626325020788}
   _core: {fileID: 6831887563971903807}
   _barrel: {fileID: 960279943900814091}

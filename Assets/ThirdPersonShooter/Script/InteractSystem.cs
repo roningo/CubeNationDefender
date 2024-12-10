@@ -21,6 +21,7 @@ namespace ThirdPersonShooter.Script
         private CinemachineVirtualCamera _towerVirtualCamera;
 
         [SerializeField] private GameObject _player;
+        [SerializeField] private GameObject _uiInteract;
 
         private Collider[] _interactableList = new Collider[1];
         private int _interactableCount;
@@ -46,6 +47,13 @@ namespace ThirdPersonShooter.Script
         {
             _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius,
                 _interactableList, _interactableLayer);
+
+            if (!_uiInteract) return;
+
+            if (_interactableCount > 0)
+                _uiInteract.SetActive(true);
+            else
+                _uiInteract.SetActive(false);
         }
 
         private void InteractTower()
