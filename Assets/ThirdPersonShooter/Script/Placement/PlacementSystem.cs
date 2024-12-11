@@ -1,11 +1,8 @@
-using System.Collections.Generic;
 using StarterAssets;
+using StarterAssets.InputSystem;
 using ThirdPersonShooter.Script.Tower;
-using TMPro;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Events;
-using UnityEngine.UI;
 
 namespace ThirdPersonShooter.Script.Placement
 {
@@ -39,15 +36,12 @@ namespace ThirdPersonShooter.Script.Placement
         private PlacementReview _placementReview;
         private Vector3Int _lastDetectedPosition = Vector3Int.zero;
 
-        [SerializeField] private GameObject _uiTowerList;
-        [SerializeField] private GameObject _uiTowerSlot;
+        //Scroll selected
+        private int _selectedIndex = 0;
+        private bool _triggered = false;
+        
         [SerializeField] private Sprite _placementSprite;
         [SerializeField] private Sprite _removingSprite;
-        public UnityEvent<Sprite> StartPlacementEvent;
-        public UnityEvent<Sprite> StartRemovingEvent;
-        public UnityEvent StopPlacementEvent;
-        
-        private List<GameObject> _towerUIList = new();
 
         private void Awake()
         {
@@ -59,12 +53,17 @@ namespace ThirdPersonShooter.Script.Placement
         {
             StopPlacement();
             _towerPlacementData = new GridData();
-            SetTowerListUI();
+            UIManager.SetupTowerSlotUI(_towerDatabase.towerDatas);
         }
 
-        // Update is called once per frame
         void Update()
         {
+            if (_buildingState != null && UtilsVariables.CurrentActiveState != UtilsVariables.ActiveState.Placement &&
+                UtilsVariables.CurrentActiveState != UtilsVariables.ActiveState.Removing)
+            {
+                StopPlacement();
+            }
+
             if (starterAssetsInputs.alpha1) StartPlacement(1);
             else if (starterAssetsInputs.alpha2) StartPlacement(2);
             else if (starterAssetsInputs.alpha3) StartPlacement(3);
@@ -83,30 +82,10 @@ namespace ThirdPersonShooter.Script.Placement
             _lastDetectedPosition = _currentGridPosition;
         }
 
-        private void SetTowerListUI()
-        {
-            _towerUIList.Clear();
-            int i = 1;
-            foreach (TowerData tower in _towerDatabase.towerDatas)
-            {
-                GameObject towerSlotUI = Instantiate(_uiTowerSlot, _uiTowerList.transform);
-                towerSlotUI.GetComponentInChildren<TowerSlot>().SetupTowerSlot(i.ToString(), tower.Icon, i);
-                _towerUIList.Add(towerSlotUI);
-                i++;
-            }
-        }
-
-        private void UpdateTowerUI(int id = 0)
-        {
-            foreach (GameObject towerUI in _towerUIList)
-            {
-                towerUI.GetComponent<TowerSlot>().SelectSlot(id);
-            }
-        } 
-
         private void StartPlacement(int id)
         {
             StopPlacement();
+            _selectedIndex = id - 1;
             _buildingState = new PlacementState(id,
                 _placementReview,
                 _towerDatabase,
@@ -121,11 +100,13 @@ namespace ThirdPersonShooter.Script.Placement
             _buildingState.UpdateState(_currentPlacePosition, _currentGridPosition);
 
             _inputManager.OnShoot.AddListener(PlaceTower);
-            _inputManager.OnExit.AddListener(StopPlacement);
+            _inputManager.OnScroll.AddListener(OnScroll);
+            _inputManager.OnAim.AddListener(StopPlacement);
 
-            UpdateTowerUI(id);
+            UIManager.UpdateTowerSlotUI(id);
 
-            StartPlacementEvent?.Invoke(_placementSprite);
+            UtilsVariables.CurrentActiveState = UtilsVariables.ActiveState.Placement;
+            UIManager.SetCurrentActiveIcon(_placementSprite);
         }
 
         private void StartRemoving()
@@ -140,11 +121,12 @@ namespace ThirdPersonShooter.Script.Placement
             _buildingState.UpdateState(_currentPlacePosition, _currentGridPosition);
 
             _inputManager.OnShoot.AddListener(PlaceTower);
-            _inputManager.OnExit.AddListener(StopPlacement);
-            
-            UpdateTowerUI();
+            _inputManager.OnAim.AddListener(StopPlacement);
 
-            StartRemovingEvent?.Invoke(_removingSprite);
+            UIManager.UpdateTowerSlotUI();
+
+            UtilsVariables.CurrentActiveState = UtilsVariables.ActiveState.Removing;
+            UIManager.SetCurrentActiveIcon(_removingSprite);
         }
 
         private void PlacementPositionScan()
@@ -186,16 +168,52 @@ namespace ThirdPersonShooter.Script.Placement
         public void StopPlacement()
         {
             if (_buildingState == null) return;
-
+            
             _buildingState.EndState();
             _inputManager.OnShoot.RemoveListener(PlaceTower);
-            _inputManager.OnExit.RemoveListener(StopPlacement);
+            _inputManager.OnScroll.RemoveListener(OnScroll);
+            _inputManager.OnAim.RemoveListener(StopPlacement);
+            
             _lastDetectedPosition = Vector3Int.zero;
             _buildingState = null;
-            
-            UpdateTowerUI();
 
-            StopPlacementEvent?.Invoke();
+            UtilsVariables.CurrentActiveState = UtilsVariables.ActiveState.Equipment;
+            UIManager.UpdateTowerSlotUI();
+        }
+
+        private void OnScroll()
+        {
+            if (_triggered) return;
+            _triggered = true;
+            
+            int previousSelectedIndex = _selectedIndex;
+
+            float scroll = _inputManager.starterAssetsInputs.scroll.normalized.y;
+            switch (scroll)
+            {
+                case > 0 when _selectedIndex >= UIManager.towerSlotUIList.Count - 1:
+                    _selectedIndex = 0;
+                    break;
+                case > 0:
+                    _selectedIndex++;
+                    break;
+                case < 0 when _selectedIndex <= 0:
+                    _selectedIndex = UIManager.towerSlotUIList.Count - 1;
+                    break;
+                case < 0:
+                    _selectedIndex--;
+                    break;
+            }
+
+            if (previousSelectedIndex != _selectedIndex)
+                StartPlacement(_selectedIndex + 1);
+
+            Invoke(nameof(ResetTrigger), 0.01f);
+        }
+
+        private void ResetTrigger()
+        {
+            _triggered = false;
         }
     }
 }

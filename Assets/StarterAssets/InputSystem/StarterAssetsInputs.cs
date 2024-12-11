@@ -1,9 +1,7 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-#endif
 
-namespace StarterAssets
+namespace StarterAssets.InputSystem
 {
     public class StarterAssetsInputs : MonoBehaviour
     {
@@ -25,7 +23,7 @@ namespace StarterAssets
         public bool alpha7;
         public bool alpha8;
         public bool alpha9;
-        public bool escape;
+        public bool pause;
 
         [Header("Movement Settings")] public bool analogMovement;
 
@@ -126,9 +124,9 @@ namespace StarterAssets
             Alpha9Input(value.isPressed);
         }
 
-        public void OnEscape(InputValue value)
+        public void OnPause(InputValue value)
         {
-            EscapeInput(value.isPressed);
+            PauseInput(value.isPressed);
         }
 #endif
 
@@ -222,9 +220,9 @@ namespace StarterAssets
             alpha9 = newAlpha9State;
         }
 
-        public void EscapeInput(bool newEscapeState)
+        public void PauseInput(bool newPauseState)
         {
-            escape = newEscapeState;
+            pause = newPauseState;
         }
 
         private void OnApplicationFocus(bool hasFocus)

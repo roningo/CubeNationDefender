@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using StarterAssets.InputSystem;
+using ThirdPersonShooter.Script;
+using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;
 #endif
@@ -161,6 +163,8 @@ namespace StarterAssets
 
         private void LateUpdate()
         {
+            if (UtilsVariables.IsGamePaused) return;
+
             CameraRotation();
         }
 

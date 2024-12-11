@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using StarterAssets.InputSystem;
+using UnityEngine;
 using UnityEngine.Serialization;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;

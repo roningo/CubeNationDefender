@@ -1,6 +1,8 @@
 using StarterAssets;
+using StarterAssets.InputSystem;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace ThirdPersonShooter.Script
 {
@@ -11,7 +13,7 @@ namespace ThirdPersonShooter.Script
         public GameObject mouseIndicator;
         [SerializeField] private LayerMask _aimColliderLayerMask;
 
-        public UnityEvent OnShoot, OnScroll, OnInteract, OnExit, OnRemove;
+        public UnityEvent OnShoot, OnAim, OnScroll, OnInteract, OnPause, OnRemove;
         private Camera _camera;
 
         private void Start()
@@ -26,9 +28,21 @@ namespace ThirdPersonShooter.Script
 
         private void Update()
         {
+            if (starterAssetsInputs.pause)
+            {
+                OnPause?.Invoke();
+            }
+
+            if (UtilsVariables.IsGamePaused) return;
+
             if (starterAssetsInputs.shoot)
             {
                 OnShoot?.Invoke();
+            }
+
+            if (starterAssetsInputs.aim)
+            {
+                OnAim?.Invoke();
             }
 
             if (starterAssetsInputs.scroll != Vector2.zero)
@@ -39,11 +53,6 @@ namespace ThirdPersonShooter.Script
             if (starterAssetsInputs.interact)
             {
                 OnInteract?.Invoke();
-            }
-
-            if (starterAssetsInputs.alpha0)
-            {
-                OnExit?.Invoke();
             }
 
             if (starterAssetsInputs.alpha9)

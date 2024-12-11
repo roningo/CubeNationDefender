@@ -1,10 +1,8 @@
-using System;
 using StarterAssets;
 using ThirdPersonShooter.Script.Placement;
 using ThirdPersonShooter.Script.Tower;
 using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace ThirdPersonShooter.Script
 {
@@ -21,21 +19,15 @@ namespace ThirdPersonShooter.Script
         private CinemachineVirtualCamera _towerVirtualCamera;
 
         [SerializeField] private GameObject _player;
-        [SerializeField] private GameObject _uiInteract;
 
         private Collider[] _interactableList = new Collider[1];
         private int _interactableCount;
 
         [SerializeField] private Sprite _interactSprite;
 
-        public UnityEvent<Sprite> InteractEvent;
-
         private void OnEnable()
         {
             _inputManager.OnInteract.AddListener(InteractTower);
-
-            //add delay to make sure InteractEvent is not null
-            Invoke(nameof(SetPreviousActionImage), float.MinValue);
         }
 
         private void OnDisable()
@@ -48,12 +40,7 @@ namespace ThirdPersonShooter.Script
             _interactableCount = Physics.OverlapSphereNonAlloc(_interactPoint.position, _interactRadius,
                 _interactableList, _interactableLayer);
 
-            if (!_uiInteract) return;
-
-            if (_interactableCount > 0)
-                _uiInteract.SetActive(true);
-            else
-                _uiInteract.SetActive(false);
+            UIManager.interactable = _interactableCount > 0;
         }
 
         private void InteractTower()
@@ -82,7 +69,7 @@ namespace ThirdPersonShooter.Script
                 collapseObject.GetComponent<TowerController>().enabled = true;
                 collapseObject.GetComponent<TowerShooterController>().enabled = true;
 
-                InteractEvent?.Invoke(_interactSprite);
+                UIManager.SetCurrentActiveIcon(_interactSprite);
 
                 //hide self
                 _player.SetActive(false);
@@ -90,7 +77,5 @@ namespace ThirdPersonShooter.Script
                 break;
             }
         }
-
-        private void SetPreviousActionImage() => InteractEvent?.Invoke(null);
     }
 }

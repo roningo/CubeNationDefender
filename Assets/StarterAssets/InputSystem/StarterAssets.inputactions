@@ -27,7 +27,7 @@
                     "name": "Jump",
                     "type": "Button",
                     "id": "8c4abdf8-4099-493a-aa1a-129acec7c3df",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -168,9 +168,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Exit",
+                    "name": "Pause",
                     "type": "PassThrough",
-                    "id": "5aae713a-7f98-473a-9398-dc672e33fd9f",
+                    "id": "d0ea00a9-5d49-41b1-a30d-9a65255e0e63",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -477,12 +477,12 @@
                 },
                 {
                     "name": "",
-                    "id": "0a577087-6b2b-4cfb-90bb-ae93351d1e8c",
+                    "id": "cbad758c-886f-4bbd-9410-62b1dc5806dd",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
-                    "groups": "KeyboardMouse",
-                    "action": "Exit",
+                    "groups": ";KeyboardMouse",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
