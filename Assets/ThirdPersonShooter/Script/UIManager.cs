@@ -23,7 +23,7 @@ namespace ThirdPersonShooter.Script
 
         private static Sprite _lastActionSprite;
 
-        public static readonly List<GameObject> towerSlotUIList = new();
+        public static readonly List<GameObject> TowerSlotUIList = new();
         public static bool interactable = false;
 
         private void Awake()
@@ -54,20 +54,20 @@ namespace ThirdPersonShooter.Script
 
         public static void SetupTowerSlotUI(List<TowerData> towerDatas)
         {
-            towerSlotUIList.Clear();
+            TowerSlotUIList.Clear();
             int i = 1;
             foreach (TowerData tower in towerDatas)
             {
                 GameObject towerSlotUI = Instantiate(_uiTowerSlotChange, _uiTowerListChange.transform);
                 towerSlotUI.GetComponentInChildren<TowerSlot>().SetupTowerSlot(i.ToString(), tower.Icon, i);
-                towerSlotUIList.Add(towerSlotUI);
+                TowerSlotUIList.Add(towerSlotUI);
                 i++;
             }
         }
 
         public static void UpdateTowerSlotUI(int id = 0)
         {
-            foreach (GameObject towerUI in towerSlotUIList)
+            foreach (GameObject towerUI in TowerSlotUIList)
             {
                 towerUI.GetComponent<TowerSlot>().SelectSlot(id);
             }

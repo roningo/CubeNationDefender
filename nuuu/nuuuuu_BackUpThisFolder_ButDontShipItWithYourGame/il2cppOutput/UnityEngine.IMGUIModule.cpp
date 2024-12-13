@@ -3074,14 +3074,18 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_mousePosition_Injected_m31B63D
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_get_delta_Injected_m4EEDB796FAFA905815EB8F89C200A8B851314B66 (intptr_t ___0__unity_self, Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7* ___1_ret, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_delta_Injected_mD97744D7B81368BBBB63E68934C41B41344E4068 (intptr_t ___0__unity_self, Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7* ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_pointerType_Injected_mB28B092716FE76712BF2640B11C4779884AAC9DB (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_pointerType_Injected_mECEF1DAD614F6A0C06E099416971AFA0BF7D1F85 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_button_Injected_mBB57C0D585B25CB1CD2D3253105FD86B3067A561 (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_button_Injected_m91D43292E83B6532F0C71F86672FE4766A238667 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_modifiers_Injected_mEBCDDF68E5FFB407E12D3EE4AFFF1B88CE808004 (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_modifiers_Injected_m81C5EC815905D62AF0B825CA14DD360B33528C33 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Event_get_pressure_Injected_m0BB21470B6093D69CC81B5DF0B0A42B9EF5E5F9A (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_pressure_Injected_m81F50F456DAFFDBCE731D088C10E2C776E0192E4 (intptr_t ___0__unity_self, float ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Event_get_twist_Injected_m602DD5ADC6CEA12B0D0E4D3B70645EE87791F19F (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_get_tilt_Injected_m0AEEC6BF7F7868238FD5269EC6E8DDD3251DEE67 (intptr_t ___0__unity_self, Vector2_t1FD6F485C871E832B347AB2DC8CBA08B739D8DF7* ___1_ret, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_penStatus_Injected_m9177A19359BD5B539130B65EB8A80A5163EC3BD9 (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_clickCount_Injected_m474D30C83AB5D8442279764154ECC263558F4968 (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_clickCount_Injected_m35FE7515EA84D0F424DD0DAF18FE7039C471A373 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Il2CppChar Event_get_character_Injected_m0327C043FFD70576F14C3EA245B0909CBC162ABC (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_character_Injected_mD4166E8F4946DCC9C8751C7193211621C8F1E9EB (intptr_t ___0__unity_self, Il2CppChar ___1_value, const RuntimeMethod* method) ;
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_Internal_keyCode_Injected_m2DDCD9B211F9C700AD0927734E6C50F7BE843F0C (intptr_t ___0__unity_self, const RuntimeMethod* method) ;
@@ -3956,6 +3960,35 @@ IL_000f:
 		return L_2;
 	}
 }
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_pointerType_m221AC6CF774B6D9C62223F57500D34B75876D826 (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, int32_t ___0_value, const RuntimeMethod* method) 
+{
+	intptr_t G_B2_0;
+	memset((&G_B2_0), 0, sizeof(G_B2_0));
+	intptr_t G_B1_0;
+	memset((&G_B1_0), 0, sizeof(G_B1_0));
+	{
+		intptr_t L_0;
+		L_0 = BindingsMarshaller_ConvertToNative_mD06CC80A68266C36E72936554BB830F6FB6561E5_inline(__this, NULL);
+		intptr_t L_1 = L_0;
+		if (L_1)
+		{
+			G_B2_0 = L_1;
+			goto IL_000f;
+		}
+		G_B1_0 = L_1;
+	}
+	{
+		ThrowHelper_ThrowNullReferenceException_mA9C7629D32240EE0218631933DAC647668CA63CF(__this, NULL);
+		G_B2_0 = G_B1_0;
+	}
+
+IL_000f:
+	{
+		int32_t L_2 = ___0_value;
+		Event_set_pointerType_Injected_mECEF1DAD614F6A0C06E099416971AFA0BF7D1F85(G_B2_0, L_2, NULL);
+		return;
+	}
+}
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_button_m57F81B5CCB26866E776D0EBD1250C708A3565C08 (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, const RuntimeMethod* method) 
 {
 	intptr_t G_B2_0;
@@ -3983,6 +4016,35 @@ IL_000f:
 		int32_t L_2;
 		L_2 = Event_get_button_Injected_mBB57C0D585B25CB1CD2D3253105FD86B3067A561(G_B2_0, NULL);
 		return L_2;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_button_m146B0DE05FEE592C8DAA08B829B5903E9C5A93DB (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, int32_t ___0_value, const RuntimeMethod* method) 
+{
+	intptr_t G_B2_0;
+	memset((&G_B2_0), 0, sizeof(G_B2_0));
+	intptr_t G_B1_0;
+	memset((&G_B1_0), 0, sizeof(G_B1_0));
+	{
+		intptr_t L_0;
+		L_0 = BindingsMarshaller_ConvertToNative_mD06CC80A68266C36E72936554BB830F6FB6561E5_inline(__this, NULL);
+		intptr_t L_1 = L_0;
+		if (L_1)
+		{
+			G_B2_0 = L_1;
+			goto IL_000f;
+		}
+		G_B1_0 = L_1;
+	}
+	{
+		ThrowHelper_ThrowNullReferenceException_mA9C7629D32240EE0218631933DAC647668CA63CF(__this, NULL);
+		G_B2_0 = G_B1_0;
+	}
+
+IL_000f:
+	{
+		int32_t L_2 = ___0_value;
+		Event_set_button_Injected_m91D43292E83B6532F0C71F86672FE4766A238667(G_B2_0, L_2, NULL);
+		return;
 	}
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_modifiers_mD55E7CF06EB720434F0F174EA569B2A29792D39B (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, const RuntimeMethod* method) 
@@ -4070,6 +4132,35 @@ IL_000f:
 		float L_2;
 		L_2 = Event_get_pressure_Injected_m0BB21470B6093D69CC81B5DF0B0A42B9EF5E5F9A(G_B2_0, NULL);
 		return L_2;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_pressure_m4A33400407C6E8D4EB8525BE47477E98B5243ADD (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, float ___0_value, const RuntimeMethod* method) 
+{
+	intptr_t G_B2_0;
+	memset((&G_B2_0), 0, sizeof(G_B2_0));
+	intptr_t G_B1_0;
+	memset((&G_B1_0), 0, sizeof(G_B1_0));
+	{
+		intptr_t L_0;
+		L_0 = BindingsMarshaller_ConvertToNative_mD06CC80A68266C36E72936554BB830F6FB6561E5_inline(__this, NULL);
+		intptr_t L_1 = L_0;
+		if (L_1)
+		{
+			G_B2_0 = L_1;
+			goto IL_000f;
+		}
+		G_B1_0 = L_1;
+	}
+	{
+		ThrowHelper_ThrowNullReferenceException_mA9C7629D32240EE0218631933DAC647668CA63CF(__this, NULL);
+		G_B2_0 = G_B1_0;
+	}
+
+IL_000f:
+	{
+		float L_2 = ___0_value;
+		Event_set_pressure_Injected_m81F50F456DAFFDBCE731D088C10E2C776E0192E4(G_B2_0, L_2, NULL);
+		return;
 	}
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Event_get_twist_m557A5139AD77A15D25598A3F83676E558D1202BF (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, const RuntimeMethod* method) 
@@ -4188,6 +4279,35 @@ IL_000f:
 		int32_t L_2;
 		L_2 = Event_get_clickCount_Injected_m474D30C83AB5D8442279764154ECC263558F4968(G_B2_0, NULL);
 		return L_2;
+	}
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_clickCount_m70AD571083FEEA20FAEADED7AF04F3329A540035 (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, int32_t ___0_value, const RuntimeMethod* method) 
+{
+	intptr_t G_B2_0;
+	memset((&G_B2_0), 0, sizeof(G_B2_0));
+	intptr_t G_B1_0;
+	memset((&G_B1_0), 0, sizeof(G_B1_0));
+	{
+		intptr_t L_0;
+		L_0 = BindingsMarshaller_ConvertToNative_mD06CC80A68266C36E72936554BB830F6FB6561E5_inline(__this, NULL);
+		intptr_t L_1 = L_0;
+		if (L_1)
+		{
+			G_B2_0 = L_1;
+			goto IL_000f;
+		}
+		G_B1_0 = L_1;
+	}
+	{
+		ThrowHelper_ThrowNullReferenceException_mA9C7629D32240EE0218631933DAC647668CA63CF(__this, NULL);
+		G_B2_0 = G_B1_0;
+	}
+
+IL_000f:
+	{
+		int32_t L_2 = ___0_value;
+		Event_set_clickCount_Injected_m35FE7515EA84D0F424DD0DAF18FE7039C471A373(G_B2_0, L_2, NULL);
+		return;
 	}
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Il2CppChar Event_get_character_m8F7A92E90EF65B9379C01432B42D6BF818C32A61 (Event_tEBC6F24B56CE22B9C9AD1AC6C24A6B83BC3860CB* __this, const RuntimeMethod* method) 
@@ -8381,6 +8501,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_pointerType_Injected_mB28B0
 	int32_t icallRetVal = _il2cpp_icall_func(___0__unity_self);
 	return icallRetVal;
 }
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_pointerType_Injected_mECEF1DAD614F6A0C06E099416971AFA0BF7D1F85 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) 
+{
+	typedef void (*Event_set_pointerType_Injected_mECEF1DAD614F6A0C06E099416971AFA0BF7D1F85_ftn) (intptr_t, int32_t);
+	static Event_set_pointerType_Injected_mECEF1DAD614F6A0C06E099416971AFA0BF7D1F85_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Event_set_pointerType_Injected_mECEF1DAD614F6A0C06E099416971AFA0BF7D1F85_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::set_pointerType_Injected(System.IntPtr,UnityEngine.PointerType)");
+	_il2cpp_icall_func(___0__unity_self, ___1_value);
+}
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_button_Injected_mBB57C0D585B25CB1CD2D3253105FD86B3067A561 (intptr_t ___0__unity_self, const RuntimeMethod* method) 
 {
 	typedef int32_t (*Event_get_button_Injected_mBB57C0D585B25CB1CD2D3253105FD86B3067A561_ftn) (intptr_t);
@@ -8389,6 +8517,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_button_Injected_mBB57C0D585
 	_il2cpp_icall_func = (Event_get_button_Injected_mBB57C0D585B25CB1CD2D3253105FD86B3067A561_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::get_button_Injected(System.IntPtr)");
 	int32_t icallRetVal = _il2cpp_icall_func(___0__unity_self);
 	return icallRetVal;
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_button_Injected_m91D43292E83B6532F0C71F86672FE4766A238667 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) 
+{
+	typedef void (*Event_set_button_Injected_m91D43292E83B6532F0C71F86672FE4766A238667_ftn) (intptr_t, int32_t);
+	static Event_set_button_Injected_m91D43292E83B6532F0C71F86672FE4766A238667_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Event_set_button_Injected_m91D43292E83B6532F0C71F86672FE4766A238667_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::set_button_Injected(System.IntPtr,System.Int32)");
+	_il2cpp_icall_func(___0__unity_self, ___1_value);
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_modifiers_Injected_mEBCDDF68E5FFB407E12D3EE4AFFF1B88CE808004 (intptr_t ___0__unity_self, const RuntimeMethod* method) 
 {
@@ -8415,6 +8551,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Event_get_pressure_Injected_m0BB21470B6
 	_il2cpp_icall_func = (Event_get_pressure_Injected_m0BB21470B6093D69CC81B5DF0B0A42B9EF5E5F9A_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::get_pressure_Injected(System.IntPtr)");
 	float icallRetVal = _il2cpp_icall_func(___0__unity_self);
 	return icallRetVal;
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_pressure_Injected_m81F50F456DAFFDBCE731D088C10E2C776E0192E4 (intptr_t ___0__unity_self, float ___1_value, const RuntimeMethod* method) 
+{
+	typedef void (*Event_set_pressure_Injected_m81F50F456DAFFDBCE731D088C10E2C776E0192E4_ftn) (intptr_t, float);
+	static Event_set_pressure_Injected_m81F50F456DAFFDBCE731D088C10E2C776E0192E4_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Event_set_pressure_Injected_m81F50F456DAFFDBCE731D088C10E2C776E0192E4_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::set_pressure_Injected(System.IntPtr,System.Single)");
+	_il2cpp_icall_func(___0__unity_self, ___1_value);
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR float Event_get_twist_Injected_m602DD5ADC6CEA12B0D0E4D3B70645EE87791F19F (intptr_t ___0__unity_self, const RuntimeMethod* method) 
 {
@@ -8450,6 +8594,14 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR int32_t Event_get_clickCount_Injected_m474D30
 	_il2cpp_icall_func = (Event_get_clickCount_Injected_m474D30C83AB5D8442279764154ECC263558F4968_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::get_clickCount_Injected(System.IntPtr)");
 	int32_t icallRetVal = _il2cpp_icall_func(___0__unity_self);
 	return icallRetVal;
+}
+IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void Event_set_clickCount_Injected_m35FE7515EA84D0F424DD0DAF18FE7039C471A373 (intptr_t ___0__unity_self, int32_t ___1_value, const RuntimeMethod* method) 
+{
+	typedef void (*Event_set_clickCount_Injected_m35FE7515EA84D0F424DD0DAF18FE7039C471A373_ftn) (intptr_t, int32_t);
+	static Event_set_clickCount_Injected_m35FE7515EA84D0F424DD0DAF18FE7039C471A373_ftn _il2cpp_icall_func;
+	if (!_il2cpp_icall_func)
+	_il2cpp_icall_func = (Event_set_clickCount_Injected_m35FE7515EA84D0F424DD0DAF18FE7039C471A373_ftn)il2cpp_codegen_resolve_icall ("UnityEngine.Event::set_clickCount_Injected(System.IntPtr,System.Int32)");
+	_il2cpp_icall_func(___0__unity_self, ___1_value);
 }
 IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Il2CppChar Event_get_character_Injected_m0327C043FFD70576F14C3EA245B0909CBC162ABC (intptr_t ___0__unity_self, const RuntimeMethod* method) 
 {

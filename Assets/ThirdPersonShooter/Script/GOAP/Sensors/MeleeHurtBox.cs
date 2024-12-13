@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ThirdPersonShooter.Script.BioStats;
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace ThirdPersonShooter.Script.GOAP.Sensors
@@ -12,6 +13,8 @@ namespace ThirdPersonShooter.Script.GOAP.Sensors
             if (other.CompareTag("Player"))
             {
                 playerEnterEvent?.Invoke(other.transform);
+                other.GetComponent<PlayerHealth>().ReceivedDamage(10f);
+
                 gameObject.SetActive(false);
             }
         }

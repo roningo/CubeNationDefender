@@ -11141,7 +11141,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MultiColumnHeaderColumnSortIndicator_set
 		Label_tC160668F9119CE0F5567021FB208E64A5B1C5B70* L_0 = __this->___m_IndexLabel;
 		String_t* L_1 = ___0_value;
 		NullCheck(L_0);
-		VirtualActionInvoker1< String_t* >::Invoke(204, L_0, L_1);
+		VirtualActionInvoker1< String_t* >::Invoke(207, L_0, L_1);
 		return;
 	}
 }
@@ -12323,7 +12323,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR void MultiColumnHeaderColumn_DefaultBindHeade
 		String_t* L_11;
 		L_11 = Column_get_title_m85647B144FF5C4C1960A71EC33360BC688045310_inline(L_10, NULL);
 		NullCheck(L_9);
-		VirtualActionInvoker1< String_t* >::Invoke(204, L_9, L_11);
+		VirtualActionInvoker1< String_t* >::Invoke(207, L_9, L_11);
 	}
 
 IL_003d:

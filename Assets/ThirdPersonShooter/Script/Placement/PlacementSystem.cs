@@ -1,6 +1,6 @@
-using StarterAssets;
 using StarterAssets.InputSystem;
 using ThirdPersonShooter.Script.Tower;
+using Unity.AI.Navigation;
 using Unity.Cinemachine;
 using UnityEngine;
 
@@ -29,6 +29,7 @@ namespace ThirdPersonShooter.Script.Placement
         private IBuildingState _buildingState;
 
         [SerializeField] private GameObject _player;
+        [SerializeField] private NavMeshSurface _meshSurface;
 
         private GridData _towerPlacementData;
         private Vector3 _currentPlacePosition;
@@ -191,14 +192,14 @@ namespace ThirdPersonShooter.Script.Placement
             float scroll = _inputManager.starterAssetsInputs.scroll.normalized.y;
             switch (scroll)
             {
-                case > 0 when _selectedIndex >= UIManager.towerSlotUIList.Count - 1:
+                case > 0 when _selectedIndex >= UIManager.TowerSlotUIList.Count - 1:
                     _selectedIndex = 0;
                     break;
                 case > 0:
                     _selectedIndex++;
                     break;
                 case < 0 when _selectedIndex <= 0:
-                    _selectedIndex = UIManager.towerSlotUIList.Count - 1;
+                    _selectedIndex = UIManager.TowerSlotUIList.Count - 1;
                     break;
                 case < 0:
                     _selectedIndex--;
