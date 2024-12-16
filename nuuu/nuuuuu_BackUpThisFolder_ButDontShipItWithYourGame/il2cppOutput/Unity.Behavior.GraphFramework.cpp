@@ -16106,7 +16106,7 @@ IL_0042:
 		Type_t* L_13 = ___0_type;
 		NullCheck(L_13);
 		Type_t* L_14;
-		L_14 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_13);
+		L_14 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_13);
 		il2cpp_codegen_runtime_class_init_inline(BlackboardUtils_t760E55A6EDD6C95F4018D29EA93C97176D8047C5_il2cpp_TypeInfo_var);
 		Texture2D_tE6505BC111DD8A424A9DBE8E05D7D09E11FFFCF4* L_15;
 		L_15 = BlackboardUtils_GetIcon_mCC2131EACFBF45D366C0AB91AB901339652725D9(L_14, NULL);
@@ -16492,7 +16492,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR Type_t* BlackboardUtils_GetVariableModelTypeF
 		(L_3)->SetAt(static_cast<il2cpp_array_size_t>(0), (Type_t*)L_4);
 		NullCheck(L_1);
 		Type_t* L_5;
-		L_5 = VirtualFuncInvoker1< Type_t*, TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(123, L_1, L_3);
+		L_5 = VirtualFuncInvoker1< Type_t*, TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(122, L_1, L_3);
 		return L_5;
 	}
 }

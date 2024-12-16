@@ -14600,7 +14600,7 @@ IL_009c:
 		(L_37)->SetAt(static_cast<il2cpp_array_size_t>(0), (Type_t*)L_38);
 		NullCheck(L_35);
 		Type_t* L_39;
-		L_39 = VirtualFuncInvoker1< Type_t*, TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(123, L_35, L_37);
+		L_39 = VirtualFuncInvoker1< Type_t*, TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(122, L_35, L_37);
 		RuntimeObject* L_40;
 		L_40 = Activator_CreateInstance_mFF030428C64FDDFACC74DFAC97388A1C628BFBCF(L_39, NULL);
 		return ((BaseLinkField_tCD1DE01A57C005C98E949A6975BA4A7EE9F57A13*)IsInstClass((RuntimeObject*)L_40, BaseLinkField_tCD1DE01A57C005C98E949A6975BA4A7EE9F57A13_il2cpp_TypeInfo_var));
@@ -16571,7 +16571,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR List_1_t4E7EC6FDD5A3230B2D89CFD9DF002B412653B
 		Type_t* L_3 = ___0_type;
 		NullCheck(L_3);
 		PropertyInfoU5BU5D_tD81C248B41D0C76207C42DB9C332DC79F490B1D7* L_4;
-		L_4 = VirtualFuncInvoker1< PropertyInfoU5BU5D_tD81C248B41D0C76207C42DB9C332DC79F490B1D7*, int32_t >::Invoke(110, L_3, ((int32_t)20));
+		L_4 = VirtualFuncInvoker1< PropertyInfoU5BU5D_tD81C248B41D0C76207C42DB9C332DC79F490B1D7*, int32_t >::Invoke(109, L_3, ((int32_t)20));
 		V_2 = L_4;
 		V_3 = 0;
 		goto IL_0080;

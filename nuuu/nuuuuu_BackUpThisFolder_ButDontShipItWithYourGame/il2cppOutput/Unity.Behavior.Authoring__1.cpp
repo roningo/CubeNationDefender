@@ -15714,7 +15714,7 @@ IL_0018_1:
 				L_11 = Object_GetType_mE10A8FC1E57F3DF29972CCBC026C2DC3942263B3(L_10, NULL);
 				NullCheck(L_11);
 				Type_t* L_12;
-				L_12 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_11);
+				L_12 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_11);
 				NullCheck(L_8);
 				L_8->___type = L_12;
 				Il2CppCodeGenWriteBarrier((void**)(&L_8->___type), (void*)L_12);
@@ -16500,7 +16500,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool U3CU3Ec__DisplayClass58_0_U3COnVariableL
 		L_5 = VirtualFuncInvoker0< Type_t* >::Invoke(7, L_4);
 		NullCheck(L_5);
 		Type_t* L_6;
-		L_6 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_5);
+		L_6 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_5);
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_7 = { reinterpret_cast<intptr_t> (EventChannelBase_tEF04E0668F88BD66E8AEC074E31745C1D874A993_0_0_0_var) };
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		Type_t* L_8;
@@ -16729,7 +16729,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool U3CU3Ec__DisplayClass70_0_U3CLinkVariabl
 		L_6 = VirtualFuncInvoker0< Type_t* >::Invoke(7, L_5);
 		NullCheck(L_6);
 		Type_t* L_7;
-		L_7 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_6);
+		L_7 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_6);
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		bool L_8;
 		L_8 = Type_op_Inequality_m83209C7BB3C05DFBEA3B6199B0BEFE8037301172(L_7, (Type_t*)NULL, NULL);
@@ -16745,10 +16745,10 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool U3CU3Ec__DisplayClass70_0_U3CLinkVariabl
 		L_10 = VirtualFuncInvoker0< Type_t* >::Invoke(7, L_9);
 		NullCheck(L_10);
 		Type_t* L_11;
-		L_11 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_10);
+		L_11 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_10);
 		NullCheck(L_11);
 		Type_t* L_12;
-		L_12 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_11);
+		L_12 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_11);
 		Type_t* L_13 = __this->___type;
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		bool L_14;
@@ -18260,7 +18260,7 @@ IL_0123_1:
 				L_46 = NodeInfo_get_Type_mC164A2399C0D7A827C1C09B7786553D7211C21D5(L_45, NULL);
 				NullCheck(L_46);
 				Type_t* L_47;
-				L_47 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_46);
+				L_47 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_46);
 				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_48 = { reinterpret_cast<intptr_t> (Modifier_t223EB73FBB2FE22F33778D06452C18C0C10BC84B_0_0_0_var) };
 				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 				Type_t* L_49;
@@ -18279,7 +18279,7 @@ IL_0123_1:
 				L_52 = NodeInfo_get_Type_mC164A2399C0D7A827C1C09B7786553D7211C21D5(L_51, NULL);
 				NullCheck(L_52);
 				Type_t* L_53;
-				L_53 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_52);
+				L_53 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_52);
 				RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_54 = { reinterpret_cast<intptr_t> (Composite_tF3DE1107942CD88BE8BD6C2E76AFE4E4F4BC3A6D_0_0_0_var) };
 				il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 				Type_t* L_55;
@@ -18310,7 +18310,7 @@ IL_017d_1:
 				L_60 = NodeInfo_get_Type_mC164A2399C0D7A827C1C09B7786553D7211C21D5(L_59, NULL);
 				NullCheck(L_60);
 				Type_t* L_61;
-				L_61 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_60);
+				L_61 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_60);
 				Type_t* L_62 = L_61;
 				if (L_62)
 				{
@@ -24445,7 +24445,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool EventChannelUtility_IsEventChannelType_m
 		Type_t* L_0 = ___0_type;
 		NullCheck(L_0);
 		Type_t* L_1;
-		L_1 = VirtualFuncInvoker0< Type_t* >::Invoke(113, L_0);
+		L_1 = VirtualFuncInvoker0< Type_t* >::Invoke(112, L_0);
 		RuntimeTypeHandle_t332A452B8B6179E4469B69525D0FE82A88030F7B L_2 = { reinterpret_cast<intptr_t> (EventChannelBase_tEF04E0668F88BD66E8AEC074E31745C1D874A993_0_0_0_var) };
 		il2cpp_codegen_runtime_class_init_inline(il2cpp_defaults.systemtype_class);
 		Type_t* L_3;
@@ -24471,7 +24471,7 @@ IL2CPP_EXTERN_C IL2CPP_METHOD_ATTR bool EventChannelUtility_IsEventChannelType_m
 		(L_9)->SetAt(static_cast<il2cpp_array_size_t>(0), (Type_t*)L_10);
 		NullCheck(L_7);
 		Type_t* L_11;
-		L_11 = VirtualFuncInvoker1< Type_t*, TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(123, L_7, L_9);
+		L_11 = VirtualFuncInvoker1< Type_t*, TypeU5BU5D_t97234E1129B564EB38B8D85CAC2AD8B5B9522FFB* >::Invoke(122, L_7, L_9);
 		*((RuntimeObject**)L_5) = (RuntimeObject*)L_11;
 		Il2CppCodeGenWriteBarrier((void**)(RuntimeObject**)L_5, (void*)(RuntimeObject*)L_11);
 		return (bool)1;
