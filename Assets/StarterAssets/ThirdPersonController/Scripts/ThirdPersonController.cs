@@ -1,5 +1,5 @@
 ﻿using StarterAssets.InputSystem;
-using ThirdPersonShooter.Script;
+using ThirdPersonShooter.Scripts;
 using UnityEngine;
 #if ENABLE_INPUT_SYSTEM 
 using UnityEngine.InputSystem;

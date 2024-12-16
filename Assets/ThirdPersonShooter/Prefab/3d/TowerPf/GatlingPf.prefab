@@ -463,6 +463,7 @@ Transform:
   - {fileID: 2736703474183309758}
   - {fileID: 3300310376334594976}
   - {fileID: 6235665026946512200}
+  - {fileID: 7025530192750463923}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8938060171543824838
@@ -497,6 +498,7 @@ MonoBehaviour:
   _forceRatio: 0
   isMovementPrediction: 0
   attackRageTrigger: {fileID: 748410626325020788}
+  _towerObstacle: {fileID: 7185008537564275004}
   _core: {fileID: 1411937860711338693}
   _barrel: {fileID: 5701301881829033254}
   _turningSpeed: 20
@@ -860,6 +862,54 @@ Transform:
   - {fileID: 304985139316911242}
   m_Father: {fileID: 7255919064426211133}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7185008537564275004
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7025530192750463923}
+  - component: {fileID: 1761481827709860688}
+  m_Layer: 17
+  m_Name: TowerObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &7025530192750463923
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7185008537564275004}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8105136676063552388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &1761481827709860688
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7185008537564275004}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.68, y: 1.18, z: 0.68}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &7352219613871014751
 GameObject:
   m_ObjectHideFlags: 0
@@ -902,7 +952,7 @@ GameObject:
   - component: {fileID: 7798049782436100286}
   - component: {fileID: 6219586844857071454}
   m_Layer: 0
-  m_Name: rig_cube
+  m_Name: ControllerCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

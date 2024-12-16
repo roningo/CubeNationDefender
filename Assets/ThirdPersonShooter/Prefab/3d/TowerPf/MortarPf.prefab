@@ -123,6 +123,54 @@ ParentConstraint:
   m_Sources:
   - sourceTransform: {fileID: 2105511939521544649}
     weight: 1
+--- !u!1 &1800126891666537473
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 332483738573464228}
+  - component: {fileID: 1825094430748501992}
+  m_Layer: 17
+  m_Name: TowerObstacle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &332483738573464228
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800126891666537473}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.62, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8105136676063552388}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &1825094430748501992
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1800126891666537473}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 0
+  m_Extents: {x: 0.68, y: 1.28, z: 0.68}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &2095887329202792313
 GameObject:
   m_ObjectHideFlags: 0
@@ -267,6 +315,7 @@ Transform:
   - {fileID: 2736703474183309758}
   - {fileID: 3300310376334594976}
   - {fileID: 6235665026946512200}
+  - {fileID: 332483738573464228}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8938060171543824838
@@ -301,6 +350,7 @@ MonoBehaviour:
   _forceRatio: 0
   isMovementPrediction: 1
   attackRageTrigger: {fileID: 748410626325020788}
+  _towerObstacle: {fileID: 1800126891666537473}
   _core: {fileID: 3305494133512445496}
   _barrel: {fileID: 6285157447604945498}
   _turningSpeed: 20
@@ -531,7 +581,7 @@ GameObject:
   - component: {fileID: 7798049782436100286}
   - component: {fileID: 6219586844857071454}
   m_Layer: 0
-  m_Name: rig_cube
+  m_Name: ControllerCube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
