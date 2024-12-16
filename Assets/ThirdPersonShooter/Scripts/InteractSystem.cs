@@ -16,7 +16,7 @@ namespace ThirdPersonShooter.Scripts
         [SerializeField] private PlacementSystem _placementSystem;
 
         [Header("Toggle On Interact")] [SerializeField]
-        private CinemachineVirtualCamera _towerVirtualCamera;
+        private CinemachineCamera _towerVirtualCamera;
 
         [SerializeField] private GameObject _player;
 
@@ -57,8 +57,8 @@ namespace ThirdPersonShooter.Scripts
 
                 //camera toggle
                 Transform towerRoot = collapseObject.transform.Find("TowerCameraRoot");
-                _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().LookAt = towerRoot;
-                _towerVirtualCamera.GetComponent<CinemachineVirtualCamera>().Follow = towerRoot;
+                _towerVirtualCamera.GetComponent<CinemachineCamera>().LookAt = towerRoot;
+                _towerVirtualCamera.GetComponent<CinemachineCamera>().Follow = towerRoot;
                 _towerVirtualCamera.gameObject.SetActive(true);
 
                 //self toggle

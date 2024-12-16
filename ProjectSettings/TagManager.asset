@@ -9,6 +9,7 @@ TagManager:
   - Tower
   - Range
   - Projectile
+  - Obstacle
   layers:
   - Default
   - TransparentFX

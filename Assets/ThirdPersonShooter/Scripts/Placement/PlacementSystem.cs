@@ -12,7 +12,7 @@ namespace ThirdPersonShooter.Scripts.Placement
         private StarterAssetsInputs starterAssetsInputs;
 
         [Tooltip("Set camera for placement tower")] [SerializeField]
-        private CinemachineVirtualCamera _towerVirtualCamera;
+        private CinemachineCamera _towerVirtualCamera;
 
         [SerializeField] private float _maxHeightPlaceable;
 

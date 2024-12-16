@@ -10,7 +10,7 @@ namespace ThirdPersonShooter.Scripts
     {
 
         public GameObject player;
-        public CinemachineVirtualCamera towerVirtualCamera;
+        public CinemachineCamera towerVirtualCamera;
         [SerializeField] private float _normalSensitivity;
         [SerializeField] private float _aimSensitivity;
         public InputManager _inputManager;

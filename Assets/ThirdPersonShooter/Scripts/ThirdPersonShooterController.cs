@@ -8,7 +8,7 @@ namespace ThirdPersonShooter.Scripts
 {
     public class ThirdPersonShooterController : MonoBehaviour
     {
-        [SerializeField] private CinemachineVirtualCamera _aimVirtualCamera;
+        [SerializeField] private CinemachineCamera _aimVirtualCamera;
         [SerializeField] private float _normalSensitivity;
         [SerializeField] private float _aimSensitivity;
         [SerializeField] private InputManager _inputManager;

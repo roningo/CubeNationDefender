@@ -16,7 +16,7 @@ namespace ThirdPersonShooter.Scripts.Placement
         private GridData _towerData;
         private TowerPlacer _towerPlacer;
 
-        private CinemachineVirtualCamera _towerVirtualCamera;
+        private CinemachineCamera _towerVirtualCamera;
         private GameObject _player;
         private InputManager _inputManager;
         private StarterAssetsInputs _starterAssetsInputs;
@@ -26,7 +26,7 @@ namespace ThirdPersonShooter.Scripts.Placement
             TowerDatabaseSO towerDatabase,
             GridData towerData,
             TowerPlacer towerPlacer,
-            CinemachineVirtualCamera towerVirtualCamera,
+            CinemachineCamera towerVirtualCamera,
             GameObject player,
             InputManager inputManager,
             StarterAssetsInputs starterAssetsInputs)
